@@ -15,17 +15,17 @@
             v-text="classInfo.teacher + classInfo.time"
           ></v-card-subtitle>
           <v-card-actions>
-            <v-btn class="ma-2 elevation-0" small>
+            <v-btn class="ml-1 mt-1 mb-1 elevation-0" small>
               <v-icon left dark color="red darken-2">mdi-account-circle</v-icon>
               成员
             </v-btn>
-            <v-btn class="ma-2 elevation-0" small>
+            <v-btn class="ml-1 mt-1 mb-1 elevation-0" small>
               <v-icon left dark color="orange darken-2"
                 >mdi-clipboard-text-outline</v-icon
               >
               统计
             </v-btn>
-            <v-btn class="ma-2 elevation-0" small @click="sign">
+            <v-btn class="ml-1 mt-1 mb-1 elevation-0" small @click="sign">
               <v-icon left dark color="green darken-2">mdi-check-circle</v-icon>
               签到
             </v-btn>
@@ -33,6 +33,8 @@
         </div>
         <v-avatar class="ma-3" size="125" tile>
           <v-img
+            max-width="120px"
+            max-height="120px"
             :src="
               classInfo.imgUrl && classInfo.imgUrl !== ''
                 ? classInfo.imgUrl
