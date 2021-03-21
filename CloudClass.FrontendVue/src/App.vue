@@ -42,6 +42,11 @@
 export default {
   name: "App",
   components: {},
+  mounted() {
+    if (document.body.clientWidth > 1264) {
+      this.drawer = true;
+    }
+  },
   data: () => ({
     drawer: false,
     darkModeIcon: "mdi-brightness-4",
@@ -56,6 +61,11 @@ export default {
         icon: "mdi-account",
         text: "登录",
         to: "/login",
+      },
+      {
+        icon: "mdi-google-classroom",
+        text: "班课列表",
+        to: "/class",
       },
       {
         icon: "mdi-information",

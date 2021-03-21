@@ -22,7 +22,7 @@
         >注册</v-btn
       >
     </div>
-    <v-btn class="ma-2" color="primary" block>登录</v-btn>
+    <v-btn class="ma-2" color="primary" block @click="login">登录</v-btn>
   </v-container>
 </template>
 
@@ -35,9 +35,13 @@ export default {
       showPassword: false,
       rules: {
         required: (value) => !!value || "必填.",
-        emailMatch: () => `The email and password you entered don't match`,
       },
     };
+  },
+  methods: {
+    login() {
+      this.$router.push("/class");
+    },
   },
 };
 </script>

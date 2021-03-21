@@ -32,6 +32,20 @@ const routes = [
     },
     component: () => import("../views/Register"),
   },
+  {
+    path: "/class",
+    meta: {
+      title: "班课管理",
+    },
+    component: () => import("../views/ClassList"),
+  },
+  {
+    path: "/sign",
+    meta: {
+      title: "签到",
+    },
+    component: () => import("../views/Sign"),
+  },
 ];
 
 const router = new VueRouter({
