@@ -5,4 +5,4 @@
 # Links
 
 - [列表页](CloudClass.BackendVue/src/views/user/list.vue)
-- [标签页](CloudClass.BackendVue/src/views/user/edit.vue)
+- [编辑页](CloudClass.BackendVue/src/views/user/edit.vue)
