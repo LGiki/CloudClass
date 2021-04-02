@@ -1,0 +1,20 @@
+package com.fzu.CloudClass.service.impl;
+
+import com.fzu.CloudClass.entity.SignIn;
+import com.fzu.CloudClass.mapper.SignInMapper;
+import com.fzu.CloudClass.service.ISignInService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.stereotype.Service;
+
+/**
+ * <p>
+ * ǩ 服务实现类
+ * </p>
+ *
+ * @author djk
+ * @since 2021-04-02
+ */
+@Service
+public class SignInServiceImpl extends ServiceImpl<SignInMapper, SignIn> implements ISignInService {
+
+}
