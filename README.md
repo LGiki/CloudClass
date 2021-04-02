@@ -8,5 +8,5 @@
 - [编辑页](CloudClass.BackendVue/src/views/user/edit.vue)
 
 - [HTTP拦截器](CloudClass.BackendVue/src/utils/request.js)
-- [前端调用REST API](CloudClass.Frontend/src/api/user.js)
+- [前端调用REST API](CloudClass.FrontendVue/src/api/user.js)
 - [后台管理调用REST API](CloudClass.BackendVue/src/api/user.js)
