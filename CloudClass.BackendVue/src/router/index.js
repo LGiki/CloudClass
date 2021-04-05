@@ -36,6 +36,16 @@ export const constantRoutes = [
     component: () => import('@/views/login/index'),
     hidden: true
   },
+  {
+    path: '/reset-password',
+    component: () => import('@/views/login/reset_password'),
+    hidden: true
+  },
+  {
+    path: '/signup',
+    component: () => import('@/views/login/signup'),
+    hidden: true
+  },
 
   {
     path: '/404',
@@ -75,6 +85,30 @@ export const constantRoutes = [
         hidden: true,
         meta: {
           title: '编辑用户'
+        }
+      }
+    ]
+  },
+  {
+    path: '/data-dict',
+    component: Layout,
+    meta: { title: '数据字典', icon: 'dict' },
+    children: [
+      {
+        path: 'index',
+        name: 'Data Dict List',
+        component: () => import('@/views/data-dict/list'),
+        meta: {
+          title: '数据字典'
+        }
+      },
+      {
+        path: 'edit/:id',
+        name: 'Data Dict List',
+        component: () => import('@/views/data-dict/list'),
+        hidden: true,
+        meta: {
+          title: '编辑数据字典'
         }
       }
     ]

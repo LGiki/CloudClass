@@ -41,8 +41,7 @@ module.exports = [
       }
 
       return {
-        code: 20000,
-        data: token
+        code: 20000, data: token
       }
     }
   },

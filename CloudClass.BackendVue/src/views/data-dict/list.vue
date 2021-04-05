@@ -9,13 +9,13 @@
         class="filter-item"
       />
       <el-button type="primary" @click="onSearch">
-        <svg-icon icon-class="search" />&nbsp;搜索
+        <svg-icon icon-class="search"/>&nbsp;搜索
       </el-button>
       <el-button v-if="inSearch" type="primary" @click="onCancelSearch">
-        <i class="el-icon-close" />&nbsp;取消搜索
+        <i class="el-icon-close"/>&nbsp;取消搜索
       </el-button>
       <el-button type="danger">
-        <i class="el-icon-plus" />&nbsp;新建用户
+        <i class="el-icon-plus"/>&nbsp;新建用户
       </el-button>
     </div>
     <el-table
@@ -27,44 +27,24 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column label="用户ID" prop="id" align="center" width="80px">
+      <el-table-column label="数据字典ID" prop="id" align="center" width="120">
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="用户名" width="150px" align="center">
+      <el-table-column label="中文标识" width="150" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.username }}</span>
+          <span>{{ row.chinese }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="昵称" min-width="150px" align="center">
+      <el-table-column label="英文标识" min-width="150" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.nickname }}</span>
+          <span>{{ row.english }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="所属角色" width="100px" align="center">
+      <el-table-column label="备注" width="100" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.role }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="性别" width="80px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.sex }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="手机号" width="110px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.phone }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="邮箱" width="180px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.email }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="注册日期" width="120px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.registerData }}</span>
+          <span>{{ row.comment }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="150" class-name="small-padding fixed-width">
@@ -113,13 +93,9 @@ export default {
     for (let i = 0; i < 10; i++) {
       this.list.push({
         id: i,
-        username: 'Admin',
-        nickname: '张三',
-        role: '管理员',
-        sex: '男',
-        phone: '13800138000',
-        email: 'example@example.org',
-        registerData: '2020年1月1日'
+        chinese: '数据字典',
+        english: 'data_dictionary',
+        comment: 'Admin'
       })
     }
   },
@@ -136,7 +112,7 @@ export default {
       this.$router.push('/user/edit/' + row.id)
     },
     handleDelete(row, index) {
-      this.$alert('您确定要删除该用户吗？', '删除确认', {
+      this.$alert('您确定要删除该数据字典吗？', '删除确认', {
         confirmButtonText: '确定',
         callback: action => {
           // this.$message({
@@ -164,3 +140,4 @@ export default {
   justify-content: center;
 }
 </style>
+
