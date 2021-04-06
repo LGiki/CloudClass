@@ -44,4 +44,51 @@ public class SignIn implements Serializable {
     private String position;
 
 
+    public Integer getSiId() {
+        return siId;
+    }
+
+    public void setSiId(Integer siId) {
+        this.siId = siId;
+    }
+
+    public Integer getPeId() {
+        return peId;
+    }
+
+    public void setPeId(Integer peId) {
+        this.peId = peId;
+    }
+
+    public Integer getcId() {
+        return cId;
+    }
+
+    public void setcId(Integer cId) {
+        this.cId = cId;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
 }

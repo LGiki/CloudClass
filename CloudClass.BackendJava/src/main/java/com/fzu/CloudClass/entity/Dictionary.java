@@ -28,4 +28,27 @@ public class Dictionary implements Serializable {
     private String englishName;
 
 
+    public Integer getdId() {
+        return dId;
+    }
+
+    public void setdId(Integer dId) {
+        this.dId = dId;
+    }
+
+    public String getChineseName() {
+        return chineseName;
+    }
+
+    public void setChineseName(String chineseName) {
+        this.chineseName = chineseName;
+    }
+
+    public String getEnglishName() {
+        return englishName;
+    }
+
+    public void setEnglishName(String englishName) {
+        this.englishName = englishName;
+    }
 }
