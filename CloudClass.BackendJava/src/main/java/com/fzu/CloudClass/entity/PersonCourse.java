@@ -29,4 +29,43 @@ public class PersonCourse implements Serializable {
     private Integer status;
 
 
+    public Integer getPcId() {
+        return pcId;
+    }
+
+    public void setPcId(Integer pcId) {
+        this.pcId = pcId;
+    }
+
+    public Integer getPeId() {
+        return peId;
+    }
+
+    public void setPeId(Integer peId) {
+        this.peId = peId;
+    }
+
+    public Integer getcId() {
+        return cId;
+    }
+
+    public void setcId(Integer cId) {
+        this.cId = cId;
+    }
+
+    public Integer getValue() {
+        return value;
+    }
+
+    public void setValue(Integer value) {
+        this.value = value;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 }
