@@ -1,15 +1,15 @@
 <template>
   <div class="wscn-http404-container">
     <div class="wscn-http404">
-      <div class="pic-404">
-        <img class="pic-404__parent" src="@/assets/404_images/404.png" alt="404">
-        <img class="pic-404__child left" src="@/assets/404_images/404_cloud.png" alt="404">
-        <img class="pic-404__child mid" src="@/assets/404_images/404_cloud.png" alt="404">
-        <img class="pic-404__child right" src="@/assets/404_images/404_cloud.png" alt="404">
-      </div>
+<!--      <div class="pic-404">-->
+<!--        <img class="pic-404__parent" src="@/assets/404_images/404.png" alt="404">-->
+<!--        <img class="pic-404__child left" src="@/assets/404_images/404_cloud.png" alt="404">-->
+<!--        <img class="pic-404__child mid" src="@/assets/404_images/404_cloud.png" alt="404">-->
+<!--        <img class="pic-404__child right" src="@/assets/404_images/404_cloud.png" alt="404">-->
+<!--      </div>-->
       <div class="bullshit">
-        <div class="bullshit__oops">404</div>
-<!--        <div class="bullshit__info"></div>-->
+        <div class="bullshit__oops">401</div>
+        <!--        <div class="bullshit__info"></div>-->
         <div class="bullshit__headline">{{ message }}</div>
         <div class="bullshit__info">请检查网址是否正确，或点击下方按钮返回主页</div>
         <a href="" class="bullshit__return-home">返回主页</a>
@@ -21,10 +21,10 @@
 <script>
 
 export default {
-  name: 'Page404',
+  name: 'Page401',
   computed: {
     message() {
-      return '您请求的页面不存在'
+      return '请登录后再访问该页面'
     }
   }
 }

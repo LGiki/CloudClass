@@ -7,9 +7,10 @@ const routes = [
   {
     path: "/",
     meta: {
-      title: "主页",
+      title: "登录",
     },
-    component: () => import("../views/Home"),
+    // component: () => import("../views/Home"),
+    component: () => import("../views/Login"),
   },
   {
     path: "/login",
