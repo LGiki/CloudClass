@@ -46,6 +46,13 @@ const routes = [
     },
     component: () => import("../views/Sign"),
   },
+  {
+    path: "/addClass",
+    meta: {
+      title: "添加班课",
+    },
+    component: () => import("../views/AddClass")
+  },
 ];
 
 const router = new VueRouter({
