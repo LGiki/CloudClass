@@ -21,8 +21,7 @@
             </v-btn>
             <v-btn class="ml-1 mt-1 mb-1 elevation-0" small>
               <v-icon left dark color="orange darken-2"
-                >mdi-clipboard-text-outline</v-icon
-              >
+                >mdi-clipboard-text-outline</v-icon>
               统计
             </v-btn>
             <v-btn class="ml-1 mt-1 mb-1 elevation-0" small @click="sign">
@@ -44,6 +43,12 @@
         </v-avatar>
       </div>
     </v-card>
+
+    <v-btn elevation="6" fab color="primary" medium  absolute right class="mr-4" @click="addClass">
+      <v-icon dark >
+        mdi-plus
+      </v-icon>
+    </v-btn>
   </v-container>
 </template>
 
@@ -59,18 +64,21 @@ export default {
           imgUrl: "",
           teacher: "池芝标",
           time: "2021-1",
+          classNumber: 10004
         },
         {
           title: "工程实践",
           imgUrl: "",
           teacher: "池芝标",
           time: "2021-1",
+          classNumber: 10003
         },
         {
           title: "工程实践",
           imgUrl: "",
           teacher: "池芝标",
           time: "2021-1",
+          classNumber: 10002
         },
       ],
     };
@@ -79,7 +87,23 @@ export default {
     sign() {
       this.$router.push("/sign");
     },
+    addClass(){
+      this.$router.push("/addClass")
+    },
+
   },
+  mounted: function (){
+
+    this.classes.push({
+      title: this.$route.query.className,
+      imgUrl:  "",
+      teacher:  this.$route.query.teacherName,
+      time: this.$route.query.semester,
+      classNumber: this.$route.query.classNumber
+    });
+    console.log(this.classes);
+
+  }
 };
 </script>
 
