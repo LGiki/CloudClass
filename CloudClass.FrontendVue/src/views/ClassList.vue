@@ -15,35 +15,58 @@
             v-text="classInfo.teacher + classInfo.time"
           ></v-card-subtitle>
           <v-card-actions>
-            <v-btn class="ml-1 mt-1 mb-1 elevation-0" small>
-              <v-icon left dark color="red darken-2">mdi-account-circle</v-icon>
-              成员
-            </v-btn>
-            <v-btn class="ml-1 mt-1 mb-1 elevation-0" small>
-              <v-icon left dark color="orange darken-2"
-                >mdi-clipboard-text-outline</v-icon
-              >
-              统计
-            </v-btn>
-            <v-btn class="ml-1 mt-1 mb-1 elevation-0" small @click="sign">
-              <v-icon left dark color="green darken-2">mdi-check-circle</v-icon>
-              签到
-            </v-btn>
+            <div style="display: flex; flex-direction: row; flex-wrap: wrap">
+              <v-btn class="ml-1 mt-1 mb-1 elevation-0" small>
+                <v-icon left dark color="red darken-2"
+                  >mdi-account-circle
+                </v-icon>
+                成员
+              </v-btn>
+              <v-btn class="ml-1 mt-1 mb-1 elevation-0" small>
+                <v-icon left dark color="orange darken-2"
+                  >mdi-clipboard-text-outline
+                </v-icon>
+                统计
+              </v-btn>
+              <v-btn class="ml-1 mt-1 mb-1 elevation-0" small @click="sign">
+                <v-icon left dark color="green darken-2"
+                  >mdi-check-circle
+                </v-icon>
+                签到
+              </v-btn>
+            </div>
           </v-card-actions>
         </div>
-        <v-avatar class="ma-3" size="125" tile>
-          <v-img
-            max-width="120px"
-            max-height="120px"
-            :src="
-              classInfo.imgUrl && classInfo.imgUrl !== ''
-                ? classInfo.imgUrl
-                : classDefaultAvatar
-            "
-          ></v-img>
-        </v-avatar>
+        <div style="display: flex; align-items: center">
+          <v-avatar class="ma-3" size="125" tile>
+            <v-img
+              class="class-image"
+              max-width="120px"
+              max-height="120px"
+              :src="
+                classInfo.imgUrl && classInfo.imgUrl !== ''
+                  ? classInfo.imgUrl
+                  : classDefaultAvatar
+              "
+            ></v-img>
+          </v-avatar>
+        </div>
       </div>
     </v-card>
+    <div style="width: 100%; display: flex; justify-content: center">
+      <v-btn
+        elevation="6"
+        fab
+        color="primary"
+        medium
+        bottom
+        fixed
+        class="mr-4"
+        @click="addClass"
+      >
+        <v-icon dark> mdi-plus</v-icon>
+      </v-btn>
+    </div>
   </v-container>
 </template>
 
@@ -59,18 +82,21 @@ export default {
           imgUrl: "",
           teacher: "池芝标",
           time: "2021-1",
+          classNumber: 10004,
         },
         {
           title: "工程实践",
           imgUrl: "",
           teacher: "池芝标",
           time: "2021-1",
+          classNumber: 10003,
         },
         {
           title: "工程实践",
           imgUrl: "",
           teacher: "池芝标",
           time: "2021-1",
+          classNumber: 10002,
         },
       ],
     };
@@ -79,6 +105,19 @@ export default {
     sign() {
       this.$router.push("/sign");
     },
+    addClass() {
+      this.$router.push("/addClass");
+    },
+  },
+  mounted: function () {
+    this.classes.push({
+      title: this.$route.query.className,
+      imgUrl: "",
+      teacher: this.$route.query.teacherName,
+      time: this.$route.query.semester,
+      classNumber: this.$route.query.classNumber,
+    });
+    console.log(this.classes);
   },
 };
 </script>
