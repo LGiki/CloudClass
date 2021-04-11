@@ -19,14 +19,16 @@
     <div class="d-flex justify-end">
       <v-btn class="ma-2" elevation="0" small>忘记密码？</v-btn>
       <v-btn class="ma-2" elevation="0" small @click="$router.push('/register')"
-        >注册</v-btn
-      >
+        >注册
+      </v-btn>
     </div>
     <v-btn class="ma-2" color="primary" block @click="login">登录</v-btn>
   </v-container>
 </template>
 
 <script>
+// import { login } from "@/api/user";
+
 export default {
   data() {
     return {
@@ -39,7 +41,13 @@ export default {
     };
   },
   methods: {
-    login() {
+    async login() {
+      // let loginResponse = await login(this.username.trim(), this.password);
+      // if (loginResponse.status === 200 && loginResponse.data.code === '200') {
+      //   this.$router.push("/class");
+      // } else {
+      //   console.log("登录失败");
+      // }
       this.$router.push("/class");
     },
   },

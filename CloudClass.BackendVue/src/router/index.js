@@ -54,6 +54,18 @@ export const constantRoutes = [
   },
 
   {
+    path: '/403',
+    component: () => import('@/views/403'),
+    hidden: true
+  },
+
+  {
+    path: '/401',
+    component: () => import('@/views/401'),
+    hidden: true
+  },
+
+  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
@@ -68,6 +80,7 @@ export const constantRoutes = [
   {
     path: '/user',
     component: Layout,
+    redirect: '/user/index',
     meta: { title: '用户管理', icon: 'peoples' },
     children: [
       {
@@ -92,6 +105,7 @@ export const constantRoutes = [
   {
     path: '/data-dict',
     component: Layout,
+    redirect: '/data-dict/index',
     meta: { title: '数据字典', icon: 'dict' },
     children: [
       {
@@ -105,10 +119,35 @@ export const constantRoutes = [
       {
         path: 'edit/:id',
         name: 'Data Dict List',
-        component: () => import('@/views/data-dict/list'),
+        component: () => import('@/views/data-dict/edit'),
         hidden: true,
         meta: {
           title: '编辑数据字典'
+        }
+      }
+    ]
+  },
+  {
+    path: '/system',
+    component: Layout,
+    // redirect: '/system/menu',
+    name: 'system-configure',
+    meta: { title: '系统设置', icon: 'setting' },
+    children: [
+      {
+        path: 'menu',
+        name: 'Menu',
+        component: () => import('@/views/system/menu'),
+        meta: {
+          title: '菜单管理'
+        }
+      },
+      {
+        path: 'role',
+        name: 'Role',
+        component: () => import('@/views/system/role'),
+        meta: {
+          title: '角色管理'
         }
       }
     ]

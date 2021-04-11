@@ -55,6 +55,16 @@ export default {
         to: "/",
       },
       {
+        icon: "mdi-account",
+        text: "用户管理",
+        to: "/user-list",
+      },
+      {
+        icon: "mdi-information",
+        text: "数据字典",
+        to: "/data-dict",
+      },
+      {
         icon: "mdi-information",
         text: "关于",
         to: "/about",

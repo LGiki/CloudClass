@@ -15,7 +15,7 @@
         <i class="el-icon-close"/>&nbsp;取消搜索
       </el-button>
       <el-button type="danger">
-        <i class="el-icon-plus"/>&nbsp;新建用户
+        <i class="el-icon-plus"/>&nbsp;新建数据字典
       </el-button>
     </div>
     <el-table
@@ -109,7 +109,7 @@ export default {
       return sort === `+${key}` ? 'ascending' : 'descending'
     },
     handleUpdate(row) {
-      this.$router.push('/user/edit/' + row.id)
+      this.$router.push('/data-dict/edit/' + row.id)
     },
     handleDelete(row, index) {
       this.$alert('您确定要删除该数据字典吗？', '删除确认', {

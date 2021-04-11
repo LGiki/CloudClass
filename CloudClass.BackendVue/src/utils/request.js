@@ -24,7 +24,7 @@ service.interceptors.response.use(
   response => {
     if (response.status === 403) {
       Message.error('您无权访问当前页面')
-      this.$router.replace({ path: '/login' })
+      this.$router.back()
     }
     return response
   },
@@ -34,6 +34,7 @@ service.interceptors.response.use(
       switch (error.response.status) {
         case 401:
           Message.error('您未登录或登录已过期，请登录后重试')
+          this.$router.replace({ path: '/login' })
           // TODO: remove token from localstorage
       }
       return Promise.reject(error)
