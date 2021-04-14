@@ -16,7 +16,11 @@
           ></v-card-subtitle>
           <v-card-actions>
             <div style="display: flex; flex-direction: row; flex-wrap: wrap">
-              <v-btn class="ml-1 mt-1 mb-1 elevation-0" small>
+              <v-btn
+                class="ml-1 mt-1 mb-1 elevation-0"
+                small
+                @click="goClassDetail"
+              >
                 <v-icon left dark color="red darken-2"
                   >mdi-account-circle
                 </v-icon>
@@ -67,6 +71,22 @@
         <v-icon dark> mdi-plus</v-icon>
       </v-btn>
     </div>
+    <v-overlay :absolute="absolute" :value="overlay" opacity="0.7">
+      <div class="d-flex flex-no-wrap flex-column">
+        <v-btn
+          elevation="2"
+          x-large
+          class="mb-10"
+          color="success"
+          @click="enterByClassCode"
+        >
+          通过班课号加入
+        </v-btn>
+        <v-btn x-large elevation="2" color="success" @click="enterByQrCode">
+          通过二维码加入
+        </v-btn>
+      </div>
+    </v-overlay>
   </v-container>
 </template>
 
@@ -75,6 +95,8 @@ export default {
   name: "lookup_classes",
   data() {
     return {
+      absolute: true,
+      overlay: false,
       classDefaultAvatar: require("../assets/images/class_default_avatar.png"),
       classes: [
         {
@@ -106,18 +128,50 @@ export default {
       this.$router.push("/sign");
     },
     addClass() {
-      this.$router.push("/addClass");
+      if (this.GLOBAL.user == "student") {
+        this.overlay = !this.overlay;
+      } else {
+        this.$router.push("/addClass");
+      }
+    },
+    enterByClassCode() {
+      this.$router.push({
+        path: "/enterClass",
+        query: {
+          type: "classCode",
+        },
+      });
+    },
+    enterByQrCode() {
+      this.$router.push({
+        path: "/enterClass",
+        query: {
+          type: "qrCode",
+        },
+      });
+    },
+    goClassDetail() {
+      this.$router.push({
+        path: "/classDetail",
+        query: {
+          classCode: 10001,
+        },
+      });
     },
   },
   mounted: function () {
-    this.classes.push({
-      title: this.$route.query.className,
-      imgUrl: "",
-      teacher: this.$route.query.teacherName,
-      time: this.$route.query.semester,
-      classNumber: this.$route.query.classNumber,
-    });
-    console.log(this.classes);
+    // console.log(this.$route.query.className);
+    if (this.$route.query.className != null) {
+      this.classes.push({
+        title: this.$route.query.className,
+        imgUrl: "",
+        teacher: this.$route.query.teacherName,
+        time: this.$route.query.semester,
+        classNumber: this.$route.query.classNumber,
+      });
+    }
+
+    // console.log(this.classes);
   },
 };
 </script>

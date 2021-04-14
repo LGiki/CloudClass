@@ -7,14 +7,17 @@ const routes = [
   {
     path: "/",
     meta: {
-      title: "主页",
+      title: "登录",
+      stuTitle: "登录",
     },
-    component: () => import("../views/Home"),
+    // component: () => import("../views/Home"),
+    component: () => import("../views/Login"),
   },
   {
     path: "/login",
     meta: {
       title: "登录",
+      stuTitle: "登录",
     },
     component: () => import("../views/Login"),
   },
@@ -22,6 +25,7 @@ const routes = [
     path: "/about",
     meta: {
       title: "关于",
+      stuTitle: "关于",
     },
     component: () => import("../views/About"),
   },
@@ -29,6 +33,7 @@ const routes = [
     path: "/register",
     meta: {
       title: "注册",
+      stuTitle: "注册",
     },
     component: () => import("../views/Register"),
   },
@@ -36,22 +41,41 @@ const routes = [
     path: "/class",
     meta: {
       title: "班课管理",
+      stuTitle: "我加入的班课",
     },
     component: () => import("../views/ClassList"),
   },
   {
     path: "/sign",
     meta: {
-      title: "签到",
+      title: "发起签到",
+      stuTitle: "签到",
     },
     component: () => import("../views/Sign"),
   },
   {
     path: "/addClass",
     meta: {
-      title: "添加班课",
+      title: "创建班课",
+      stuTitle: "创建班课",
     },
-    component: () => import("../views/AddClass")
+    component: () => import("../views/AddClass"),
+  },
+  {
+    path: "/enterClass",
+    meta: {
+      title: "加入班课",
+      stuTitle: "加入班课",
+    },
+    component: () => import("../views/EnterClass"),
+  },
+  {
+    path: "/classDetail",
+    meta: {
+      title: "班课详情",
+      stuTitle: "班级详情",
+    },
+    component: () => import("../views/ClassDetail"),
   },
 ];
 
