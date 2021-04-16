@@ -19,7 +19,7 @@
               <v-btn
                 class="ml-1 mt-1 mb-1 elevation-0"
                 small
-                @click="goClassDetail"
+                @click="goClassDetail(classInfo.classNumber)"
               >
                 <v-icon left dark color="red darken-2"
                   >mdi-account-circle
@@ -80,10 +80,21 @@
           color="success"
           @click="enterByClassCode"
         >
+          <v-icon dark left> mdi-form-textbox-password</v-icon>
           通过班课号加入
         </v-btn>
-        <v-btn x-large elevation="2" color="success" @click="enterByQrCode">
+        <v-btn
+          x-large
+          class="mb-10"
+          elevation="2"
+          color="success"
+          @click="enterByQrCode"
+        >
+          <v-icon dark left> mdi-qrcode</v-icon>
           通过二维码加入
+        </v-btn>
+        <v-btn x-large elevation="2" color="grey" @click="overlay = false">
+          取消
         </v-btn>
       </div>
     </v-overlay>
@@ -91,10 +102,14 @@
 </template>
 
 <script>
+import Vue from "vue";
+
 export default {
   name: "lookup_classes",
   data() {
     return {
+      cordova: Vue.cordova,
+      window: window,
       absolute: true,
       overlay: false,
       classDefaultAvatar: require("../assets/images/class_default_avatar.png"),
@@ -143,19 +158,28 @@ export default {
       });
     },
     enterByQrCode() {
-      this.$router.push({
-        path: "/enterClass",
-        query: {
-          type: "qrCode",
-        },
-      });
+      console.log("================================");
+      // console.log(JSON.stringify(this.window.cordova));
+      // eslint-disable-next-line no-undef
+      console.log(
+        "JSON.stringify(this.cordova.plugins) ->",
+        JSON.stringify(this.cordova.plugins)
+      );
+      // console.log("navigator.QRScanner ->", navigator.QRScanner);
+      // console.log("JSON.stringify(navigator) ->", JSON.stringify(navigator));
+      // console.log(
+      //   "this.window ->",
+      //   this.window.QRScanner.scan
+      // );
+      // console.log(
+      //   "JSON.stringify(this.window.cordova.plugins) ->",
+      //   JSON.stringify(this.window.cordova.plugins)
+      // );
+      console.log("================================");
     },
-    goClassDetail() {
+    goClassDetail(classId) {
       this.$router.push({
-        path: "/classDetail",
-        query: {
-          classCode: 10001,
-        },
+        path: "/classDetail/" + classId,
       });
     },
   },

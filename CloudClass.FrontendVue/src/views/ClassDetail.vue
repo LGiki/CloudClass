@@ -6,7 +6,7 @@
           <v-card-title class="headline" v-text="classes.title"></v-card-title>
 
           <v-card-subtitle class="mt-0">
-            班级号: {{ classes.classNumber }}
+            班级号: {{ this.$route.params.id }}
             <br />
             任课教师: {{ classes.teacher }}
             <br />
@@ -104,7 +104,7 @@ export default {
   methods: {
     createQrCode() {
       new QRCode(this.$refs.qrCodeUrl, {
-        text: "10001",
+        text: this.$route.params.id,
         width: 100,
         height: 100,
         colorDark: "#00aa00",
