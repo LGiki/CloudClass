@@ -29,12 +29,15 @@
 <script>
 // import { login } from "@/api/user";
 
+import axios from "axios";
+
 export default {
   data() {
     return {
       username: "",
       password: "",
       showPassword: false,
+      isSuccess: false,
       rules: {
         required: (value) => !!value || "必填.",
       },
@@ -42,6 +45,22 @@ export default {
   },
   methods: {
     async login() {
+      axios
+        .post("", {
+          username: this.username,
+          password: this.password,
+        })
+        .then(function (res) {
+          this.isSuccess = res.data.isSuccess;
+          //判断登录成功，设置用户名
+          if (this.isSucceed) {
+            this.GLOBAL.username = this.username;
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
       // let loginResponse = await login(this.username.trim(), this.password);
       // if (loginResponse.status === 200 && loginResponse.data.code === '200') {
       //   this.$router.push("/class");

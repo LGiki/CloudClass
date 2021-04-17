@@ -7,7 +7,12 @@
       :clipped-left="$vuetify.breakpoint.lgAndUp"
     >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>到云 - {{ this.$route.meta.title }}</v-toolbar-title>
+      <v-toolbar-title v-if="this.GLOBAL.user == 'teacher'"
+        >到云 - {{ this.$route.meta.title }}</v-toolbar-title
+      >
+      <v-toolbar-title v-if="this.GLOBAL.user == 'student'"
+        >到云 - {{ this.$route.meta.stuTitle }}</v-toolbar-title
+      >
       <v-spacer />
       <v-btn icon @click="toggleDarkMode">
         <v-icon> {{ darkModeIcon }}</v-icon>
