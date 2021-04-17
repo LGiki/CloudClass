@@ -102,13 +102,10 @@
 </template>
 
 <script>
-import Vue from "vue";
-
 export default {
   name: "lookup_classes",
   data() {
     return {
-      cordova: Vue.cordova,
       window: window,
       absolute: true,
       overlay: false,
@@ -158,24 +155,37 @@ export default {
       });
     },
     enterByQrCode() {
-      console.log("================================");
-      // console.log(JSON.stringify(this.window.cordova));
-      // eslint-disable-next-line no-undef
-      console.log(
-        "JSON.stringify(this.cordova.plugins) ->",
-        JSON.stringify(this.cordova.plugins)
+      this.window.cordova.plugins.barcodeScanner.scan(
+        function (result) {
+          alert(
+            "We got a barcode\n" +
+              "Result: " +
+              result.text +
+              "\n" +
+              "Format: " +
+              result.format +
+              "\n" +
+              "Cancelled: " +
+              result.cancelled
+          );
+        },
+        function (error) {
+          alert("Scanning failed: " + error);
+        },
+        {
+          preferFrontCamera: false, // iOS and Android
+          showFlipCameraButton: true, // iOS and Android
+          showTorchButton: true, // iOS and Android
+          torchOn: false, // Android, launch with the torch switched on (if available)
+          saveHistory: true, // Android, save scan history (default false)
+          prompt: "请将二维码放置于扫描区域内", // Android
+          resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+          formats: "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
+          orientation: "portrait", // Android only (portrait|landscape), default unset so it rotates with the device
+          disableAnimations: true, // iOS
+          disableSuccessBeep: true, // iOS and Android
+        }
       );
-      // console.log("navigator.QRScanner ->", navigator.QRScanner);
-      // console.log("JSON.stringify(navigator) ->", JSON.stringify(navigator));
-      // console.log(
-      //   "this.window ->",
-      //   this.window.QRScanner.scan
-      // );
-      // console.log(
-      //   "JSON.stringify(this.window.cordova.plugins) ->",
-      //   JSON.stringify(this.window.cordova.plugins)
-      // );
-      console.log("================================");
     },
     goClassDetail(classId) {
       this.$router.push({
