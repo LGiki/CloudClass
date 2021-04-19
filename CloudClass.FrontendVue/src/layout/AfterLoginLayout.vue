@@ -1,13 +1,18 @@
 <template>
   <v-app>
     <v-app-bar
-      color="blue darken-3"
-      dark
-      app
-      :clipped-left="$vuetify.breakpoint.lgAndUp"
+        color="blue darken-3"
+        dark
+        app
+        :clipped-left="$vuetify.breakpoint.lgAndUp"
     >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>到云</v-toolbar-title>
+      <!--      <v-toolbar-title v-if="this.GLOBAL.user == 'teacher'"-->
+      <!--        >到云 - {{ this.$route.meta.title }}</v-toolbar-title-->
+      <!--      >-->
+      <v-toolbar-title
+      >到云 - {{ this.$route.meta.stuTitle }}</v-toolbar-title
+      >
       <v-spacer />
       <v-btn icon @click="toggleDarkMode">
         <v-icon> {{ darkModeIcon }}</v-icon>
@@ -15,12 +20,12 @@
     </v-app-bar>
 
     <v-navigation-drawer
-      v-model="drawer"
-      app
-      :clipped="$vuetify.breakpoint.lgAndUp"
+        v-model="drawer"
+        app
+        :clipped="$vuetify.breakpoint.lgAndUp"
     >
       <v-list nav dense>
-        <v-list-item-group v-model="item" color="primary">
+        <v-list-item-group v-model="itemIndex" color="primary">
           <v-list-item v-for="(item, i) in items" :key="i" :to="item.to">
             <v-list-item-icon>
               <v-icon v-text="item.icon"></v-icon>
@@ -33,9 +38,7 @@
       </v-list>
     </v-navigation-drawer>
     <v-main>
-      <v-container fluid>
-        <RouterView />
-      </v-container>
+      <RouterView />
     </v-main>
   </v-app>
 </template>
@@ -44,25 +47,20 @@
 export default {
   name: "App",
   components: {},
+  mounted() {
+    if (document.body.clientWidth > 1264) {
+      this.drawer = true;
+    }
+  },
   data: () => ({
     drawer: false,
     darkModeIcon: "mdi-brightness-4",
-    item: 0,
+    itemIndex: 0,
     items: [
       {
-        icon: "mdi-home",
-        text: "主页",
-        to: "/",
-      },
-      {
-        icon: "mdi-account",
-        text: "用户管理",
-        to: "/user-list",
-      },
-      {
-        icon: "mdi-information",
-        text: "数据字典",
-        to: "/data-dict",
+        icon: "mdi-google-classroom",
+        text: "班课列表",
+        to: "/class",
       },
       {
         icon: "mdi-information",
@@ -75,8 +73,8 @@ export default {
     toggleDarkMode: function () {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
       this.darkModeIcon = this.$vuetify.theme.dark
-        ? "mdi-brightness-7"
-        : "mdi-brightness-4";
+          ? "mdi-brightness-7"
+          : "mdi-brightness-4";
     },
   },
 };

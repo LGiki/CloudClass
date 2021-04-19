@@ -13,7 +13,6 @@
       :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
       :rules="[rules.required, rules.min]"
       :type="showPassword ? 'text' : 'password'"
-      name="input-10-1"
       label="密码"
       hint="至少8个字符"
       counter
@@ -26,7 +25,6 @@
       :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
       :rules="[rules.required, rules.min]"
       :type="showPassword ? 'text' : 'password'"
-      name="input-10-1"
       label="重复密码"
       hint="至少8个字符"
       counter
@@ -34,7 +32,7 @@
       @click:append="showPassword = !showPassword"
     ></v-text-field>
     <v-text-field
-      :rules="[rules.required]"
+      :rules="[rules.required, rules.phone]"
       prepend-icon="mdi-cellphone"
       v-model="phone"
       label="手机号"
@@ -47,24 +45,27 @@
         v-model="verifyCode"
         label="验证码"
         outlined
+        type="number"
       ></v-text-field>
       <v-btn class="ma-2" color="primary" large>获取验证码</v-btn>
     </div>
 
     <div class="d-flex">
-      <span> 注册身份： </span>
-      <v-checkbox
-        v-model="selected"
-        label="学生"
-        input-value="!selectedType"
-        value="student"
-      ></v-checkbox>
-      <v-checkbox
-        v-model="selected"
-        label="教师"
-        value="teacher"
-        input-value="selectedType"
-      ></v-checkbox>
+      <div class="d-flex align-center">
+        <v-icon style="margin-right: 9px">mdi-card-account-details</v-icon
+        ><span
+          :style="`color:${
+            $vuetify.theme.dark
+              ? 'rgba(255, 255, 255, 0.7)'
+              : 'rgba(0, 0, 0, .6)'
+          };`"
+          >注册身份：</span
+        >
+      </div>
+      <v-radio-group v-model="role" row>
+        <v-radio label="学生" value="student"></v-radio>
+        <v-radio label="教师" value="teacher"></v-radio>
+      </v-radio-group>
     </div>
 
     <v-btn color="primary" block @click="register">注册</v-btn>
@@ -95,14 +96,14 @@ export default {
       phone: "",
       verifyCode: "",
       showPassword: false,
-      selected: "student",
-      selectedType: false,
+      role: "student",
       snackbar: false,
       alertMessage: "",
       isRegisterSuccess: false,
       rules: {
         required: (value) => !!value || "必填",
         min: (v) => v.length >= 8 || "至少8个字符",
+        phone: (v) => /^[1][3,4,5,7,8,9][0-9]{9}$/.test(v) || "手机号码格式不正确",
       },
     };
   },
@@ -129,7 +130,7 @@ export default {
 
       service
         .post("", {
-          username: this.username,
+          username: this.username.trim(),
           password: this.password,
           phone: this.phone,
           verifyCode: this.verifyCode,

@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <h1 style="font-size: 3em; color: #1976d2" class="d-flex justify-center ma-5">到云APP</h1>
     <v-text-field
       prepend-icon="mdi-account"
       v-model="username"
@@ -18,10 +19,10 @@
       @click:append="showPassword = !showPassword"
       v-if="messageLogin === false"
     ></v-text-field>
-
     <v-text-field
       prepend-icon="mdi-account"
       v-model="username"
+      :rules="[rules.required, rules.phone]"
       label="手机号"
       outlined
       v-if="messageLogin === true"
@@ -88,8 +89,7 @@
 </template>
 
 <script>
-// import { login } from "@/api/user";
-import service from "@/utils/request";
+import { loginByUsername } from "../api/user";
 
 export default {
   data() {
@@ -104,6 +104,8 @@ export default {
       snackbar: false,
       rules: {
         required: (value) => !!value || "必填.",
+        phone: (v) =>
+          /^[1][3,4,5,7,8,9][0-9]{9}$/.test(v) || "手机号码格式不正确",
       },
     };
   },
@@ -112,25 +114,27 @@ export default {
       if (this.messageLogin) {
         this.loginByMessage();
       } else {
-        service
-          .post("", {
-            username: this.username,
-            password: this.password,
-          })
-          .then(function (res) {
-            this.isSuccess = res.data.isSuccess;
-            //判断登录成功，设置用户名
-            if (this.isSucceed) {
-              this.GLOBAL.username = this.username;
-              this.$router.push("/class");
-            } else {
-              this.alertMessage = "用户名或密码有误";
-              this.snackbar = true;
-            }
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        this.$router.push("/class");
+        let result = await loginByUsername(this.username.trim(), this.password)
+        console.log(result);
+          // .post("", {
+          //   username: this.username.trim(),
+          //   password: this.password,
+          // })
+          // .then(function (res) {
+          //   this.isSuccess = res.data.isSuccess;
+          //   //判断登录成功，设置用户名
+          //   if (this.isSucceed) {
+          //     this.GLOBAL.username = this.username;
+          //     this.$router.push("/class");
+          //   } else {
+          //     this.alertMessage = "用户名或密码有误";
+          //     this.snackbar = true;
+          //   }
+          // })
+          // .catch(function (error) {
+          //   console.log(error);
+          // });
 
         // let loginResponse = await login(this.username.trim(), this.password);
         // if (loginResponse.status === 200 && loginResponse.data.code === '200') {
@@ -142,39 +146,41 @@ export default {
     },
 
     async loginByMessage() {
-      if (this.verifyCode === "") {
-        this.alertMessage = "请先获取验证码";
-        this.snackbar = true;
-        return;
-      }
-      service
-        .post("", {
-          username: this.username,
-          verifyCode: this.verifyCode,
-        })
-        .then(function (res) {
-          this.isSuccess = res.data.isSuccess;
-          //判断登录成功，设置用户名
-          if (this.isSucceed) {
-            this.GLOBAL.username = this.username;
-            this.$router.push("/class");
-          } else {
-            this.snackbar = true;
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-
-      // let loginResponse = await login(this.username.trim(), this.password);
-      // if (loginResponse.status === 200 && loginResponse.data.code === '200') {
-      //   this.$router.push("/class");
-      // } else {
-      //   console.log("登录失败");
+      // if (this.verifyCode === "") {
+      //   this.alertMessage = "请先获取验证码";
+      //   this.snackbar = true;
+      //   return;
       // }
+      // service
+      //   .post("", {
+      //     username: this.username.trim(),
+      //     verifyCode: this.verifyCode,
+      //   })
+      //   .then(function (res) {
+      //     this.isSuccess = res.data.isSuccess;
+      //     //判断登录成功，设置用户名
+      //     if (this.isSucceed) {
+      //       this.GLOBAL.username = this.username;
+      //       this.$router.push("/class");
+      //     } else {
+      //       this.snackbar = true;
+      //     }
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
+      //
+      // // let loginResponse = await login(this.username.trim(), this.password);
+      // // if (loginResponse.status === 200 && loginResponse.data.code === '200') {
+      // //   this.$router.push("/class");
+      // // } else {
+      // //   console.log("登录失败");
+      // // }
     },
 
-    getVerifyCode() {},
+    getVerifyCode() {
+
+    },
   },
 };
 </script>

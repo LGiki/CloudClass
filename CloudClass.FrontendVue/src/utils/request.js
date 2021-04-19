@@ -2,7 +2,7 @@ import axios from "axios";
 import store from "@/store";
 
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  baseURL: "http://8.140.0.237:8080/api/CloudClass", // url = base url + request url
   timeout: 5000,
 });
 
