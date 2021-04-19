@@ -139,6 +139,7 @@ export default {
     sign() {
       this.$router.push("/sign");
     },
+    //创建班课
     addClass() {
       if (this.GLOBAL.user == "student") {
         this.overlay = !this.overlay;
@@ -189,7 +190,10 @@ export default {
     },
     goClassDetail(classId) {
       this.$router.push({
-        path: "/classDetail/" + classId,
+        path: "/classDetail/",
+        query: {
+          id: classId,
+        },
       });
     },
   },
