@@ -1,11 +1,13 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import AfterLoginLayout from "../layout/AfterLoginLayout";
+import store from "../store/index"
 
 Vue.use(VueRouter);
 
 const routes = [
     {
+        name: 'Login',
         path: "/",
         meta: {
             title: "登录",
@@ -15,6 +17,7 @@ const routes = [
         component: () => import("../views/Login"),
     },
     {
+        name: 'Login',
         path: "/login",
         meta: {
             title: "登录",
@@ -23,6 +26,7 @@ const routes = [
         component: () => import("../views/Login"),
     },
     {
+        name: 'Register',
         path: "/register",
         meta: {
             title: "注册",
@@ -32,13 +36,10 @@ const routes = [
     },
     {
         path: "/",
-        meta: {
-            title: "关于",
-            stuTitle: "关于",
-        },
         component: AfterLoginLayout,
         children: [
             {
+                name: 'About',
                 path: "/about",
                 meta: {
                     title: "关于",
@@ -47,6 +48,7 @@ const routes = [
                 component: () => import("../views/About"),
             },
             {
+                name: 'Class',
                 path: "/class",
                 meta: {
                     title: "班课管理",
@@ -55,6 +57,7 @@ const routes = [
                 component: () => import("../views/ClassList"),
             },
             {
+                name: 'Sign',
                 path: "/sign",
                 meta: {
                     title: "发起签到",
@@ -63,6 +66,7 @@ const routes = [
                 component: () => import("../views/Sign"),
             },
             {
+                name: 'AddClass',
                 path: "/addClass",
                 meta: {
                     title: "创建班课",
@@ -71,6 +75,7 @@ const routes = [
                 component: () => import("../views/AddClass"),
             },
             {
+                name: 'EnterClass',
                 path: "/enterClass",
                 meta: {
                     title: "加入班课",
@@ -79,6 +84,7 @@ const routes = [
                 component: () => import("../views/EnterClass"),
             },
             {
+                name: 'ClassDetail',
                 path: "/classDetail",
                 meta: {
                     title: "班课详情",
@@ -96,8 +102,12 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    document.title = to.meta.title;
-    next();
+    if (to.name !== 'Login' && to.name !== 'Register' && !store.state.token.token) {
+        next({ name: 'Login' });
+    }else{
+        document.title = to.meta.title;
+        next();
+    }
 });
 
 export default router;

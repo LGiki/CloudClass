@@ -134,23 +134,13 @@ export default {
           this.snackbar = true;
           return;
         }
-
         let result = await loginByUsername(this.username.trim(), this.password);
-        console.log(result.data.msg);
-
-        switch (parseInt(result.data.code)) {
-          case 200:
+        switch (result.data.code) {
+          case "200":
             this.alertMessage = "登录成功";
             this.snackbar = true;
+            this.$store.commit("token/SET_TOKEN", result.data.token);
             this.$router.push("/class");
-            break;
-          case 404:
-            this.alertMessage = result.data.msg;
-            this.snackbar = true;
-            break;
-          case 500:
-            this.alertMessage = result.data.msg;
-            this.snackbar = true;
             break;
           default:
             this.alertMessage = result.data.msg;

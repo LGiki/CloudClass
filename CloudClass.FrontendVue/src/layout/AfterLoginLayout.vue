@@ -32,6 +32,14 @@
               <v-list-item-title v-text="item.text"></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          <v-list-item @click="logout">
+            <v-list-item-icon>
+              <v-icon>mdi-information</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>退出</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -65,11 +73,6 @@ export default {
         text: "关于",
         to: "/about",
       },
-      {
-        icon: "mdi-information",
-        text: "退出",
-        to: "/login",
-      },
     ],
   }),
   methods: {
@@ -79,6 +82,10 @@ export default {
         ? "mdi-brightness-7"
         : "mdi-brightness-4";
     },
+    logout() {
+      this.$router.replace({ path: "/login" });
+      this.$store.commit("token/REMOVE_TOKEN");
+    }
   },
 };
 </script>
