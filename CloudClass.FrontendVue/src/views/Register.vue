@@ -57,8 +57,13 @@
           outlined
           type="number"
         ></v-text-field>
-        <v-btn class="ma-2" color="primary" large @click="getVerifyCode"
-          >获取验证码</v-btn
+        <v-btn
+          class="ma-2"
+          color="primary"
+          large
+          @click="getVerifyCode"
+          :disabled="disabled"
+          >{{ getVerifyCodeText }}</v-btn
         >
       </div>
 
@@ -109,12 +114,15 @@ export default {
       rePassword: "",
       phone: "",
       verifyCode: "",
+      getVerifyCodeText: "获取验证码",
       showPassword: false,
       role: "student",
       snackbar: false,
       alertMessage: "",
       isTeacher: "0",
       isRegisterSuccess: false,
+      disabled: false,
+      time: 60,
       rules: {
         required: (value) => !!value || "必填",
         min: (v) => v.length >= 8 || "至少8个字符",
@@ -163,14 +171,6 @@ export default {
           this.snackbar = true;
           this.$router.push("/login");
           break;
-        case 404:
-          this.alertMessage = result.data.msg;
-          this.snackbar = true;
-          break;
-        case 500:
-          this.alertMessage = result.data.msg;
-          this.snackbar = true;
-          break;
         default:
           this.alertMessage = result.data.msg;
           this.snackbar = true;
@@ -178,23 +178,35 @@ export default {
     },
     async getVerifyCode() {
       let result = await sendSMS(this.phone);
+
+      if (result.data.code === null) {
+        this.alertMessage = "网络连接失败";
+        this.snackbar = true;
+        return;
+      }
       switch (parseInt(result.data.code)) {
         case 200:
           this.alertMessage = "已发送验证码";
           this.snackbar = true;
-
-          break;
-        case 404:
-          this.alertMessage = "网络连接失败";
-          this.snackbar = true;
-          break;
-        case 500:
-          this.alertMessage = "服务器错误";
-          this.snackbar = true;
+          this.disabled = true;
+          this.timer();
           break;
         default:
           this.alertMessage = result.data.msg;
           this.snackbar = true;
+      }
+    },
+    //倒计时60s
+    timer() {
+      if (this.time > 0) {
+        this.disabled = true;
+        this.time--;
+        this.getVerifyCodeText = this.time + "秒";
+        setTimeout(this.timer, 1000);
+      } else {
+        this.time = 0;
+        this.disabled = false;
+        this.getVerifyCodeText = "获取验证码";
       }
     },
   },
