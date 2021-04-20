@@ -135,21 +135,27 @@ export default {
           return;
         }
 
-        this.$router.push("/class");
         let result = await loginByUsername(this.username.trim(), this.password);
-        console.log(result);
+        console.log(result.data.msg);
 
-        // .then(function (res) {
-        //   this.isSuccess = res.data.isSuccess;
-        //   //判断登录成功，设置用户名
-        //   if (this.isSucceed) {
-        //     this.GLOBAL.username = this.username;
-        //     this.$router.push("/class");
-        //   } else {
-        //     this.alertMessage = "用户名或密码有误";
-        //     this.snackbar = true;
-        //   }
-        // })
+        switch (parseInt(result.data.code)) {
+          case 200:
+            this.alertMessage = "登录成功";
+            this.snackbar = true;
+            this.$router.push("/class");
+            break;
+          case 404:
+            this.alertMessage = result.data.msg;
+            this.snackbar = true;
+            break;
+          case 500:
+            this.alertMessage = result.data.msg;
+            this.snackbar = true;
+            break;
+          default:
+            this.alertMessage = result.data.msg;
+            this.snackbar = true;
+        }
       }
     },
 

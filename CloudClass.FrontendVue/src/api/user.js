@@ -11,15 +11,15 @@ export function loginByUsername(username, password) {
   });
 }
 
-export function register(phone, username, password, isTeacher) {
+export function register(phone, username, password, is_teacher) {
   return request({
-    url: "/authentication/person",
+    url: "/person",
     method: "post",
     data: {
       phone: phone,
       username: username,
       password: password,
-      isTeacher: isTeacher,
+      is_teacher: is_teacher,
     },
   });
 }
@@ -29,7 +29,7 @@ export function sendSMS(phone) {
     url: "/Sms/send",
     method: "post",
     data: {
-      phone: phone
+      phone: phone,
     },
-  })
+  });
 }

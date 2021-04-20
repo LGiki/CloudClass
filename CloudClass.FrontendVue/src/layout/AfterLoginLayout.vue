@@ -1,18 +1,16 @@
 <template>
   <v-app>
     <v-app-bar
-        color="blue darken-3"
-        dark
-        app
-        :clipped-left="$vuetify.breakpoint.lgAndUp"
+      color="blue darken-3"
+      dark
+      app
+      :clipped-left="$vuetify.breakpoint.lgAndUp"
     >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <!--      <v-toolbar-title v-if="this.GLOBAL.user == 'teacher'"-->
       <!--        >到云 - {{ this.$route.meta.title }}</v-toolbar-title-->
       <!--      >-->
-      <v-toolbar-title
-      >到云 - {{ this.$route.meta.stuTitle }}</v-toolbar-title
-      >
+      <v-toolbar-title>到云 - {{ this.$route.meta.stuTitle }}</v-toolbar-title>
       <v-spacer />
       <v-btn icon @click="toggleDarkMode">
         <v-icon> {{ darkModeIcon }}</v-icon>
@@ -20,9 +18,9 @@
     </v-app-bar>
 
     <v-navigation-drawer
-        v-model="drawer"
-        app
-        :clipped="$vuetify.breakpoint.lgAndUp"
+      v-model="drawer"
+      app
+      :clipped="$vuetify.breakpoint.lgAndUp"
     >
       <v-list nav dense>
         <v-list-item-group v-model="itemIndex" color="primary">
@@ -67,14 +65,19 @@ export default {
         text: "关于",
         to: "/about",
       },
+      {
+        icon: "mdi-information",
+        text: "退出",
+        to: "/login",
+      },
     ],
   }),
   methods: {
     toggleDarkMode: function () {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
       this.darkModeIcon = this.$vuetify.theme.dark
-          ? "mdi-brightness-7"
-          : "mdi-brightness-4";
+        ? "mdi-brightness-7"
+        : "mdi-brightness-4";
     },
   },
 };
