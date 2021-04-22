@@ -103,7 +103,7 @@
 </template>
 
 <script>
-import { loginByUsername } from "../api/user";
+import { loginByUsername, sendSMS } from "../api/user";
 
 export default {
   data() {
@@ -127,7 +127,23 @@ export default {
   methods: {
     async login() {
       if (this.messageLogin) {
-        this.loginByMessage();
+        if (this.username === "" || this.verifyCode === "") {
+          this.alertMessage = "请输入手机号及验证码";
+          this.snackbar = true;
+          return;
+        }
+        let result = await this.loginByMessage(this.username, this.verifyCode);
+        switch (result.data.code) {
+          case "200":
+            this.alertMessage = "登录成功";
+            this.snackbar = true;
+            this.$store.commit("token/SET_TOKEN", result.data.token);
+            this.$router.push("/class");
+            break;
+          default:
+            this.alertMessage = result.data.msg;
+            this.snackbar = true;
+        }
       } else {
         if (this.username === "" || this.password === "") {
           this.alertMessage = "请输入用户名和密码";
@@ -149,39 +165,32 @@ export default {
       }
     },
 
-    async loginByMessage() {
+    async getVerifyCode() {
       if (this.phone === "") {
-        this.alertMessage = "请填写正确的手机号";
-        this.snackbar = true;
-        return;
-      } else if (this.verifyCode === "") {
-        this.alertMessage = "请先获取验证码";
+        this.alertMessage = "请填写正确手机号";
         this.snackbar = true;
         return;
       }
-      // let result = await loginByUsername(this.phone.trim(), this.verifyCode);
 
-      // service
-      //   .post("", {
-      //     username: this.username.trim(),
-      //     verifyCode: this.verifyCode,
-      //   })
-      //   .then(function (res) {
-      //     this.isSuccess = res.data.isSuccess;
-      //     //判断登录成功，设置用户名
-      //     if (this.isSucceed) {
-      //       this.GLOBAL.username = this.username;
-      //       this.$router.push("/class");
-      //     } else {
-      //       this.snackbar = true;
-      //     }
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //   });
+      let result = await sendSMS(this.phone);
+
+      if (result.data.code === null) {
+        this.alertMessage = "网络连接失败";
+        this.snackbar = true;
+        return;
+      }
+      switch (parseInt(result.data.code)) {
+        case 200:
+          this.alertMessage = "已发送验证码";
+          this.snackbar = true;
+          this.disabled = true;
+          this.timer();
+          break;
+        default:
+          this.alertMessage = result.data.msg;
+          this.snackbar = true;
+      }
     },
-
-    getVerifyCode() {},
   },
 };
 </script>

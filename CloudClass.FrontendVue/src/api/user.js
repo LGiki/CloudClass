@@ -10,6 +10,16 @@ export function loginByUsername(username, password) {
     },
   });
 }
+export function loginByMessage(username, verifyCode) {
+  return request({
+    url: "authentication/phone",
+    method: "post",
+    data: {
+      username: username,
+      verifyCode: verifyCode,
+    },
+  });
+}
 
 export function register(phone, username, password, is_teacher) {
   return request({

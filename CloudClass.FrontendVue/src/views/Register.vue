@@ -177,6 +177,12 @@ export default {
       }
     },
     async getVerifyCode() {
+      if (this.phone === "") {
+        this.alertMessage = "请填写正确手机号";
+        this.snackbar = true;
+        return;
+      }
+
       let result = await sendSMS(this.phone);
 
       if (result.data.code === null) {

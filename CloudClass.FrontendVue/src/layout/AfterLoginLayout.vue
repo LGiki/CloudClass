@@ -34,7 +34,7 @@
           </v-list-item>
           <v-list-item @click="logout">
             <v-list-item-icon>
-              <v-icon>mdi-information</v-icon>
+              <v-icon>mdi-arrow-left-bold</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>退出</v-list-item-title>
@@ -85,7 +85,7 @@ export default {
     logout() {
       this.$router.replace({ path: "/login" });
       this.$store.commit("token/REMOVE_TOKEN");
-    }
+    },
   },
 };
 </script>
