@@ -2,7 +2,7 @@ import request from "../utils/request";
 
 export function loginByUsername(username, password) {
   return request({
-    url: "/authentication/username",
+    url: "/authentication/",
     method: "post",
     data: {
       username: username,
@@ -10,16 +10,7 @@ export function loginByUsername(username, password) {
     },
   });
 }
-export function loginByTelephone(phone, password) {
-  return request({
-    url: "/authentication/phone",
-    method: "post",
-    data: {
-      phone: phone,
-      password: password,
-    },
-  });
-}
+
 export function loginByMessage(phone, verifyCode) {
   return request({
     url: "authentication/verifyCode",

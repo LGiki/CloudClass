@@ -118,12 +118,7 @@
 </template>
 
 <script>
-import {
-  loginByUsername,
-  sendSMS,
-  loginByMessage,
-  loginByTelephone,
-} from "../api/user";
+import { loginByUsername, sendSMS, loginByMessage } from "../api/user";
 
 export default {
   data() {
@@ -174,15 +169,8 @@ export default {
           return;
         }
 
-        let result;
+        let result = await loginByUsername(this.username.trim(), this.password);
 
-        if (/^[1][3,4,5,7,8,9][0-9]{9}$/.test(this.username)) {
-          console.log("here");
-          result = await loginByTelephone(this.username.trim(), this.password);
-        } else {
-          console.log("here2");
-          result = await loginByUsername(this.username.trim(), this.password);
-        }
         switch (result.data.code) {
           case "200":
             this.alertMessage = "登录成功";
