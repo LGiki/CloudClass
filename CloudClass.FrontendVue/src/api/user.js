@@ -10,18 +10,34 @@ export function loginByUsername(username, password) {
     },
   });
 }
-export function loginByMessage(username, verifyCode) {
+export function loginByTelephone(phone, password) {
   return request({
-    url: "authentication/phone",
+    url: "/authentication/phone",
     method: "post",
     data: {
-      username: username,
-      verifyCode: verifyCode,
+      phone: phone,
+      password: password,
+    },
+  });
+}
+export function loginByMessage(phone, verifyCode) {
+  return request({
+    url: "authentication/verifyCode",
+    method: "post",
+    data: {
+      phone: phone,
+      verifycode: verifyCode,
     },
   });
 }
 
-export function register(phone, username, password, is_teacher) {
+export function registerByName(
+  phone,
+  username,
+  password,
+  verifyCode,
+  is_teacher
+) {
   return request({
     url: "/person",
     method: "post",
@@ -29,6 +45,19 @@ export function register(phone, username, password, is_teacher) {
       phone: phone,
       username: username,
       password: password,
+      verifycode: verifyCode,
+      is_teacher: is_teacher,
+    },
+  });
+}
+
+export function registerByPhone(phone, verifycode, is_teacher) {
+  return request({
+    url: "/fast",
+    method: "post",
+    data: {
+      phone: phone,
+      verifycode: verifycode,
       is_teacher: is_teacher,
     },
   });

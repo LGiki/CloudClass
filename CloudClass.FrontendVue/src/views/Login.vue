@@ -50,40 +50,55 @@
           color="primary"
           large
           v-if="messageLogin === true"
+          :disabled="disabled"
           @click="getVerifyCode"
-          >获取验证码
+          >{{ getVerifyCodeText }}
         </v-btn>
       </div>
-
-      <div class="d-flex justify-end">
-        <v-btn
-          class="ma-2 float-left"
-          elevation="0"
-          color="primary"
-          small
-          v-if="messageLogin === false"
-          @click="messageLogin = true"
-          >切换短信登录
-        </v-btn>
-        <v-btn
-          class="ma-2 float-left"
-          elevation="0"
-          color="primary"
-          small
-          @click="messageLogin = false"
-          v-if="messageLogin === true"
-          >切换账号密码登录
-        </v-btn>
-        <v-btn class="ma-2" elevation="0" small v-if="messageLogin === false"
-          >忘记密码？
-        </v-btn>
-        <v-btn
-          class="ma-2"
-          elevation="0"
-          small
-          @click="$router.push('/register')"
-          >注册
-        </v-btn>
+      <div class="d-flex justify-space-between flex-nowrap">
+        <div class="d-flex flex-nowrap start">
+          <v-btn
+            class="ma-2"
+            elevation="0"
+            small
+            fixed
+            left
+            @click="registerByPhone"
+            >手机注册
+          </v-btn>
+          <v-btn
+            elevation="0"
+            class="mt-2"
+            style="margin-left: 100px"
+            small
+            left
+            @click="registerByName"
+            >用户名注册
+          </v-btn>
+        </div>
+        <div class="d-flex justify-end flex-nowrap">
+          <v-btn
+            class="ma-2 float-left"
+            elevation="0"
+            color="primary"
+            small
+            v-if="messageLogin === false"
+            @click="messageLogin = true"
+            >切换短信登录
+          </v-btn>
+          <v-btn
+            class="ma-2 float-left"
+            elevation="0"
+            color="primary"
+            small
+            @click="messageLogin = false"
+            v-if="messageLogin === true"
+            >切换账号密码登录
+          </v-btn>
+          <v-btn class="ma-2" elevation="0" small v-if="messageLogin === false"
+            >忘记密码？
+          </v-btn>
+        </div>
       </div>
       <v-btn class="ma-2" color="primary" block @click="login">登录</v-btn>
 
@@ -103,7 +118,12 @@
 </template>
 
 <script>
-import { loginByUsername, sendSMS } from "../api/user";
+import {
+  loginByUsername,
+  sendSMS,
+  loginByMessage,
+  loginByTelephone,
+} from "../api/user";
 
 export default {
   data() {
@@ -116,7 +136,10 @@ export default {
       isSuccess: false,
       messageLogin: false,
       alertMessage: "用户名或密码有误",
+      getVerifyCodeText: "获取验证码",
       snackbar: false,
+      disabled: false,
+      time: 60,
       rules: {
         required: (value) => !!value || "必填.",
         phone: (v) =>
@@ -127,12 +150,12 @@ export default {
   methods: {
     async login() {
       if (this.messageLogin) {
-        if (this.username === "" || this.verifyCode === "") {
+        if (this.phone === "" || this.verifyCode === "") {
           this.alertMessage = "请输入手机号及验证码";
           this.snackbar = true;
           return;
         }
-        let result = await this.loginByMessage(this.username, this.verifyCode);
+        let result = await loginByMessage(this.phone, this.verifyCode);
         switch (result.data.code) {
           case "200":
             this.alertMessage = "登录成功";
@@ -150,7 +173,16 @@ export default {
           this.snackbar = true;
           return;
         }
-        let result = await loginByUsername(this.username.trim(), this.password);
+
+        let result;
+
+        if (/^[1][3,4,5,7,8,9][0-9]{9}$/.test(this.username)) {
+          console.log("here");
+          result = await loginByTelephone(this.username.trim(), this.password);
+        } else {
+          console.log("here2");
+          result = await loginByUsername(this.username.trim(), this.password);
+        }
         switch (result.data.code) {
           case "200":
             this.alertMessage = "登录成功";
@@ -189,6 +221,34 @@ export default {
         default:
           this.alertMessage = result.data.msg;
           this.snackbar = true;
+      }
+    },
+    registerByPhone() {
+      this.$router.push({
+        path: "/register",
+        query: {
+          type: "phone",
+        },
+      });
+    },
+    registerByName() {
+      this.$router.push({
+        path: "/register",
+        query: {
+          type: "name",
+        },
+      });
+    },
+    timer() {
+      if (this.time > 0) {
+        this.disabled = true;
+        this.time--;
+        this.getVerifyCodeText = this.time + "秒";
+        setTimeout(this.timer, 1000);
+      } else {
+        this.time = 0;
+        this.getVerifyCodeText = "获取验证码";
+        this.disabled = false;
       }
     },
   },

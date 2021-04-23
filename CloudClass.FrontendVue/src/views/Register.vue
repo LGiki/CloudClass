@@ -16,6 +16,7 @@
         v-model="username"
         label="用户名"
         outlined
+        v-if="registerType === 'name'"
       ></v-text-field>
       <v-text-field
         prepend-icon="mdi-lock"
@@ -27,6 +28,7 @@
         hint="至少8个字符"
         counter
         outlined
+        v-if="registerType === 'name'"
         @click:append="showPassword = !showPassword"
       ></v-text-field>
       <v-text-field
@@ -39,6 +41,7 @@
         hint="至少8个字符"
         counter
         outlined
+        v-if="registerType === 'name'"
         @click:append="showPassword = !showPassword"
       ></v-text-field>
       <v-text-field
@@ -103,7 +106,8 @@
 </template>
 
 <script>
-import { register } from "../api/user";
+import { registerByName } from "../api/user";
+import { registerByPhone } from "../api/user";
 import { sendSMS } from "../api/user";
 
 export default {
@@ -114,6 +118,7 @@ export default {
       rePassword: "",
       phone: "",
       verifyCode: "",
+      registerType: "",
       getVerifyCodeText: "获取验证码",
       showPassword: false,
       role: "student",
@@ -134,15 +139,19 @@ export default {
   methods: {
     async registerIn() {
       if (
-        this.username === "" ||
-        this.password === "" ||
-        this.rePassword === "" ||
-        this.phone === ""
+        this.registerType === "name" &&
+        (this.username === "" ||
+          this.password === "" ||
+          this.rePassword === "" ||
+          this.phone === "")
       ) {
         this.alertMessage = "请补充完整信息";
         this.snackbar = true;
         return;
-      } else if (this.password !== this.rePassword) {
+      } else if (
+        this.registerType === "name" &&
+        this.password !== this.rePassword
+      ) {
         this.alertMessage = "两次输入的密码不一致";
         this.snackbar = true;
         return;
@@ -157,19 +166,30 @@ export default {
         this.isTeacher = "0";
       }
 
-      let result = await register(
-        this.phone,
-        this.username.trim(),
-        this.password,
-        this.isTeacher
-      );
+      let result;
+      if (this.registerType === "name") {
+        result = await registerByName(
+          this.phone,
+          this.username.trim(),
+          this.password,
+          this.verifyCode,
+          this.isTeacher
+        );
+      } else if (this.registerType === "phone") {
+        result = await registerByPhone(
+          this.phone,
+          this.verifyCode,
+          this.isTeacher
+        );
+      }
+
       console.log(result.data);
 
       switch (parseInt(result.data.code)) {
         case 200:
+          this.$router.push("/login");
           this.alertMessage = "注册成功";
           this.snackbar = true;
-          this.$router.push("/login");
           break;
         default:
           this.alertMessage = result.data.msg;
@@ -211,10 +231,14 @@ export default {
         setTimeout(this.timer, 1000);
       } else {
         this.time = 0;
-        this.disabled = false;
         this.getVerifyCodeText = "获取验证码";
+        this.disabled = false;
       }
     },
+  },
+  mounted() {
+    this.registerType = this.$route.query.type;
+    console.log(this.registerType);
   },
 };
 </script>
