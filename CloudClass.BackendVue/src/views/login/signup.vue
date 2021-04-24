@@ -61,25 +61,40 @@
           @keyup.enter.native="handleRegister"
         />
       </el-form-item>
+      <el-form-item prop="phone">
+        <span class="svg-container">
+          <svg-icon icon-class="phone"/>
+        </span>
+        <el-input
+          key="phone"
+          ref="phone"
+          v-model="loginForm.phone"
+          placeholder="手机号"
+          name="phone"
+          tabindex="2"
+          auto-complete="on"
+          :maxlength="13"
+        />
+      </el-form-item>
       <div style="width: 100%;display: inline-grid;grid-template-columns: 3fr 1fr;grid-column-gap: 20px;">
-        <el-form-item prop="phone">
-          <div>
-            <span class="svg-container">
-              <svg-icon icon-class="phone"/>
-            </span>
+        <div>
+          <el-form-item prop="validationCode">
+          <span class="svg-container">
+            <svg-icon icon-class="message"/>
+          </span>
             <el-input
-              key="phone"
-              ref="phone"
-              v-model="loginForm.phone"
+              key="validationCode"
+              ref="validationCode"
+              v-model="loginForm.validationCode"
               type="text"
-              placeholder="手机号"
-              name="phone"
+              placeholder="验证码"
+              name="validationCode"
               tabindex="2"
               auto-complete="on"
               @keyup.enter.native="handleRegister"
             />
-          </div>
-        </el-form-item>
+          </el-form-item>
+        </div>
         <el-button
           :disabled="sendValidationButton.disabled"
           type="primary"
@@ -89,22 +104,6 @@
           {{ sendValidationButton.title }}
         </el-button>
       </div>
-      <el-form-item prop="validationCode">
-        <span class="svg-container">
-          <svg-icon icon-class="message" />
-        </span>
-        <el-input
-          key="validationCode"
-          ref="validationCode"
-          v-model="loginForm.validationCode"
-          type="text"
-          placeholder="验证码"
-          name="validationCode"
-          tabindex="2"
-          auto-complete="on"
-          @keyup.enter.native="handleRegister"
-        />
-      </el-form-item>
       <el-button
         :loading="loading"
         type="primary"
@@ -118,7 +117,8 @@
 </template>
 
 <script>
-import { Message } from 'element-ui'
+import {Message} from 'element-ui'
+import {validatePhone} from "@/utils/validate";
 
 export default {
   name: 'Signup',
@@ -144,13 +144,6 @@ export default {
         callback()
       }
     }
-    const validatePhone = (rule, value, callback) => {
-      if (value.length === 0) {
-        callback(new Error('手机号不能为空'))
-      } else {
-        callback()
-      }
-    }
     const validateValidationCode = (rule, value, callback) => {
       if (value.length === 0) {
         callback(new Error('验证码不能为空'))
@@ -170,11 +163,11 @@ export default {
         disabled: false
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }],
-        rePassword: [{ required: true, trigger: 'blur', validator: validateRePassword }],
-        phone: [{ required: true, trigger: 'blur', validator: validatePhone }],
-        validationCode: [{ required: true, trigger: 'blur', validator: validateValidationCode }]
+        username: [{required: true, trigger: 'blur', validator: validateUsername}],
+        password: [{required: true, trigger: 'blur', validator: validatePassword}],
+        rePassword: [{required: true, trigger: 'blur', validator: validateRePassword}],
+        phone: [{required: true, trigger: 'blur', validator: validatePhone}],
+        validationCode: [{required: true, trigger: 'blur', validator: validateValidationCode}]
       },
       loading: false,
       passwordType: 'password',
@@ -184,7 +177,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler: function (route) {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true

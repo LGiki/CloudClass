@@ -8,13 +8,34 @@ import request from '@/utils/request'
 //   })
 // }
 
-export function login(username, password) {
+export function loginByPassword(username, password) {
   return request({
-    url: '/vue-admin-template/user/login',
+    url: '/user/phone',
     method: 'post',
     data: {
-      username: username,
+      phone: username,
       password: password
+    }
+  })
+}
+
+export function sendSMS(phoneNumber) {
+  return request({
+    url: '/Sms/send',
+    method: 'post',
+    data: {
+      phone: phoneNumber
+    }
+  })
+}
+
+export function loginBySMS(username, verifyCode) {
+  return request({
+    url: '/user/verifyCode',
+    method: 'post',
+    data: {
+      phone: username,
+      verifyCode: verifyCode
     }
   })
 }
