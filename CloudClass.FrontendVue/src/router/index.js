@@ -35,6 +35,14 @@ const routes = [
         component: () => import("../views/Register"),
     },
     {
+        name: 'Github OAuth',
+        path: "/github-redirect",
+        meta: {
+            title: "Github登录跳转",
+        },
+        component: () => import("../views/GithubRedirect"),
+    },
+    {
         path: "/",
         component: AfterLoginLayout,
         children: [
@@ -98,11 +106,12 @@ const routes = [
 ];
 
 const router = new VueRouter({
+    mode: 'history',
     routes,
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.name !== 'Login' && to.name !== 'Register' && !store.state.token.token) {
+    if (to.name !== 'Login' && to.name !== 'Register' && to.name !== 'Github OAuth' && !store.state.token.token) {
         next({ name: 'Login' });
     }else{
         document.title = to.meta.title;

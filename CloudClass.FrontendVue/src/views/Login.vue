@@ -10,51 +10,61 @@
       >
         到云APP - 登录
       </h1>
-      <v-text-field
-        prepend-icon="mdi-account"
-        v-model="username"
-        label="用户名"
-        outlined
-        v-if="messageLogin === false"
-      ></v-text-field>
-      <v-text-field
-        prepend-icon="mdi-lock"
-        v-model="password"
-        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-        :rules="[rules.required]"
-        :type="showPassword ? 'text' : 'password'"
-        label="密码"
-        outlined
-        @click:append="showPassword = !showPassword"
-        v-if="messageLogin === false"
-      ></v-text-field>
-      <v-text-field
-        prepend-icon="mdi-account"
-        v-model="phone"
-        :rules="[rules.required, rules.phone]"
-        label="手机号"
-        outlined
-        v-if="messageLogin === true"
-      ></v-text-field>
-      <div class="d-flex">
-        <v-text-field
-          :rules="[rules.required]"
-          prepend-icon="mdi-android-messages"
-          v-model="verifyCode"
-          label="验证码"
-          outlined
-          v-if="messageLogin === true"
-        ></v-text-field>
-        <v-btn
-          class="ma-2"
-          color="primary"
-          large
-          v-if="messageLogin === true"
-          :disabled="disabled"
-          @click="getVerifyCode"
-          >{{ getVerifyCodeText }}
-        </v-btn>
-      </div>
+      <v-card>
+        <v-tabs v-model="loginType" grow class="mb-5">
+          <v-tab href="#password-login"> 账号密码登录</v-tab>
+          <v-tab href="#sms-login"> 短信登录 </v-tab>
+        </v-tabs>
+        <div class="pa-4">
+          <v-tabs-items v-model="loginType">
+            <v-tab-item value="password-login" class="ma-1">
+              <v-text-field
+                prepend-icon="mdi-account"
+                v-model="username"
+                label="用户名"
+                :rules="[rules.required]"
+                outlined
+              ></v-text-field>
+              <v-text-field
+                prepend-icon="mdi-lock"
+                v-model="password"
+                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                :rules="[rules.required]"
+                :type="showPassword ? 'text' : 'password'"
+                label="密码"
+                outlined
+                @click:append="showPassword = !showPassword"
+              ></v-text-field>
+            </v-tab-item>
+            <v-tab-item value="sms-login" class="ma-1">
+              <v-text-field
+                prepend-icon="mdi-account"
+                v-model="phone"
+                :rules="[rules.required, rules.phone]"
+                label="手机号"
+                outlined
+              ></v-text-field>
+              <div class="d-flex">
+                <v-text-field
+                  :rules="[rules.required]"
+                  prepend-icon="mdi-android-messages"
+                  v-model="verifyCode"
+                  label="验证码"
+                  outlined
+                ></v-text-field>
+                <v-btn
+                  class="ma-2"
+                  color="primary"
+                  large
+                  :disabled="disabled"
+                  @click="getVerifyCode"
+                  >{{ getVerifyCodeText }}
+                </v-btn>
+              </div>
+            </v-tab-item>
+          </v-tabs-items>
+        </div>
+      </v-card>
       <div class="d-flex justify-space-between flex-nowrap">
         <div class="d-flex flex-nowrap start">
           <v-btn
@@ -77,37 +87,19 @@
         </div>
         <div class="d-flex justify-end flex-nowrap">
           <v-btn
+            class="ma-2 float-left"
             elevation="0"
-            depressed
-            href="https://github.com/login/oauth/authorize?client_id=1ce1ed69349a9f307417&redirect_uri=http://localhost:8080/class#/class"
+            target="_blank"
+            small
+            href="https://github.com/login/oauth/authorize?client_id=1bcc057d1fa210ff880a&redirect_uri=http://localhost:8080/github-redirect"
           >
-            <v-icon color="orange darken-2" large>mdi-github </v-icon>
+            <v-icon color="darken-2">mdi-github</v-icon>
+            Github登录
           </v-btn>
-          <v-btn
-            class="ma-2 float-left"
-            elevation="0"
-            color="primary"
-            small
-            v-if="messageLogin === false"
-            @click="messageLogin = true"
-            >切换短信登录
-          </v-btn>
-          <v-btn
-            class="ma-2 float-left"
-            elevation="0"
-            color="primary"
-            small
-            @click="messageLogin = false"
-            v-if="messageLogin === true"
-            >切换账号密码登录
-          </v-btn>
-          <v-btn class="ma-2" elevation="0" small v-if="messageLogin === false"
-            >忘记密码？
-          </v-btn>
+          <v-btn class="ma-2" elevation="0" small>忘记密码？ </v-btn>
         </div>
       </div>
       <v-btn class="mt-2" color="primary" block @click="login">登录</v-btn>
-
       <div class="text-center">
         <v-snackbar v-model="snackbar" timeout="3000">
           {{ alertMessage }}
@@ -131,13 +123,14 @@ import service from "@/utils/request";
 export default {
   data() {
     return {
+      tab: null,
+      loginType: "password-login",
       username: "",
       password: "",
       verifyCode: "",
       phone: "",
       showPassword: false,
       isSuccess: false,
-      messageLogin: false,
       alertMessage: "用户名或密码有误",
       getVerifyCodeText: "获取验证码",
       snackbar: false,
@@ -152,7 +145,7 @@ export default {
   },
   methods: {
     async login() {
-      if (this.messageLogin) {
+      if (this.loginType === "sms-login") {
         if (this.phone === "" || this.verifyCode === "") {
           this.alertMessage = "请输入手机号及验证码";
           this.snackbar = true;
