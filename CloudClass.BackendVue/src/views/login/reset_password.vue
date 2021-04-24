@@ -71,16 +71,11 @@
 </template>
 
 <script>
+import {validatePhone} from "@/utils/validate";
+
 export default {
   name: 'ResetPassword',
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (value.length === 0) {
-        callback(new Error('用户名不能为空'))
-      } else {
-        callback()
-      }
-    }
     const validatePassword = (rule, value, callback) => {
       if (value.length === 0) {
         callback(new Error('密码不能为空'))
@@ -97,7 +92,7 @@ export default {
         validationCode: ''
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        phone: [{ required: true, trigger: 'blur', validator: validatePhone }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,
