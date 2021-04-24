@@ -3,6 +3,9 @@
     style="height: 100%; background-color: rgba(0, 0, 0, 0.02)"
     class="d-flex align-center"
   >
+    <v-btn @click="$router.back(-1)" color="primary" fixed top left>
+      <v-icon>mdi-arrow-left-bold</v-icon>
+    </v-btn>
     <v-container>
       <h1
         style="font-size: 2.5em; color: #1976d2"
