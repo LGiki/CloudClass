@@ -71,12 +71,18 @@
             class="mt-2"
             style="margin-left: 100px"
             small
-            left
             @click="registerByName"
             >用户名注册
           </v-btn>
         </div>
         <div class="d-flex justify-end flex-nowrap">
+          <v-btn
+            elevation="0"
+            depressed
+            href="https://github.com/login/oauth/authorize?client_id=1ce1ed69349a9f307417&redirect_uri=http://localhost:8080/class#/class"
+          >
+            <v-icon color="orange darken-2" large>mdi-github </v-icon>
+          </v-btn>
           <v-btn
             class="ma-2 float-left"
             elevation="0"
@@ -100,7 +106,7 @@
           </v-btn>
         </div>
       </div>
-      <v-btn class="ma-2" color="primary" block @click="login">登录</v-btn>
+      <v-btn class="mt-2" color="primary" block @click="login">登录</v-btn>
 
       <div class="text-center">
         <v-snackbar v-model="snackbar" timeout="3000">
@@ -119,6 +125,8 @@
 
 <script>
 import { loginByUsername, sendSMS, loginByMessage } from "../api/user";
+//import axios from "axios";
+import service from "@/utils/request";
 
 export default {
   data() {
@@ -183,6 +191,22 @@ export default {
             this.snackbar = true;
         }
       }
+    },
+    loginByGithub() {
+      service
+        .get("https://github.com/login/oauth/authorize", {
+          params: {
+            client_id: "1ce1ed69349a9f307417",
+            redirect_uri: "http://localhost:8080/class#/class",
+          },
+        })
+        .then(function (response) {
+          let result = response.data;
+          console.log(result);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
 
     async getVerifyCode() {

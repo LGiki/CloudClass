@@ -17,7 +17,7 @@ export function loginByMessage(phone, verifyCode) {
     method: "post",
     data: {
       phone: phone,
-      verifycode: verifyCode,
+      verifyCode: verifyCode,
     },
   });
 }
@@ -36,7 +36,7 @@ export function registerByName(
       phone: phone,
       username: username,
       password: password,
-      verifycode: verifyCode,
+      verifyCode: verifyCode,
       is_teacher: is_teacher,
     },
   });
@@ -48,7 +48,7 @@ export function registerByPhone(phone, verifycode, is_teacher) {
     method: "post",
     data: {
       phone: phone,
-      verifycode: verifycode,
+      verifyCode: verifycode,
       is_teacher: is_teacher,
     },
   });
