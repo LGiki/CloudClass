@@ -3,9 +3,11 @@
     style="height: 100%; background-color: rgba(0, 0, 0, 0.02)"
     class="d-flex align-center"
   >
+    <!--
     <v-btn @click="$router.back(-1)" color="primary" fixed top left>
       <v-icon>mdi-arrow-left-bold</v-icon>
     </v-btn>
+    -->
     <v-container>
       <h1
         style="font-size: 2.5em; color: #1976d2"
@@ -13,66 +15,101 @@
       >
         到云APP - 注册
       </h1>
-      <v-text-field
-        prepend-icon="mdi-account"
-        :rules="[rules.required]"
-        v-model="username"
-        label="用户名"
-        outlined
-        v-if="registerType === 'name'"
-      ></v-text-field>
-      <v-text-field
-        prepend-icon="mdi-lock"
-        v-model="password"
-        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-        :rules="[rules.required, rules.min]"
-        :type="showPassword ? 'text' : 'password'"
-        label="密码"
-        hint="至少8个字符"
-        counter
-        outlined
-        v-if="registerType === 'name'"
-        @click:append="showPassword = !showPassword"
-      ></v-text-field>
-      <v-text-field
-        prepend-icon="mdi-lock"
-        v-model="rePassword"
-        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-        :rules="[rules.required, rules.min]"
-        :type="showPassword ? 'text' : 'password'"
-        label="重复密码"
-        hint="至少8个字符"
-        counter
-        outlined
-        v-if="registerType === 'name'"
-        @click:append="showPassword = !showPassword"
-      ></v-text-field>
-      <v-text-field
-        :rules="[rules.required, rules.phone]"
-        prepend-icon="mdi-cellphone"
-        v-model="phone"
-        label="手机号"
-        outlined
-      ></v-text-field>
-      <div class="d-flex">
-        <v-text-field
-          :rules="[rules.required]"
-          prepend-icon="mdi-android-messages"
-          v-model="verifyCode"
-          label="验证码"
-          outlined
-          type="number"
-        ></v-text-field>
-        <v-btn
-          class="ma-2"
-          color="primary"
-          large
-          @click="getVerifyCode"
-          :disabled="disabled"
-          >{{ getVerifyCodeText }}</v-btn
-        >
-      </div>
-
+      <v-card>
+        <v-tabs v-model="registerType" grow class="mb-5">
+          <v-tab href="#phone"> 手机号注册</v-tab>
+          <v-tab href="#name"> 用户名密码注册 </v-tab>
+        </v-tabs>
+        <div class="pa-4">
+          <v-tabs-items v-model="registerType">
+            <v-tab-item value="name" class="ma-1">
+              <v-text-field
+                prepend-icon="mdi-account"
+                :rules="[rules.required]"
+                v-model="username"
+                label="用户名"
+                outlined
+              ></v-text-field>
+              <v-text-field
+                prepend-icon="mdi-lock"
+                v-model="password"
+                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                :rules="[rules.required, rules.min]"
+                :type="showPassword ? 'text' : 'password'"
+                label="密码"
+                hint="至少8个字符"
+                counter
+                outlined
+                @click:append="showPassword = !showPassword"
+              ></v-text-field>
+              <v-text-field
+                prepend-icon="mdi-lock"
+                v-model="rePassword"
+                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                :rules="[rules.required, rules.min]"
+                :type="showPassword ? 'text' : 'password'"
+                label="重复密码"
+                hint="至少8个字符"
+                counter
+                outlined
+                @click:append="showPassword = !showPassword"
+              ></v-text-field>
+              <v-text-field
+                :rules="[rules.required, rules.phone]"
+                prepend-icon="mdi-cellphone"
+                v-model="phone"
+                label="手机号"
+                outlined
+              ></v-text-field>
+              <div class="d-flex">
+                <v-text-field
+                  :rules="[rules.required]"
+                  prepend-icon="mdi-android-messages"
+                  v-model="verifyCode"
+                  label="验证码"
+                  outlined
+                  type="number"
+                ></v-text-field>
+                <v-btn
+                  class="ma-2"
+                  color="primary"
+                  large
+                  @click="getVerifyCode"
+                  :disabled="disabled"
+                  >{{ getVerifyCodeText }}</v-btn
+                >
+              </div>
+            </v-tab-item>
+            <v-tab-item value="phone" class="ma-1">
+              <v-text-field
+                :rules="[rules.required, rules.phone]"
+                prepend-icon="mdi-cellphone"
+                v-model="phone"
+                label="手机号"
+                outlined
+              ></v-text-field>
+              <div class="d-flex">
+                <v-text-field
+                  :rules="[rules.required]"
+                  prepend-icon="mdi-android-messages"
+                  v-model="verifyCode"
+                  label="验证码"
+                  outlined
+                  type="number"
+                ></v-text-field>
+                <v-btn
+                  class="ma-2"
+                  color="primary"
+                  large
+                  @click="getVerifyCode"
+                  :disabled="disabled"
+                  >{{ getVerifyCodeText }}</v-btn
+                >
+              </div>
+            </v-tab-item>
+          </v-tabs-items>
+        </div>
+      </v-card>
       <div class="d-flex">
         <div class="d-flex align-center">
           <v-icon style="margin-right: 9px">mdi-card-account-details </v-icon>
@@ -153,9 +190,20 @@ export default {
         return;
       } else if (
         this.registerType === "name" &&
+        (this.password.length < 8 || this.rePassword < 8)
+      ) {
+        this.alertMessage = "密码必须8个字符以上";
+        this.snackbar = true;
+        return;
+      } else if (
+        this.registerType === "name" &&
         this.password !== this.rePassword
       ) {
         this.alertMessage = "两次输入的密码不一致";
+        this.snackbar = true;
+        return;
+      } else if (!/^[1][3,4,5,7,8,9][0-9]{9}$/.test(this.phone)) {
+        this.alertMessage = "手机号格式不正确";
         this.snackbar = true;
         return;
       } else if (this.verifyCode === "") {
@@ -186,19 +234,26 @@ export default {
         );
       }
 
-      console.log(result.data);
-
-      switch (parseInt(result.data.code)) {
-        case 200:
-          this.$router.push("/login");
-          this.alertMessage = "注册成功";
-          this.snackbar = true;
-          break;
-        default:
-          this.alertMessage = result.data.msg;
-          this.snackbar = true;
+      //   console.log(result.data);
+      if (result !== null) {
+        switch (parseInt(result.data.code)) {
+          case 200:
+            this.alertMessage = "注册成功";
+            this.snackbar = true;
+            this.sleep(1500).then(() => {
+              this.$router.push("/login");
+            });
+            break;
+          default:
+            this.alertMessage = result.data.msg;
+            this.snackbar = true;
+        }
+      } else {
+        this.alertMessage = "网络连接失败";
+        this.snackbar = true;
       }
     },
+
     async getVerifyCode() {
       if (this.phone === "") {
         this.alertMessage = "请填写正确手机号";
@@ -233,10 +288,13 @@ export default {
         this.getVerifyCodeText = this.time + "秒";
         setTimeout(this.timer, 1000);
       } else {
-        this.time = 0;
+        this.time = 60;
         this.getVerifyCodeText = "获取验证码";
         this.disabled = false;
       }
+    },
+    sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
     },
   },
   mounted() {

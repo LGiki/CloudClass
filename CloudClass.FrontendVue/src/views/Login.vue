@@ -65,36 +65,22 @@
           </v-tabs-items>
         </div>
       </v-card>
-      <div class="d-flex justify-space-between flex-nowrap">
-        <div class="d-flex flex-nowrap start">
-          <v-btn
-            class="ma-2"
-            elevation="0"
-            small
-            fixed
-            left
-            @click="registerByPhone"
-            >手机注册
-          </v-btn>
-          <v-btn
-            elevation="0"
-            class="mt-2"
-            style="margin-left: 100px"
-            small
-            @click="registerByName"
-            >用户名注册
-          </v-btn>
-        </div>
-        <div class="d-flex justify-end flex-nowrap">
+      <div class="d-flex justify-space-between flex-nowrap mt-2">
+        <div class="d-flex justify-start flex-nowrap">
           <v-btn
             class="ma-2 float-left"
             elevation="0"
             target="_blank"
             small
-            href="https://github.com/login/oauth/authorize?client_id=1bcc057d1fa210ff880a&redirect_uri=http://localhost:8080/github-redirect"
+            href="https://github.com/login/oauth/authorize?client_id=1bcc057d1fa210ff880a&redirect_uri=http://localhost:8080/class"
           >
             <v-icon color="darken-2">mdi-github</v-icon>
             Github登录
+          </v-btn>
+        </div>
+        <div class="d-flex flex-nowrap flex-end">
+          <v-btn class="ma-2" elevation="0" small @click="registerByPhone"
+            >注册
           </v-btn>
           <v-btn class="ma-2" elevation="0" small>忘记密码？ </v-btn>
         </div>
@@ -251,7 +237,7 @@ export default {
         this.getVerifyCodeText = this.time + "秒";
         setTimeout(this.timer, 1000);
       } else {
-        this.time = 0;
+        this.time = 60;
         this.getVerifyCodeText = "获取验证码";
         this.disabled = false;
       }

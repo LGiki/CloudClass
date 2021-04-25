@@ -47,7 +47,7 @@
                 v-html="item.subtitle"
               ></v-list-item-subtitle>
             </v-list-item-content>
-            <v-list-item-content class="ml-16 font-weight-bold">
+            <v-list-item-content class="ml-16 font-weight-bold red--text">
               {{ item.grade }}积分</v-list-item-content
             >
           </v-list-item>
