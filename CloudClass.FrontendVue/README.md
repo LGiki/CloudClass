@@ -1,4 +1,4 @@
-# cloud_class_frontend
+# Cloud Class Frontend
 
 ## Project setup
 ```
