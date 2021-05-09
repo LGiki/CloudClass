@@ -100,12 +100,21 @@ const routes = [
         },
         component: () => import("../views/ClassDetail"),
       },
+      {
+        name: "Personal",
+        path: "/personal",
+        meta: {
+          title: "个人信息",
+          stuTitle: "个人信息",
+        },
+        component: () => import("../views/Personal"),
+      },
     ],
   },
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  //mode: "history",
   routes,
 });
 

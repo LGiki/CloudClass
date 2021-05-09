@@ -69,6 +69,11 @@ export default {
         to: "/class",
       },
       {
+        icon: "mdi-account",
+        text: "个人信息",
+        to: "/personal",
+      },
+      {
         icon: "mdi-information",
         text: "关于",
         to: "/about",

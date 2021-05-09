@@ -70,9 +70,8 @@
           <v-btn
             class="ma-2 float-left"
             elevation="0"
-            target="_blank"
             small
-            href="https://github.com/login/oauth/authorize?client_id=1bcc057d1fa210ff880a&redirect_uri=http://localhost:8080/class"
+            href="https://github.com/login/oauth/authorize?client_id=1bcc057d1fa210ff880a&redirect_uri=http://localhost:8080/github-redirect"
           >
             <v-icon color="darken-2">mdi-github</v-icon>
             Github登录
@@ -104,7 +103,6 @@
 <script>
 import { loginByUsername, sendSMS, loginByMessage } from "../api/user";
 //import axios from "axios";
-import service from "@/utils/request";
 
 export default {
   data() {
@@ -170,22 +168,6 @@ export default {
             this.snackbar = true;
         }
       }
-    },
-    loginByGithub() {
-      service
-        .get("https://github.com/login/oauth/authorize", {
-          params: {
-            client_id: "1ce1ed69349a9f307417",
-            redirect_uri: "http://localhost:8080/class#/class",
-          },
-        })
-        .then(function (response) {
-          let result = response.data;
-          console.log(result);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
     },
 
     async getVerifyCode() {
