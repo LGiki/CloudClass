@@ -1,5 +1,6 @@
 const state = {
   token: localStorage.getItem("token"),
+  isTeacher: localStorage.getItem("isTeacher"),
 };
 
 const mutations = {
@@ -11,6 +12,10 @@ const mutations = {
     state.token = "";
     localStorage.removeItem("token");
   },
+  SET_TEA_TYPE(state, isTeacher) {
+    state.isTeacher = isTeacher;
+    localStorage.setItem("isTeacher", isTeacher);
+  },
 };
 
 const actions = {
@@ -19,6 +24,9 @@ const actions = {
   },
   removeToken({ commit }) {
     commit("REMOVE_TOKEN");
+  },
+  setTeacherType({ commit }) {
+    commit("SET_TEA_TYPE");
   },
 };
 

@@ -11,6 +11,39 @@
       prepend-icon="mdi-format-color-highlight"
     >
     </v-text-field>
+    <v-text-field
+      v-if="type === 'school'"
+      v-model="classNumber"
+      :rules="[rules.required]"
+      class="mt-5"
+      hint="请输入学校名称"
+      label="学校"
+      outlined
+      prepend-icon="mdi-format-color-highlight"
+    >
+    </v-text-field>
+    <v-text-field
+      v-if="type === 'grade'"
+      v-model="classNumber"
+      :rules="[rules.required]"
+      class="mt-5"
+      hint="请输入年级"
+      label="年级"
+      outlined
+      prepend-icon="mdi-format-color-highlight"
+    >
+    </v-text-field>
+    <v-text-field
+      v-if="type === 'major'"
+      v-model="classNumber"
+      :rules="[rules.required]"
+      class="mt-5"
+      hint="请输入专业班级"
+      label="专业班级"
+      outlined
+      prepend-icon="mdi-format-color-highlight"
+    >
+    </v-text-field>
 
     <!--
       <v-alert
@@ -95,13 +128,19 @@ export default {
     },
   },
   mounted: function () {
-    if (this.$route.query.type != "") {
+    if (this.$route.query.type !== "") {
       this.type = this.$route.query.type;
     }
-    console.log(this.type);
-    if (this.type === "qrCode") {
-      //
+    if (this.type === "school") {
+      this.$route.meta.stuTitle = "修改学校";
+    } else if (this.type === "grade") {
+      this.$route.meta.stuTitle = "修改年级";
+    } else if (this.type === "major") {
+      this.$route.meta.stuTitle = "修改专业";
+    } else if (this.type === "classCode") {
+      this.$route.meta.stuTitle = "加入班课";
     }
+    console.log(this.type);
   },
 };
 </script>

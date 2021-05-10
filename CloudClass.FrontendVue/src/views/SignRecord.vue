@@ -26,18 +26,17 @@
             class="font-weight-bold"
             v-if="item.header"
             :key="item.header"
-          >
+            style="font-size: large"
+            >{{ item.header }}
           </v-subheader>
 
           <v-divider v-else-if="item.divider" :key="index"></v-divider>
 
-          <v-list-item v-else :key="item.title" @click="goEdit(index)">
-            <v-list-item-content>
-              <v-list-item-title v-html="item.title"> </v-list-item-title>
-            </v-list-item-content>
-            <v-list-item-icon>
-              <v-icon left>mdi-chevron-right</v-icon>
-            </v-list-item-icon>
+          <v-list-item v-else :key="item.title">
+            <v-list-item-content> {{ item.title }}</v-list-item-content>
+            <v-list-item-content>{{ item.time }}</v-list-item-content>
+            <v-list-item-content> {{ item.change }}</v-list-item-content>
+            <v-list-item-content> {{ item.exp }}</v-list-item-content>
           </v-list-item>
         </template>
       </v-list>
@@ -47,33 +46,34 @@
 
 <script>
 export default {
-  name: "Personal",
+  name: "SignRecord",
   data() {
     return {
       items: [
-        { header: " " },
+        { header: "签到记录" },
         {
-          title: "个人信息修改",
-          subtitle: ``,
+          title: "日期",
+          time: "时间",
+          change: "经验变化",
+          exp: "经验总数",
         },
         { divider: true, inset: true },
         {
-          title: "签到记录",
-          subtitle: ``,
+          title: "5-1",
+          time: "10:43",
+          change: "+2",
+          exp: "25",
+        },
+        { divider: true, inset: true },
+        {
+          title: "5-2",
+          time: "18:64",
+          change: "-2",
+          exp: "23",
         },
         { divider: true, inset: true },
       ],
     };
-  },
-  methods: {
-    goEdit(index) {
-      console.log(index);
-      if (index === 3) {
-        this.$router.push("/signRecord");
-      } else if (index === 1) {
-        this.$router.push("/personalEdit");
-      }
-    },
   },
 };
 </script>

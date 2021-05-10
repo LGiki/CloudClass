@@ -7,10 +7,6 @@
 
           <v-card-subtitle class="mt-0">
             学号: {{ 200327063 }}
-            <br />
-            班级: {{ 123 }}
-            <br />
-            专业: {{ 123 }}
           </v-card-subtitle>
         </div>
         <div style="display: flex; align-items: center">
@@ -47,19 +43,20 @@
 
 <script>
 export default {
-  name: "Personal",
+  name: "PersonalEdit",
   data() {
     return {
       items: [
-        { header: " " },
         {
-          title: "个人信息修改",
-          subtitle: ``,
+          title: "学校",
         },
         { divider: true, inset: true },
         {
-          title: "签到记录",
-          subtitle: ``,
+          title: "年级",
+        },
+        { divider: true, inset: true },
+        {
+          title: "专业班级",
         },
         { divider: true, inset: true },
       ],
@@ -68,10 +65,25 @@ export default {
   methods: {
     goEdit(index) {
       console.log(index);
-      if (index === 3) {
-        this.$router.push("/signRecord");
-      } else if (index === 1) {
-        this.$router.push("/personalEdit");
+      switch (index) {
+        case 0:
+          this.$router.push({
+            path: "/enterClass",
+            query: { type: "school" },
+          });
+          break;
+        case 2:
+          this.$router.push({
+            path: "/enterClass",
+            query: { type: "grade" },
+          });
+          break;
+        case 4:
+          this.$router.push({
+            path: "/enterClass",
+            query: { type: "major" },
+          });
+          break;
       }
     },
   },

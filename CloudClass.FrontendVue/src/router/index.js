@@ -109,6 +109,24 @@ const routes = [
         },
         component: () => import("../views/Personal"),
       },
+      {
+        name: "SignRecord",
+        path: "/signRecord",
+        meta: {
+          title: "签到记录",
+          stuTitle: "签到记录",
+        },
+        component: () => import("../views/SignRecord"),
+      },
+      {
+        name: "PersonalEdit",
+        path: "/personalEdit",
+        meta: {
+          title: "个人信息修改",
+          stuTitle: "个人信息修改",
+        },
+        component: () => import("../views/PersonalEdit"),
+      },
     ],
   },
 ];
