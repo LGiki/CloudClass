@@ -46,6 +46,7 @@ export default {
   name: "PersonalEdit",
   data() {
     return {
+      isTeacher: localStorage.getItem("isTeacher"),
       items: [
         {
           title: "学校",
@@ -67,25 +68,47 @@ export default {
       console.log(index);
       switch (index) {
         case 0:
-          this.$router.push({
-            path: "/enterClass",
-            query: { type: "school" },
-          });
+          if (this.isTeacher === "0") {
+            this.$router.push({
+              path: "/enterClass",
+              query: { type: "school" },
+            });
+            this.$route.meta.stuTitle = "修改学校";
+          } else if (this.isTeacher === "1") {
+            this.$router.push({
+              path: "/enterClass",
+              query: { type: "exp" },
+            });
+            this.$route.meta.title = "修改经验值";
+          }
           break;
         case 2:
           this.$router.push({
             path: "/enterClass",
             query: { type: "grade" },
           });
+          this.$route.meta.stuTitle = "修改年级";
           break;
         case 4:
           this.$router.push({
             path: "/enterClass",
             query: { type: "major" },
           });
+          this.$route.meta.stuTitle = "修改专业";
           break;
       }
     },
+  },
+  mounted() {
+    if (this.isTeacher === "1") {
+      this.items.splice(0, this.items.length);
+      this.items.push(
+        {
+          title: "经验值",
+        },
+        { divider: true, inset: true }
+      );
+    }
   },
 };
 </script>

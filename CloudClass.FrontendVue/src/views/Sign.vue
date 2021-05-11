@@ -2,9 +2,25 @@
   <v-container>
     <div class="text-h4 text-center mb-16 mt-16">班级：工程实践</div>
     <div class="d-flex justify-center align-self-center pt-16 pb-16">
-      <v-btn x-large class="primary mb-16 mt-16" @click="sign(1)">
+      <v-btn
+        x-large
+        class="primary mb-16 mt-16"
+        @click="sign(1)"
+        v-if="isSuccess === false"
+      >
         <v-icon left>mdi-clipboard-account</v-icon>
         签到
+      </v-btn>
+      <v-btn
+        v-if="isSuccess === true"
+        x-large
+        class="mb-16 mt-16 white--text"
+        elevation="4"
+        color="green lighten"
+        shaped
+      >
+        <v-icon left>mdi-check</v-icon>
+        签到成功
       </v-btn>
     </div>
     <v-snackbar v-model="snackbar">
@@ -24,6 +40,7 @@ export default {
     snackbar: false,
     text: `签到成功！`,
     msg: "位置信息获取失败",
+    isSuccess: false,
   }),
   methods: {
     sign(val) {
@@ -69,12 +86,14 @@ export default {
         enableHighAccuracy: val,
       });
 
+      this.isSuccess = true;
+      console.log(this.isSuccess);
+
       setTimeout(function () {
         alert(me.msg);
       }, 1000);
-
-      //this.snackbar = true;
     },
+    createSignUp() {},
   },
 };
 </script>

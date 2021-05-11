@@ -44,6 +44,17 @@
       prepend-icon="mdi-format-color-highlight"
     >
     </v-text-field>
+    <v-text-field
+      v-if="type == 'exp'"
+      v-model="classNumber"
+      :rules="[rules.required]"
+      class="mt-5"
+      hint="请输入修改后的经验值"
+      label="经验值"
+      outlined
+      prepend-icon="mdi-format-color-highlight"
+    >
+    </v-text-field>
 
     <!--
       <v-alert
@@ -54,11 +65,8 @@
 
       >请填写班课信息</v-alert>
 -->
-    <div
-      class="text-center d-flex justify-space-around"
-      v-if="type === 'classCode'"
-    >
-      <v-btn color="primary" dark @click="judgeEnterClass"> 加入班课 </v-btn>
+    <div class="text-center d-flex justify-space-around">
+      <v-btn color="primary" dark @click="judgeEnterClass"> 确定 </v-btn>
       <v-btn color="green lighten" dark @click="back"> 返回 </v-btn>
     </div>
 
@@ -130,15 +138,6 @@ export default {
   mounted: function () {
     if (this.$route.query.type !== "") {
       this.type = this.$route.query.type;
-    }
-    if (this.type === "school") {
-      this.$route.meta.stuTitle = "修改学校";
-    } else if (this.type === "grade") {
-      this.$route.meta.stuTitle = "修改年级";
-    } else if (this.type === "major") {
-      this.$route.meta.stuTitle = "修改专业";
-    } else if (this.type === "classCode") {
-      this.$route.meta.stuTitle = "加入班课";
     }
     console.log(this.type);
   },

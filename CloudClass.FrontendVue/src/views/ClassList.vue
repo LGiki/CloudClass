@@ -142,7 +142,7 @@ export default {
     //创建班课
     addClass() {
       // if (this.GLOBAL.user == "student") {
-        this.overlay = !this.overlay;
+      this.overlay = !this.overlay;
       // } else {
       //   this.$router.push("/addClass");
       // }
@@ -154,6 +154,7 @@ export default {
           type: "classCode",
         },
       });
+      this.$route.meta.stuTitle = "加入班课";
     },
     enterByQrCode() {
       this.window.cordova.plugins.barcodeScanner.scan(

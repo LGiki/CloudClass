@@ -7,10 +7,13 @@
       :clipped-left="$vuetify.breakpoint.lgAndUp"
     >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <!--      <v-toolbar-title v-if="this.GLOBAL.user == 'teacher'"-->
-      <!--        >到云 - {{ this.$route.meta.title }}</v-toolbar-title-->
-      <!--      >-->
-      <v-toolbar-title>到云 - {{ this.$route.meta.stuTitle }}</v-toolbar-title>
+      <v-toolbar-title v-if="isTeacher === '1'">
+        到云 - {{ this.$route.meta.title }}
+      </v-toolbar-title>
+
+      <v-toolbar-title v-if="isTeacher === '0'"
+        >到云 - {{ this.$route.meta.stuTitle }}</v-toolbar-title
+      >
       <v-spacer />
       <v-btn icon @click="toggleDarkMode">
         <v-icon> {{ darkModeIcon }}</v-icon>
@@ -62,6 +65,7 @@ export default {
     drawer: false,
     darkModeIcon: "mdi-brightness-4",
     itemIndex: 0,
+    isTeacher: localStorage.getItem("isTeacher"),
     items: [
       {
         icon: "mdi-google-classroom",

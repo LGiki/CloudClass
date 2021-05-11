@@ -11,6 +11,8 @@
             班级: {{ 123 }}
             <br />
             专业: {{ 123 }}
+            <br />
+            经验值： 100
           </v-card-subtitle>
         </div>
         <div style="display: flex; align-items: center">
