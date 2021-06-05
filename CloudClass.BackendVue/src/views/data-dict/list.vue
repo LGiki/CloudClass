@@ -27,26 +27,10 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column label="数据字典ID" prop="id" align="center" width="120">
-        <template slot-scope="{row}">
-          <span>{{ row.id }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="中文标识" width="150" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.chinese }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="英文标识" min-width="150" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.english }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="备注" width="100" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.comment }}</span>
-        </template>
-      </el-table-column>
+      <el-table-column prop="id" label="数据字典ID" align="center" />
+      <el-table-column prop="chinese" label="名称" align="center" />
+      <el-table-column prop="english" label="编码" align="center" />
+      <el-table-column prop="comment" label="字典值" align="center" />
       <el-table-column label="操作" align="center" width="150" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
