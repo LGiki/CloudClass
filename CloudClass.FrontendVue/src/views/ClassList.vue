@@ -68,7 +68,7 @@
         class="mr-4"
         @click="addClass"
       >
-        <v-icon dark> mdi-plus</v-icon>
+        <v-icon dark>mdi-plus</v-icon>
       </v-btn>
     </div>
     <v-overlay :absolute="absolute" :value="overlay" opacity="0.7">
@@ -80,7 +80,7 @@
           color="success"
           @click="enterByClassCode"
         >
-          <v-icon dark left> mdi-form-textbox-password</v-icon>
+          <v-icon dark left>mdi-form-textbox-password</v-icon>
           通过班课号加入
         </v-btn>
         <v-btn
@@ -90,7 +90,7 @@
           color="success"
           @click="enterByQrCode"
         >
-          <v-icon dark left> mdi-qrcode</v-icon>
+          <v-icon dark left>mdi-qrcode</v-icon>
           通过二维码加入
         </v-btn>
         <v-btn x-large elevation="2" color="grey" @click="overlay = false">
@@ -139,12 +139,13 @@ export default {
     sign() {
       this.$router.push("/sign");
     },
+    //创建班课
     addClass() {
-      if (this.GLOBAL.user == "student") {
-        this.overlay = !this.overlay;
-      } else {
-        this.$router.push("/addClass");
-      }
+      // if (this.GLOBAL.user == "student") {
+      this.overlay = !this.overlay;
+      // } else {
+      //   this.$router.push("/addClass");
+      // }
     },
     enterByClassCode() {
       this.$router.push({
@@ -189,7 +190,10 @@ export default {
     },
     goClassDetail(classId) {
       this.$router.push({
-        path: "/classDetail/" + classId,
+        path: "/classDetail/",
+        query: {
+          id: classId,
+        },
       });
     },
   },

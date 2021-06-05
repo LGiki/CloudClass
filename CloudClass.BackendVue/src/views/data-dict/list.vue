@@ -9,10 +9,10 @@
         class="filter-item"
       />
       <el-button type="primary" @click="onSearch">
-        <svg-icon icon-class="search"/>&nbsp;搜索
+        <svg-icon icon-class="search" />&nbsp;搜索
       </el-button>
       <el-button v-if="inSearch" type="primary" @click="onCancelSearch">
-        <i class="el-icon-close"/>&nbsp;取消搜索
+        <i class="el-icon-close" />&nbsp;取消搜索
       </el-button>
       <el-button type="danger">
         <i class="el-icon-plus"/>&nbsp;新建数据字典
@@ -59,7 +59,7 @@
       </el-table-column>
     </el-table>
     <div class="pagination-center">
-      <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList"/>
+      <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
     </div>
   </div>
 </template>

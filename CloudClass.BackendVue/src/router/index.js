@@ -73,7 +73,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '主页', icon: 'dashboard' }
+      meta: {title: '主页', icon: 'dashboard'}
     }]
   },
 
@@ -81,7 +81,7 @@ export const constantRoutes = [
     path: '/user',
     component: Layout,
     redirect: '/user/index',
-    meta: { title: '用户管理', icon: 'peoples' },
+    meta: {title: '用户管理', icon: 'peoples'},
     children: [
       {
         path: 'index',
@@ -106,7 +106,7 @@ export const constantRoutes = [
     path: '/data-dict',
     component: Layout,
     redirect: '/data-dict/index',
-    meta: { title: '数据字典', icon: 'dict' },
+    meta: {title: '数据字典', icon: 'dict'},
     children: [
       {
         path: 'index',
@@ -128,11 +128,12 @@ export const constantRoutes = [
     ]
   },
   {
+
     path: '/system',
     component: Layout,
     // redirect: '/system/menu',
     name: 'system-configure',
-    meta: { title: '系统设置', icon: 'setting' },
+    meta: {title: '系统设置', icon: 'setting'},
     children: [
       {
         path: 'menu',
@@ -149,16 +150,24 @@ export const constantRoutes = [
         meta: {
           title: '角色管理'
         }
+      },
+      {
+        path: 'config',
+        name: 'Config',
+        component: () => import('@/views/system/config'),
+        meta: {
+          title: '系统参数'
+        }
       }
     ]
   },
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  {path: '*', redirect: '/404', hidden: true}
 ]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({y: 0}),
   routes: constantRoutes
 })
 

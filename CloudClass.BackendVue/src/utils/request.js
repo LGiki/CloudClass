@@ -36,6 +36,7 @@ service.interceptors.response.use(
           Message.error('您未登录或登录已过期，请登录后重试')
           this.$router.replace({ path: '/login' })
           // TODO: remove token from localstorage
+          this.$store.commit('token/REMOVE_TOKEN')
       }
       return Promise.reject(error)
     }

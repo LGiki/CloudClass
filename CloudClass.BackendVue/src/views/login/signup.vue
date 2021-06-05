@@ -15,7 +15,7 @@
 
       <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user"/>
+          <svg-icon icon-class="user" />
         </span>
         <el-input
           ref="username"
@@ -30,7 +30,7 @@
 
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="password"/>
+          <svg-icon icon-class="password" />
         </span>
         <el-input
           key="password"
@@ -47,7 +47,7 @@
 
       <el-form-item prop="rePassword">
         <span class="svg-container">
-          <svg-icon icon-class="password"/>
+          <svg-icon icon-class="password" />
         </span>
         <el-input
           key="rePassword"
@@ -63,7 +63,7 @@
       </el-form-item>
       <el-form-item prop="phone">
         <span class="svg-container">
-          <svg-icon icon-class="phone"/>
+          <svg-icon icon-class="phone" />
         </span>
         <el-input
           key="phone"
@@ -79,9 +79,9 @@
       <div style="width: 100%;display: inline-grid;grid-template-columns: 3fr 1fr;grid-column-gap: 20px;">
         <div>
           <el-form-item prop="validationCode">
-          <span class="svg-container">
-            <svg-icon icon-class="message"/>
-          </span>
+            <span class="svg-container">
+              <svg-icon icon-class="message" />
+            </span>
             <el-input
               key="validationCode"
               ref="validationCode"
@@ -117,8 +117,8 @@
 </template>
 
 <script>
-import {Message} from 'element-ui'
-import {validatePhone} from "@/utils/validate";
+import { Message } from 'element-ui'
+import { validatePhone } from '@/utils/validate'
 
 export default {
   name: 'Signup',
@@ -163,11 +163,11 @@ export default {
         disabled: false
       },
       loginRules: {
-        username: [{required: true, trigger: 'blur', validator: validateUsername}],
-        password: [{required: true, trigger: 'blur', validator: validatePassword}],
-        rePassword: [{required: true, trigger: 'blur', validator: validateRePassword}],
-        phone: [{required: true, trigger: 'blur', validator: validatePhone}],
-        validationCode: [{required: true, trigger: 'blur', validator: validateValidationCode}]
+        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }],
+        rePassword: [{ required: true, trigger: 'blur', validator: validateRePassword }],
+        phone: [{ required: true, trigger: 'blur', validator: validatePhone }],
+        validationCode: [{ required: true, trigger: 'blur', validator: validateValidationCode }]
       },
       loading: false,
       passwordType: 'password',
@@ -177,7 +177,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function (route) {
+      handler: function(route) {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true

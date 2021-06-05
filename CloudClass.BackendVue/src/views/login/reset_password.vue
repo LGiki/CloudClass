@@ -17,7 +17,7 @@
         <el-form-item prop="phone">
           <div>
             <span class="svg-container">
-              <svg-icon icon-class="phone"/>
+              <svg-icon icon-class="phone" />
             </span>
             <el-input
               key="phone"
@@ -44,7 +44,7 @@
 
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="password"/>
+          <svg-icon icon-class="password" />
         </span>
         <el-input
           key="validationCode"
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import {validatePhone} from "@/utils/validate";
+import { validatePhone } from '@/utils/validate'
 
 export default {
   name: 'ResetPassword',
@@ -100,7 +100,7 @@ export default {
       sendValidationButton: {
         title: '发送验证码',
         disabled: false
-      },
+      }
     }
   },
   watch: {
