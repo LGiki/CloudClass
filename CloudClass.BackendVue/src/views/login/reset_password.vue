@@ -80,7 +80,7 @@ export default {
   data() {
     const validatePassword = (rule, value, callback) => {
       if (value.length === 0) {
-        callback(new Error('密码不能为空'))
+        callback(new Error('验证码不能为空'))
       } else {
         callback()
       }
