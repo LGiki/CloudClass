@@ -327,7 +327,7 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
-  backdrop-filter: blur(35px) saturate(1.9);
+  backdrop-filter: blur(30px) saturate(1.9);
   background-color: rgba(255, 255, 255, .2);
   border-radius: 25px;
   padding: 25px;

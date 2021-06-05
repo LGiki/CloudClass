@@ -1,77 +1,79 @@
 <template>
-  <div class="login-container">
-    <el-form
-      ref="loginForm"
-      :model="loginForm"
-      :rules="loginRules"
-      class="login-form"
-      auto-complete="on"
-      label-position="left"
-    >
+  <div class="container">
+    <div class="login-container">
+      <el-form
+        ref="loginForm"
+        :model="loginForm"
+        :rules="loginRules"
+        class="login-form"
+        auto-complete="on"
+        label-position="left"
+      >
 
-      <div class="title-container">
-        <h3 class="title">重置密码</h3>
-      </div>
+        <div class="title-container">
+          <h3 class="title">重置密码</h3>
+        </div>
 
-      <div style="width: 100%;display: inline-grid;grid-template-columns: 3fr 1fr;grid-column-gap: 20px;">
-        <el-form-item prop="phone">
-          <div>
+        <div style="width: 100%;display: inline-grid;grid-template-columns: 3fr 1fr;grid-column-gap: 20px;">
+          <el-form-item prop="phone">
+            <div>
             <span class="svg-container">
-              <svg-icon icon-class="phone" />
+              <svg-icon icon-class="phone"/>
             </span>
-            <el-input
-              key="phone"
-              ref="phone"
-              v-model="loginForm.phone"
-              type="text"
-              placeholder="手机号"
-              name="phone"
-              tabindex="2"
-              auto-complete="on"
-              @keyup.enter.native="handleLogin"
-            />
-          </div>
+              <el-input
+                key="phone"
+                ref="phone"
+                v-model="loginForm.phone"
+                type="text"
+                placeholder="手机号"
+                name="phone"
+                tabindex="2"
+                auto-complete="on"
+                @keyup.enter.native="handleLogin"
+              />
+            </div>
+          </el-form-item>
+          <el-button
+            :disabled="sendValidationButton.disabled"
+            type="primary"
+            style="width:100%;margin-bottom:22px;"
+            @click="handleSendValidationCode"
+          >
+            {{ sendValidationButton.title }}
+          </el-button>
+        </div>
+
+        <el-form-item prop="password">
+        <span class="svg-container">
+          <svg-icon icon-class="password"/>
+        </span>
+          <el-input
+            key="validationCode"
+            ref="validationCode"
+            v-model="loginForm.validationCode"
+            type="validationCode"
+            placeholder="验证码"
+            name="validationCode"
+            tabindex="2"
+            auto-complete="on"
+            @keyup.enter.native="handleLogin"
+          />
         </el-form-item>
         <el-button
-          :disabled="sendValidationButton.disabled"
+          :loading="loading"
           type="primary"
-          style="width:100%;margin-bottom:22px;"
-          @click="handleSendValidationCode"
-        >
-          {{ sendValidationButton.title }}
+          style="width:100%;margin-bottom:30px;"
+          @click.native.prevent="handleLogin"
+        >下一步
         </el-button>
-      </div>
 
-      <el-form-item prop="password">
-        <span class="svg-container">
-          <svg-icon icon-class="password" />
-        </span>
-        <el-input
-          key="validationCode"
-          ref="validationCode"
-          v-model="loginForm.validationCode"
-          type="validationCode"
-          placeholder="验证码"
-          name="validationCode"
-          tabindex="2"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin"
-        />
-      </el-form-item>
-      <el-button
-        :loading="loading"
-        type="primary"
-        style="width:100%;margin-bottom:30px;"
-        @click.native.prevent="handleLogin"
-      >下一步
-      </el-button>
-
-    </el-form>
+      </el-form>
+    </div>
   </div>
 </template>
 
 <script>
-import { validatePhone } from '@/utils/validate'
+import {validatePhone} from '@/utils/validate'
 
 export default {
   name: 'ResetPassword',
@@ -92,8 +94,8 @@ export default {
         validationCode: ''
       },
       loginRules: {
-        phone: [{ required: true, trigger: 'blur', validator: validatePhone }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        phone: [{required: true, trigger: 'blur', validator: validatePhone}],
+        password: [{required: true, trigger: 'blur', validator: validatePassword}]
       },
       loading: false,
       redirect: undefined,
@@ -105,7 +107,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler: function (route) {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
@@ -138,7 +140,7 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
+            this.$router.push({path: this.redirect || '/'})
             this.loading = false
           }).catch(() => {
             this.loading = false
@@ -167,8 +169,29 @@ $cursor: #fff;
   }
 }
 
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //background-color: $bg;
+  background: url("../../assets/login-background.jpg") no-repeat;
+  background-size: cover;
+}
+
 /* reset element-ui css */
 .login-container {
+  backdrop-filter: blur(30px) saturate(1.9);
+  background-color: rgba(255, 255, 255, .2);
+  border-radius: 25px;
+  padding: 25px;
+  box-shadow: 0 0.8px 4.7px rgba(0, 0, 0, 0.028),
+  0 2px 9.9px rgba(0, 0, 0, 0.04),
+  0 3.8px 16.2px rgba(0, 0, 0, 0.05),
+  0 6.7px 25.2px rgba(0, 0, 0, 0.06),
+  0 12.5px 41.1px rgba(0, 0, 0, 0.072),
+  0 30px 86px rgba(0, 0, 0, 0.1);
   .el-input {
     display: inline-block;
     height: 47px;
@@ -211,16 +234,15 @@ $light_gray: #eee;
 }
 
 .login-container {
-  min-height: 100%;
-  width: 100%;
-  background-color: $bg;
+  //min-height: 100%;
+  //width: 100%;
   overflow: hidden;
 
   .login-form {
     position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 160px 35px 0;
+    //padding: 160px 35px 0;
     margin: 0 auto;
     overflow: hidden;
   }
