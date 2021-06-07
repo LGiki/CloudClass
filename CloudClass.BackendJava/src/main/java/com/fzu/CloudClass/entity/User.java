@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author djk
- * @since 2021-04-02
+ * @since 2021-04-13
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -36,59 +36,9 @@ public class User implements Serializable {
 
     private Integer status;
 
-    public Integer getuId() {
-        return uId;
-    }
+    private String password;
 
-    public void setuId(Integer uId) {
-        this.uId = uId;
-    }
+    private Integer userType;
 
-    public String getuNumber() {
-        return uNumber;
-    }
 
-    public void setuNumber(String uNumber) {
-        this.uNumber = uNumber;
-    }
-
-    public String getuName() {
-        return uName;
-    }
-
-    public void setuName(String uName) {
-        this.uName = uName;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmaile() {
-        return emaile;
-    }
-
-    public void setEmaile(String emaile) {
-        this.emaile = emaile;
-    }
-
-    public LocalDateTime getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(LocalDateTime createDate) {
-        this.createDate = createDate;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 }

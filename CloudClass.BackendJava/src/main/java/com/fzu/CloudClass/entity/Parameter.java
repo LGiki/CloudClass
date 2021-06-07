@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author djk
- * @since 2021-04-02
+ * @since 2021-04-13
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -32,43 +32,4 @@ public class Parameter implements Serializable {
     private Integer status;
 
 
-    public Integer getPaId() {
-        return paId;
-    }
-
-    public void setPaId(Integer paId) {
-        this.paId = paId;
-    }
-
-    public String getPaName() {
-        return paName;
-    }
-
-    public void setPaName(String paName) {
-        this.paName = paName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Double getValue() {
-        return value;
-    }
-
-    public void setValue(Double value) {
-        this.value = value;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 }

@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author djk
- * @since 2021-04-02
+ * @since 2021-04-13
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -22,40 +22,5 @@ public class School implements Serializable {
 
     private String sName;
 
-    private String college;
 
-    private String major;
-
-
-    public Integer getsId() {
-        return sId;
-    }
-
-    public void setsId(Integer sId) {
-        this.sId = sId;
-    }
-
-    public String getsName() {
-        return sName;
-    }
-
-    public void setsName(String sName) {
-        this.sName = sName;
-    }
-
-    public String getCollege() {
-        return college;
-    }
-
-    public void setCollege(String college) {
-        this.college = college;
-    }
-
-    public String getMajor() {
-        return major;
-    }
-
-    public void setMajor(String major) {
-        this.major = major;
-    }
 }

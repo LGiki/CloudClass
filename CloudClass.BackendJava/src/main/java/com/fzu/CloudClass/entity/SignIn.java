@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author djk
- * @since 2021-04-02
+ * @since 2021-04-13
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -23,10 +23,6 @@ public class SignIn implements Serializable {
 
     @TableId(value = "si_id", type = IdType.AUTO)
     private Integer siId;
-
-    private Integer peId;
-
-    private Integer cId;
 
     /**
      * ǩ
@@ -43,52 +39,9 @@ public class SignIn implements Serializable {
      */
     private String position;
 
+    private Integer peId;
 
-    public Integer getSiId() {
-        return siId;
-    }
+    private Integer cId;
 
-    public void setSiId(Integer siId) {
-        this.siId = siId;
-    }
 
-    public Integer getPeId() {
-        return peId;
-    }
-
-    public void setPeId(Integer peId) {
-        this.peId = peId;
-    }
-
-    public Integer getcId() {
-        return cId;
-    }
-
-    public void setcId(Integer cId) {
-        this.cId = cId;
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
 }

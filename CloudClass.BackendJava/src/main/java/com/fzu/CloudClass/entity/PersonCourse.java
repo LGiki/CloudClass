@@ -1,5 +1,7 @@
 package com.fzu.CloudClass.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,7 +12,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author djk
- * @since 2021-04-02
+ * @since 2021-04-13
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -18,54 +20,16 @@ public class PersonCourse implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value = "pc_id", type = IdType.AUTO)
     private Integer pcId;
-
-    private Integer peId;
-
-    private Integer cId;
 
     private Integer value;
 
     private Integer status;
 
+    private Integer peId;
 
-    public Integer getPcId() {
-        return pcId;
-    }
+    private Integer cId;
 
-    public void setPcId(Integer pcId) {
-        this.pcId = pcId;
-    }
 
-    public Integer getPeId() {
-        return peId;
-    }
-
-    public void setPeId(Integer peId) {
-        this.peId = peId;
-    }
-
-    public Integer getcId() {
-        return cId;
-    }
-
-    public void setcId(Integer cId) {
-        this.cId = cId;
-    }
-
-    public Integer getValue() {
-        return value;
-    }
-
-    public void setValue(Integer value) {
-        this.value = value;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 }
