@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author djk
- * @since 2021-04-02
+ * @since 2021-04-13
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -22,10 +22,6 @@ public class Person implements Serializable {
 
     @TableId(value = "pe_id", type = IdType.AUTO)
     private Integer peId;
-
-    private Integer uId;
-
-    private Integer sId;
 
     private String peNumber;
 
@@ -44,84 +40,17 @@ public class Person implements Serializable {
 
     private Integer isTeacher;
 
+    private String username;
 
-    public Integer getPeId() {
-        return peId;
-    }
+    private String password;
 
-    public void setPeId(Integer peId) {
-        this.peId = peId;
-    }
+    private String phone;
 
-    public Integer getuId() {
-        return uId;
-    }
+    private String email;
 
-    public void setuId(Integer uId) {
-        this.uId = uId;
-    }
+    private Integer type;
 
-    public Integer getsId() {
-        return sId;
-    }
+    private String oauth;
 
-    public void setsId(Integer sId) {
-        this.sId = sId;
-    }
 
-    public String getPeNumber() {
-        return peNumber;
-    }
-
-    public void setPeNumber(String peNumber) {
-        this.peNumber = peNumber;
-    }
-
-    public String getPeName() {
-        return peName;
-    }
-
-    public void setPeName(String peName) {
-        this.peName = peName;
-    }
-
-    public Integer getGender() {
-        return gender;
-    }
-
-    public void setGender(Integer gender) {
-        this.gender = gender;
-    }
-
-    public String getGrade() {
-        return grade;
-    }
-
-    public void setGrade(String grade) {
-        this.grade = grade;
-    }
-
-    public String getMajor() {
-        return major;
-    }
-
-    public void setMajor(String major) {
-        this.major = major;
-    }
-
-    public Integer getClasses() {
-        return classes;
-    }
-
-    public void setClasses(Integer classes) {
-        this.classes = classes;
-    }
-
-    public Integer getIsTeacher() {
-        return isTeacher;
-    }
-
-    public void setIsTeacher(Integer isTeacher) {
-        this.isTeacher = isTeacher;
-    }
 }

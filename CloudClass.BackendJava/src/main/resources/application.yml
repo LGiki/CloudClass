@@ -31,14 +31,14 @@ mybatis-plus:
 spring:
   application:
     name: ${SPRING_APPLICATION_NAME:CloudClass}
-  #  redis:
-  #    host: ${REDIS_HOST:192.168.99.100}
-  #    port: 6379
+#    redis:
+#      host: ${REDIS_HOST:192.168.99.100}
+#      port: 6379
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/cloudclass?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2B8
+    url: jdbc:mysql://8.140.0.237:3306/cloudclass?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2B8
     username: root
-    password: 123456
+    password: cloudclass123456
 server:
   servlet:
     context-path: /api
@@ -47,3 +47,20 @@ opentracing:
   jaeger:
     http-sender:
       url: http://${JAEGER_ENDPOINT:localhost}:14268/api/traces
+jwt:
+  # 加密密钥
+  secret: cloudclass1234567
+  # token有效时长
+  expire: 36000
+  # header 名称
+  header: token
+
+#oauth:
+#  github:
+#    app-id: 1ce1ed69349a9f307417
+#    app-secret: 1909c97b4b153eb5273f5086e5a11ddedd7e79d9
+#
+oauth:
+  github:
+    app-id: 1bcc057d1fa210ff880a
+    app-secret: 0282c18668f9495cc7b64c4685c241b7caae062b
