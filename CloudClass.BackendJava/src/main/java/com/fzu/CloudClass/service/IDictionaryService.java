@@ -16,6 +16,8 @@ import java.util.List;
  */
 public interface IDictionaryService extends IService<Dictionary> {
 
+    int getCountAll();
+
     List<Dictionary> getAllDictionary(int pageNo, int pageSize);
 
     void addDictionary(String chineseName,String englishName);

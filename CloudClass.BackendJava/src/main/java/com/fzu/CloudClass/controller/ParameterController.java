@@ -34,9 +34,11 @@ public class ParameterController {
     public JSONObject getAllParameter(@RequestParam("pageNo") int pageNo, @RequestParam("pageSize") int pageSize){
 
 
+        int count = parameterService.getCountAll();
         List<Parameter> parameters = parameterService.getAllParameter(pageNo,pageSize);
 
         JSONObject result = new JSONObject();
+        result.put("total",count);
         result.put("data", parameters);
         result.put("msg", "ok");
         result.put("code", "200");

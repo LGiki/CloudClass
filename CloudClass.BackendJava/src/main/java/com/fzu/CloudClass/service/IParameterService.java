@@ -16,6 +16,8 @@ import java.util.List;
  */
 public interface IParameterService extends IService<Parameter> {
 
+    int getCountAll();
+
     List<Parameter> getAllParameter(int pageNo, int pageSize);
 
     void addParameter(String pa_name,String description,double value,int status);

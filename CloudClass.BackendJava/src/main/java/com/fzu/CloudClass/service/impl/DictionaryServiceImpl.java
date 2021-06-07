@@ -28,6 +28,12 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
     DictionaryMapper dictionaryMapper;
 
     @Override
+    public int getCountAll() {
+        QueryWrapper<Dictionary> queryWrapper =  new QueryWrapper<>();
+        return dictionaryMapper.selectCount(queryWrapper);
+    }
+
+    @Override
     public List<Dictionary> getAllDictionary(int pageNo, int pageSize) {
 
         QueryWrapper<Dictionary> queryWrapper =  new QueryWrapper<>();

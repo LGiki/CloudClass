@@ -1,114 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="01042bfc-f3a0-4203-a0b3-ceaf341237b8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/Applicatiion.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/ButtonController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/CourseController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/DictionaryController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/DictionaryDetailController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/MenuButtonController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/MenuController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/ParameterController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/PermissionController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/PersonController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/PersonCourseController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/RoleController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/RolePermissionController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/SchoolController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/SignInController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/UserRoleController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/Button.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/Course.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/Dictionary.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/DictionaryDetail.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/Menu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/MenuButton.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/Parameter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/Permission.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/Person.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/PersonCourse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/Role.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/RolePermission.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/School.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/SignIn.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/UserRole.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/ButtonMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/CourseMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/DictionaryDetailMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/DictionaryMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/MenuButtonMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/MenuMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/ParameterMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/PermissionMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/PersonCourseMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/PersonMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/RoleMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/RolePermissionMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/SchoolMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/SignInMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/UserMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/UserRoleMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IButtonService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/ICourseService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IDictionaryDetailService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IDictionaryService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IMenuButtonService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IMenuService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IParameterService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IPermissionService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IPersonCourseService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IPersonService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IRolePermissionService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IRoleService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/ISchoolService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/ISignInService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IUserRoleService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IUserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/ButtonServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/CourseServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/DictionaryDetailServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/DictionaryServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/MenuButtonServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/MenuServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/ParameterServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/PermissionServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/PersonCourseServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/PersonServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/RolePermissionServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/RoleServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/SchoolServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/SignInServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/UserRoleServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/UserServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/Generator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/CloudClass/ButtonMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/CloudClass/CourseMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/CloudClass/DictionaryDetailMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/CloudClass/DictionaryMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/CloudClass/MenuButtonMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/CloudClass/MenuMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/CloudClass/ParameterMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/CloudClass/PermissionMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/CloudClass/PersonCourseMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/CloudClass/PersonMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/CloudClass/RoleMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/CloudClass/RolePermissionMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/CloudClass/SchoolMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/CloudClass/SignInMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/CloudClass/UserMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/CloudClass/UserRoleMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Docs/09_CloudClass.pdm" beforeDir="false" afterPath="$PROJECT_DIR$/../Docs/09_CloudClass.pdm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/DictionaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/DictionaryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/ParameterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/ParameterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IDictionaryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IDictionaryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IParameterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IParameterService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/DictionaryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/DictionaryServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/ParameterServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/ParameterServiceImpl.java" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/out/" />
-    <ignored path="$PROJECT_DIR$/target/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -116,75 +22,6 @@
   </component>
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IDictionaryService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="18" selection-start-line="18" selection-end-line="24" selection-end-column="74" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IParameterService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="20" column="62" selection-start-line="20" selection-start-column="62" selection-end-line="20" selection-end-column="62" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/DictionaryServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="741">
-              <caret line="52" column="13" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
-              <folding>
-                <element signature="e#1555#1556#0" expanded="true" />
-                <element signature="e#1604#1605#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/DictionaryController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1672">
-              <caret line="96" selection-start-line="96" selection-end-line="110" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/ParameterController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
-              <caret line="44" column="5" selection-start-line="44" selection-start-column="5" selection-end-line="44" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/ParameterServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="931">
-              <caret line="62" column="40" selection-start-line="62" selection-start-column="40" selection-end-line="62" selection-end-column="40" />
-              <folding>
-                <element signature="e#1615#1616#0" expanded="true" />
-                <element signature="e#1664#1665#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -286,6 +123,7 @@
     <option name="width" value="3273" />
     <option name="height" value="2193" />
   </component>
+  <component name="ProjectId" id="1tbGDJiZGY0TLwR40q4h13sNTRV" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -460,6 +298,10 @@
       <pane id="PackagesPane" />
     </panes>
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
@@ -477,7 +319,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.4867647" />
     <property name="settings.editor.selected.configurable" value="File.Encoding" />
@@ -493,17 +335,6 @@
         <option value="SpringBootApplicationConfigurationType" />
       </set>
     </option>
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-    <option name="contentProportion" value="0.011838006" />
   </component>
   <component name="RunManager" selected="Spring Boot.Application">
     <configuration name="Generator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -539,6 +370,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -593,6 +425,7 @@
       <workItem from="1622858081311" duration="18884000" />
       <workItem from="1622960912138" duration="6305000" />
       <workItem from="1622996633433" duration="615000" />
+      <workItem from="1623030261855" duration="3869000" />
     </task>
     <servers />
   </component>
@@ -639,7 +472,18 @@
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />

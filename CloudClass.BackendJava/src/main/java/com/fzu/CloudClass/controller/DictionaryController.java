@@ -36,7 +36,7 @@ public class DictionaryController {
         List<Map<String, Object>> datas = new ArrayList<>();
 
         List<Dictionary> dictionaries = dictionaryService.getAllDictionary(pageNo,pageSize);
-
+        int count = dictionaryService.getCountAll();
         for(int i =0;i<dictionaries.size();i++){
             Map<String, Object> data = new HashMap<>();
             Dictionary one = dictionaries.get(i);
@@ -51,6 +51,7 @@ public class DictionaryController {
 
 
         JSONObject result = new JSONObject();
+        result.put("total",count);
         result.put("data", datas);
         result.put("msg", "ok");
         result.put("code", "200");

@@ -28,6 +28,12 @@ public class ParameterServiceImpl extends ServiceImpl<ParameterMapper, Parameter
     ParameterMapper parameterMapper;
 
     @Override
+    public int getCountAll() {
+        QueryWrapper<Parameter> queryWrapper =  new QueryWrapper<>();
+        return parameterMapper.selectCount(queryWrapper);
+    }
+
+    @Override
     public List<Parameter> getAllParameter(int pageNo, int pageSize) {
         QueryWrapper<Parameter> queryWrapper =  new QueryWrapper<>();
         queryWrapper.orderByAsc("pa_id");
