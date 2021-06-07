@@ -152,9 +152,9 @@ export const constantRoutes = [
         }
       },
       {
-        path: 'config',
+        path: 'parameter',
         name: 'Config',
-        component: () => import('@/views/system/config'),
+        component: () => import('@/views/system/parameter'),
         meta: {
           title: '系统参数'
         }
