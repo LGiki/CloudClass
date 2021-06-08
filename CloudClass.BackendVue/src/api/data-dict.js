@@ -44,14 +44,12 @@ export function deleteDataDict(dId) {
   })
 }
 
-export function getDataDictItemList(dId, pageNo, pageSize) {
+export function getDataDictItemList(dId) {
   return request({
     url: `/dictionary-detail/DictionaryDetail`,
     method: 'get',
     params: {
-      dId: `${dId}`,
-      pageNo: `${pageNo}`,
-      pageSize: `${pageSize}`
+      dId: `${dId}`
     }
   })
 }
@@ -85,5 +83,21 @@ export function deleteDataDictItem(ddId) {
     params: {
       ddId: ddId
     }
+  })
+}
+
+export function addDataDictAndItem(data) {
+  return request({
+    url: `/dictionary-detail/DictionaryAndDetail`,
+    method: 'post',
+    data: data
+  })
+}
+
+export function updateDataDictAndItem(data) {
+  return request({
+    url: `/dictionary-detail/DictionaryDetail`,
+    method: 'put',
+    data: data
   })
 }

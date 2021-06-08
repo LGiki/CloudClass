@@ -47,3 +47,13 @@ export function deleteSystemParameter(paId) {
     }
   })
 }
+
+export function isDescriptionExist(description) {
+  return request({
+    url: '/parameter/KeyWord',
+    method: 'post',
+    data: {
+      description: description
+    }
+  })
+}

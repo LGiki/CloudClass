@@ -15,13 +15,13 @@
     >
       <el-table-column prop="d_id" label="数据字典ID" align="center"/>
       <el-table-column prop="ChineseName" label="名称" align="center"/>
-      <el-table-column prop="EnglishName" label="编码" align="center"/>
-      <el-table-column prop="comment" label="字典值" align="center">
+      <el-table-column prop="EnglishName" label="关键字" align="center"/>
+      <el-table-column prop="comment" label="字典明细项" align="center">
         <template slot-scope="{row}">
-          <div style="display: flex; flex-wrap: wrap">
-          <span v-for="item of row['items']" :key="item.ddId" class="dict-value">
-            {{ item.ddName }}
-          </span>
+          <div style="display: flex; flex-wrap: wrap;justify-content: center">
+            <span v-for="item of row['items']" :key="item.ddId" :class="item.isDefault == '1' ? 'dict-value dict-value-default' : 'dict-value'">
+              {{ item.ddName }}
+            </span>
           </div>
         </template>
       </el-table-column>
@@ -47,70 +47,92 @@
         @current-change="currentChangeHandle"
       />
     </div>
-    <el-dialog :title="`${isAdd ? '新增' : '编辑'}数据字典`" :visible.sync="dialogFormVisible" width="80%">
-      <el-form ref="dictDetail" :model="dataDictDetail" label-width="120px">
+    <el-dialog @closed="onNewDataDictDialogClosed" :title="`${isAdd ? '新增' : '编辑'}数据字典`" :visible.sync="dialogFormVisible" width="80%">
+      <el-form ref="dataDictDialogForm" :model="dataDictDetail" :rules="newDataDictCheckRules" label-width="120px">
         <el-form-item v-if="!isAdd" label="数据字典ID">
           <el-input v-model="dataDictDetail['d_id']" disabled/>
         </el-form-item>
-        <el-form-item label="中文标识" prop="chineseName">
-          <el-input v-model="dataDictDetail.ChineseName" placeholder="请输入中文标识"/>
+        <el-form-item label="名称" prop="ChineseName">
+          <el-input v-model="dataDictDetail.ChineseName" placeholder="请输入名称"/>
         </el-form-item>
-        <el-form-item label="英文标识" prop="englishName">
-          <el-input v-model="dataDictDetail.EnglishName" placeholder="请输入英文标识"/>
+        <el-form-item label="关键字" prop="EnglishName">
+          <el-input v-model="dataDictDetail.EnglishName" placeholder="请输入关键字"/>
         </el-form-item>
       </el-form>
       <div class="operation-button">
-        <el-button type="danger" size="small"
-                   @click="initDataDictItem(); isDataDictItemAdd = true; dataDictItemEditDialogFormVisible = true">
-          <i class="el-icon-plus"/>&nbsp;新建数据字典项
+        <el-button
+          type="danger"
+          size="small"
+          @click="initDataDictItem(); isDataDictItemAdd = true; dataDictItemEditDialogFormVisible = true"
+        >
+          <i class="el-icon-plus"/>&nbsp;新建数据字典明细项
         </el-button>
       </div>
       <el-table
         v-loading="dataDictItemTableLoading"
         :data="dataDictItemList"
+        :key="dataDictItemTableKey"
         border
         fit
         highlight-current-row
         style="width: 100%;"
       >
-        <el-table-column prop="ddId" label="数据字典项ID" align="center" v-if="!isAdd"/>
+        <el-table-column v-if="!isAdd" prop="ddId" label="数据字典明细项ID" align="center"/>
         <el-table-column prop="ddName" label="名称" align="center"/>
-        <el-table-column label="操作" align="center" width="150" class-name="small-padding fixed-width">
+        <el-table-column prop="isDefault" label="默认值" align="center">
           <template slot-scope="{row,$index}">
-            <el-button type="primary" size="mini" @click="handleDataDictItemUpdate(row,$index)">
-              编辑
-            </el-button>
-            <el-button size="mini" type="danger" @click="onDeleteDataDictItem(row,$index)">
-              删除
-            </el-button>
+            <el-tag v-if="row.isDefault === 1" size="small">是</el-tag>
+            <el-tag v-else size="small" type="info">否</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+          <template slot-scope="{row,$index}">
+            <div style="display: flex;justify-content: center">
+              <el-button type="primary" size="mini" @click="handleDataDictItemUpdate(row,$index)">
+                编辑
+              </el-button>
+              <el-button size="mini" type="danger" @click="onDeleteDataDictItem(row,$index)">
+                删除
+              </el-button>
+              <div style="display: flex; flex-direction: column; font-size: .1rem; margin-left: 10px">
+                <button class="change-order-button" @click="onDataDictItemUp(row,$index)" :disabled="$index === 0">
+                  ↑
+                </button>
+                <button class="change-order-button" @click="onDataDictItemDown(row,$index)" :disabled="$index === dataDictItemList.length - 1">
+                  ↓
+                </button>
+              </div>
+            </div>
           </template>
         </el-table-column>
       </el-table>
-      <div class="pagination-center">
-        <el-pagination
-          :current-page="dataDictItemTablePageIndex"
-          :page-sizes="[5, 10]"
-          :page-size="dataDictItemTablePageSize"
-          :total="dataDictItemTableTotal"
-          layout="total, sizes, prev, pager, next, jumper"
-          @size-change="dataDictItemTablePageSizeChangeHandle"
-          @current-change="dataDictItemTablePageCurrentChangeHandle"
-        />
-      </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false;getList()">取 消</el-button>
         <el-button type="primary" @click="onEditSubmit">保 存</el-button>
       </div>
     </el-dialog>
     <el-dialog
-      :title="`${isDataDictItemAdd ? '新增' : '编辑'}数据字典项`" :visible.sync="dataDictItemEditDialogFormVisible"
-      width="50%">
-      <el-form ref="dataDictItem" :model="dataDictItem" label-width="120px">
-        <el-form-item v-if="!isDataDictItemAdd && !isAdd" label="数据字典项ID">
-          <el-input v-model="dataDictItem.ddId" disabled/>
+      :title="`${isDataDictItemAdd ? '新增' : '编辑'}数据字典明细项`"
+      :visible.sync="dataDictItemEditDialogFormVisible"
+      width="50%"
+    >
+      <el-form ref="dataDictItem" :model="dataDictItem" :rules="dataDictItemCheckRules" label-width="120px">
+        <el-form-item v-if="!isDataDictItemAdd && !isAdd" label="明细项ID">
+          <el-input v-model="dataDictItem.ddId" disabled />
         </el-form-item>
-        <el-form-item label="名称">
-          <el-input v-model="dataDictItem.ddName" placeholder="请输入名称"/>
+        <el-form-item label="名称" prop="ddName">
+          <el-input v-model="dataDictItem.ddName" placeholder="请输入名称" />
+        </el-form-item>
+        <el-form-item label="默认值">
+          <template>
+            <el-radio v-model="dataDictItem.isDefault" :label="1">是</el-radio>
+            <el-radio v-model="dataDictItem.isDefault" :label="0">否</el-radio>
+          </template>
+        </el-form-item>
+        <el-form-item label="数值" prop="sort">
+          <template>
+            <el-input v-model="dataDictItem.sort" type="number">是</el-input>
+          </template>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -124,13 +146,14 @@
 <script>
 import {
   getDataDictList,
-  addDataDict,
   deleteDataDict,
   addDataDictItem,
   updateDataDictItem,
   deleteDataDictItem,
   getDataDictItemList,
-  updateDataDict
+  updateDataDict,
+  addDataDictAndItem,
+  updateDataDictAndItem
 } from '@/api/data-dict' // secondary package based on el-pagination
 
 export default {
@@ -150,13 +173,51 @@ export default {
       isDataDictItemAdd: false,
       dataDictItemEditDialogFormVisible: false,
       dataDictItem: {},
-      dataDictItemTablePageIndex: 1,
-      dataDictItemTablePageSize: 5,
-      dataDictItemTableTotal: 0,
       dataDictItemTableLoading: false,
       dataDictItemList: [],
       newDataDict: {},
-      tempDataDictIndex: 0
+      tempDataDictIndex: 0,
+      dataDictItemTableKey: 0,
+      dataDictItemCheckRules: {
+        ddName: [
+          {
+            required: true,
+            message: '名称不能为空',
+            trigger: 'blur'
+          }
+        ],
+        sort: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: (rule, value, callback) => {
+              if (!value || value.length === 0) {
+                callback(new Error('数值不能为空'))
+                return
+              }
+              if (this.isSortExist(value)) {
+                callback(new Error('数值重复'))
+              }
+            }
+          }
+        ]
+      },
+      newDataDictCheckRules: {
+        ChineseName: [
+          {
+            required: true,
+            message: '名称不能为空',
+            trigger: 'blur'
+          }
+        ],
+        EnglishName: [
+          {
+            required: true,
+            message: '关键字不能为空',
+            trigger: 'blur'
+          }
+        ]
+      }
     }
   },
   mounted() {
@@ -166,67 +227,126 @@ export default {
     this.initDataDictDetail()
   },
   methods: {
+    onNewDataDictDialogClosed() {
+      this.dataDictItemTableLoading = false
+    },
+    onDataDictItemUp(row, index) {
+      const tempDataDictItem = this.dataDictItemList[index]
+      this.dataDictItemList[index] = this.dataDictItemList[index - 1]
+      this.dataDictItemList[index - 1] = tempDataDictItem
+      this.dataDictItemTableKey = Math.random()
+    },
+    onDataDictItemDown(row, index) {
+      const tempDataDictItem = this.dataDictItemList[index]
+      this.dataDictItemList[index] = this.dataDictItemList[index + 1]
+      this.dataDictItemList[index + 1] = tempDataDictItem
+      this.dataDictItemTableKey = Math.random()
+    },
     onNewDataDict() {
       this.initDataDictDetail()
       this.dataDictItemList = []
       this.isAdd = true
       this.dialogFormVisible = true
-      this.dataDictItemTableTotal = 0
-    },
-    dataDictItemTablePageSizeChangeHandle(newSize) {
-      this.dataDictItemTablePageSize = newSize
-      this.getDataDictItemList(this.dataDictDetail['d_id'])
-    },
-    dataDictItemTablePageCurrentChangeHandle(newCurrent) {
-      this.dataDictItemTablePageIndex = newCurrent
-      this.getDataDictItemList(this.dataDictDetail['d_id'])
+      this.$refs.dataDictDialogForm.resetFields()
     },
     getDataDictItemList(dId) {
       this.dataDictItemTableLoading = true
-      getDataDictItemList(dId, this.dataDictItemTablePageIndex, this.dataDictItemTablePageSize).then(res => {
+      getDataDictItemList(dId).then(res => {
         if (res.data.code === '200') {
           this.dataDictItemList = res.data.data
-          this.dataDictItemTableTotal = res.data.total
-          console.log(this.dataDictItemTableTotal)
         } else {
           this.$message.error(res.data.msg)
         }
         this.dataDictItemTableLoading = false
       })
     },
+    isDefaultExist() {
+      for (const dataDictItem of this.dataDictItemList) {
+        if (dataDictItem.isDefault === 1) {
+          return true
+        }
+      }
+      return false
+    },
+    isSortExist(newSort) {
+      for (const dataDictItem of this.dataDictItemList) {
+        if (dataDictItem.sort == newSort) {
+          return true
+        }
+      }
+      return false
+    },
     onDataDictItemEditSubmit() {
       if (this.isAdd) {
+        // 新建数据字典
         if (this.isDataDictItemAdd) {
+          // 增加数字字典明细项
+          if (this.dataDictItem.isDefault && this.isDefaultExist()) {
+            for (const dataDictItem of this.dataDictItemList) {
+              dataDictItem.isDefault = 0
+            }
+          }
           this.dataDictItemList.push({
             ddId: 0,
-            ddName: this.dataDictItem.ddName
+            ddName: this.dataDictItem.ddName,
+            isDefault: this.dataDictItem.isDefault,
+            sort: this.dataDictItem.sort
           })
           this.dataDictItemEditDialogFormVisible = false
         } else {
+          // 编辑数字字典明细项
           this.dataDictItemList[this.tempDataDictIndex].ddName = this.dataDictItem.ddName
+          if (this.dataDictItem.isDefault && this.isDefaultExist()) {
+            for (const dataDictItem of this.dataDictItemList) {
+              dataDictItem.isDefault = 0
+            }
+          }
+          this.dataDictItemList[this.tempDataDictIndex].isDefault = this.dataDictItem.isDefault
           this.dataDictItemEditDialogFormVisible = false
         }
       } else {
         if (this.isDataDictItemAdd) {
-          addDataDictItem(this.dataDictDetail['d_id'], this.dataDictItem.ddName).then(res => {
-            if (res.data.code === '200') {
-              this.$message.success('添加成功')
-              this.getDataDictItemList(this.dataDictDetail['d_id'])
-              this.dataDictItemEditDialogFormVisible = false
-            } else {
-              this.$message.error(res.data.msg)
+          // 增加数字字典明细项
+          if (this.dataDictItem.isDefault && this.isDefaultExist()) {
+            for (const dataDictItem of this.dataDictItemList) {
+              dataDictItem.isDefault = 0
             }
+          }
+          this.dataDictItemList.push({
+            ddId: 0,
+            ddName: this.dataDictItem.ddName,
+            isDefault: this.dataDictItem.isDefault,
+            sort: this.dataDictItem.sort
           })
+          this.dataDictItemEditDialogFormVisible = false
+          // addDataDictItem(this.dataDictDetail['d_id'], this.dataDictItem.ddName).then(res => {
+          //   if (res.data.code === '200') {
+          //     this.$message.success('添加成功')
+          //     this.getDataDictItemList(this.dataDictDetail['d_id'])
+          //     this.dataDictItemEditDialogFormVisible = false
+          //   } else {
+          //     this.$message.error(res.data.msg)
+          //   }
+          // })
         } else {
-          updateDataDictItem(this.dataDictItem.ddId, this.dataDictItem.ddName).then(res => {
-            if (res.data.code === '200') {
-              this.$message.success('更新成功')
-              this.getDataDictItemList(this.dataDictDetail['d_id'])
-              this.dataDictItemEditDialogFormVisible = false
-            } else {
-              this.$message.error(res.data.msg)
+          // 编辑数字字典明细项
+          this.dataDictItemList[this.tempDataDictIndex].ddName = this.dataDictItem.ddName
+          if (this.dataDictItem.isDefault && this.isDefaultExist()) {
+            for (const dataDictItem of this.dataDictItemList) {
+              dataDictItem.isDefault = 0
             }
-          })
+          }
+          this.dataDictItemList[this.tempDataDictIndex].isDefault = this.dataDictItem.isDefault
+          this.dataDictItemEditDialogFormVisible = false
+          // updateDataDictItem(this.dataDictItem.ddId, this.dataDictItem.ddName).then(res => {
+          //   if (res.data.code === '200') {
+          //     this.$message.success('更新成功')
+          //     this.getDataDictItemList(this.dataDictDetail['d_id'])
+          //     this.dataDictItemEditDialogFormVisible = false
+          //   } else {
+          //     this.$message.error(res.data.msg)
+          //   }
+          // })
         }
       }
     },
@@ -262,7 +382,9 @@ export default {
     initDataDictItem() {
       this.dataDictItem = {
         ddId: 0,
-        ddName: ''
+        ddName: '',
+        isDefault: 0,
+        sort: this.dataDictItemList.length
       }
     },
     sizeChangeHandle(newSize) {
@@ -284,7 +406,9 @@ export default {
       this.dataDictItem = {
         ddId: row.ddId,
         ddName: row.ddName,
-        did: row.did
+        did: row.did,
+        isDefault: row.isDefault,
+        sort: row.sort
       }
       this.tempDataDictIndex = index
       this.isDataDictItemAdd = false
@@ -308,26 +432,58 @@ export default {
       })
     },
     onEditSubmit() {
-      if (this.isAdd) {
-        addDataDict(this.dataDictDetail.ChineseName, this.dataDictDetail.EnglishName).then(res => {
-          if (res.data.code === '200') {
-            this.dialogFormVisible = false
-            this.getList()
-            this.$message.success('创建成功')
-          } else {
-            this.$message.error(res.data.msg)
+      if (this.$refs.dataDictDialogForm.validate()) {
+        if (this.isAdd) {
+          const items = []
+          for (let i = 0; i < this.dataDictItemList.length; i++) {
+            const dataDictItem = this.dataDictItemList[i]
+            items.push({
+              ddName: `${dataDictItem.ddName}`,
+              isDefault: `${dataDictItem.isDefault}`,
+              sort: `${i}`
+            })
           }
-        })
-      } else {
-        updateDataDict(this.dataDictDetail['d_id'], this.dataDictDetail.ChineseName, this.dataDictDetail.EnglishName).then(res => {
-          if (res.data.code === '200') {
-            this.dialogFormVisible = false
-            this.getList()
-            this.$message.success('更新成功')
-          } else {
-            this.$message.error(res.data.msg)
+          const data = {
+            chineseName: `${this.dataDictDetail.ChineseName}`,
+            englishName: `${this.dataDictDetail.EnglishName}`,
+            items: items
           }
-        })
+          addDataDictAndItem(data).then(res => {
+            if (res.data.code === '200') {
+              this.dialogFormVisible = false
+              this.getList()
+              this.$message.success('创建成功')
+            } else {
+              this.$message.error(res.data.msg)
+            }
+          })
+        } else {
+          const items = []
+          for (let i = 0; i < this.dataDictItemList.length; i++) {
+            const dataDictItem = this.dataDictItemList[i]
+            items.push({
+              ddId: `${dataDictItem.ddId}`,
+              ddName: `${dataDictItem.ddName}`,
+              isDefault: `${dataDictItem.isDefault}`,
+              sort: `${i}`
+            })
+          }
+          const data = {
+            dId: `${this.dataDictDetail['d_id']}`,
+            chineseName: `${this.dataDictDetail.ChineseName}`,
+            englishName: `${this.dataDictDetail.EnglishName}`,
+            items: items
+          }
+          updateDataDictAndItem(data).then(res => {
+            if (res.data.code === '200') {
+              this.dialogFormVisible = false
+              this.getList()
+              this.$message.success('更新成功')
+            } else {
+              this.$message.error(res.data.msg)
+            }
+          })
+        }
       }
     },
     getList() {
@@ -336,7 +492,7 @@ export default {
           this.dataDictList = res.data.data
           this.totalPage = res.data.total
         } else {
-
+          this.$message.error(res.data.msg)
         }
       })
     }
@@ -358,12 +514,35 @@ export default {
 }
 
 .dict-value {
-  border: 1px solid #d9ecff;
+  border: 1px solid rgba(0,0,0,.05);
   border-radius: 5px;
   margin: 2px;
-  color: #409EFF;
+  color: rgba(0,0,0,.3);
   padding: 0 2px;
+  background-color: rgba(0,0,0,.1);
+  font-size: 12px;
+}
+
+.dict-value-default {
+  border: 1px solid #d9ecff;
+  color: #409EFF;
   background-color: #ecf5ff;
+  font-weight: 900;
+}
+
+.change-order-button {
+  background-color: #319795;
+  color: white;
+  font-weight: 900;
+  border: 0;
+  margin: 1px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.change-order-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 </style>
 
