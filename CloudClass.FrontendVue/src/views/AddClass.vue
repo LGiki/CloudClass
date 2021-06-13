@@ -17,9 +17,9 @@
     ></v-text-field>
     <v-text-field
       prepend-icon="mdi-format-color-highlight"
-      v-model="classNumber"
+      v-model="classHour"
       :rules="[rules.required]"
-      label="班级号"
+      label="课时"
       outlined
     >
     </v-text-field>
@@ -57,13 +57,14 @@
 </template>
 
 <script>
+import { addClass } from "../api/class";
 export default {
   data() {
     return {
       name: "AddClass",
       className: "",
       teacherName: "",
-      classNumber: 10001,
+      classHour: 24,
       semester: "2021-1",
       rules: {
         required: (value) => !!value || "必填",
@@ -79,24 +80,29 @@ export default {
       if (
         this.className == "" ||
         this.teacherName == "" ||
-        this.classNumber < 1 ||
+        this.classHour < 1 ||
         this.semester == ""
       ) {
         this.snackbar = true;
         this.text = "请填写班课信息";
       } else {
-        this.snackbar = true;
-        this.text = "添加班课成功";
-
-        this.$router.push({
-          path: "/class",
-          query: {
-            className: this.className,
-            teacherName: this.teacherName,
-            classNumber: this.classNumber,
-            semester: this.semester,
-          },
-        });
+        let result = addClass(
+          localStorage.getItem("teacherId"),
+          this.className,
+          "nope",
+          this.semester,
+          this.classHour + ""
+        );
+        switch (result.data.code) {
+          case "200":
+            this.text = "创建成功";
+            this.snackbar = true;
+            this.$router.push("/class");
+            break;
+          default:
+            this.alertMessage = result.data.msg;
+            this.snackbar = true;
+        }
       }
 
       //逻辑判断班级号是否重复,返回是否添加成功

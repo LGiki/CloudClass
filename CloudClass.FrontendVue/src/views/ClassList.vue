@@ -66,7 +66,7 @@
         bottom
         fixed
         class="mr-4"
-        @click="addClass"
+        @click="showList"
       >
         <v-icon dark>mdi-plus</v-icon>
       </v-btn>
@@ -74,6 +74,7 @@
     <v-overlay :absolute="absolute" :value="overlay" opacity="0.7">
       <div class="d-flex flex-no-wrap flex-column">
         <v-btn
+          v-if="isTeacher === '0'"
           elevation="2"
           x-large
           class="mb-10"
@@ -84,6 +85,7 @@
           通过班课号加入
         </v-btn>
         <v-btn
+          v-if="isTeacher === '0'"
           x-large
           class="mb-10"
           elevation="2"
@@ -92,6 +94,16 @@
         >
           <v-icon dark left>mdi-qrcode</v-icon>
           通过二维码加入
+        </v-btn>
+        <v-btn
+          v-if="isTeacher === '1'"
+          x-large
+          class="mb-10"
+          elevation="2"
+          color="success"
+          @click="addClass"
+        >
+          创建班课
         </v-btn>
         <v-btn x-large elevation="2" color="grey" @click="overlay = false">
           取消
@@ -102,6 +114,8 @@
 </template>
 
 <script>
+// import { initClassList } from "@/api/class";
+
 export default {
   name: "lookup_classes",
   data() {
@@ -109,7 +123,10 @@ export default {
       window: window,
       absolute: true,
       overlay: false,
+      pageNo: 1,
+      pageSize: 20,
       classDefaultAvatar: require("../assets/images/class_default_avatar.png"),
+      isTeacher: localStorage.getItem("isTeacher"),
       classes: [
         {
           title: "工程实践",
@@ -140,9 +157,12 @@ export default {
       this.$router.push("/sign");
     },
     //创建班课
+    showList() {
+      this.overlay = !this.overlay;
+    },
     addClass() {
       // if (this.GLOBAL.user == "student") {
-      this.overlay = !this.overlay;
+      this.$router.push("addClass");
       // } else {
       //   this.$router.push("/addClass");
       // }
@@ -199,6 +219,8 @@ export default {
     },
   },
   mounted: function () {
+    // initClassList(this.pageNo,this.pageSize,localStorage.getItem("teacherId"));
+
     // console.log(this.$route.query.className);
     if (this.$route.query.className != null) {
       this.classes.push({

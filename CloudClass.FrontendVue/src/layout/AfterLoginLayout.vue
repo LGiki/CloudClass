@@ -69,7 +69,12 @@ export default {
     items: [
       {
         icon: "mdi-google-classroom",
-        text: "班课列表",
+        text: "我创建的",
+        to: "/class",
+      },
+      {
+        icon: "mdi-google-classroom",
+        text: "我加入的",
         to: "/class",
       },
       {

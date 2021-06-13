@@ -64,6 +64,11 @@ export default {
           subtitle: ``,
         },
         { divider: true, inset: true },
+        {
+          title: "修改密码",
+          subtitle: "",
+        },
+        { divider: true, inset: true },
       ],
     };
   },
@@ -74,6 +79,11 @@ export default {
         this.$router.push("/signRecord");
       } else if (index === 1) {
         this.$router.push("/personalEdit");
+      } else if (index === 5) {
+        this.$router.push({
+          path: "enterClass",
+          query: { type: "changePass" },
+        });
       }
     },
   },

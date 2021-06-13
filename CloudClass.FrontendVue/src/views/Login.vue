@@ -161,7 +161,8 @@ export default {
             this.alertMessage = "登录成功";
             this.snackbar = true;
             this.$store.commit("token/SET_TOKEN", result.data.token);
-            this.$store.commit("userInfo/SET_TEA_TYPE", "0");
+            //设置是教师还是学生
+            this.$store.commit("userInfo/SET_TEA_TYPE", "1");
             this.$router.push("/class");
             break;
           default:

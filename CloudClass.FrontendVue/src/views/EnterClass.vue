@@ -1,61 +1,36 @@
 <template>
   <v-container>
     <v-text-field
-      v-if="type === 'classCode'"
       v-model="classNumber"
       :rules="[rules.required]"
       class="mt-5"
-      hint="请输入班级号"
-      label="班级号"
-      outlined
-      prepend-icon="mdi-format-color-highlight"
-    >
-    </v-text-field>
-    <v-text-field
-      v-if="type === 'school'"
-      v-model="classNumber"
-      :rules="[rules.required]"
-      class="mt-5"
-      hint="请输入学校名称"
-      label="学校"
-      outlined
-      prepend-icon="mdi-format-color-highlight"
-    >
-    </v-text-field>
-    <v-text-field
-      v-if="type === 'grade'"
-      v-model="classNumber"
-      :rules="[rules.required]"
-      class="mt-5"
-      hint="请输入年级"
-      label="年级"
-      outlined
-      prepend-icon="mdi-format-color-highlight"
-    >
-    </v-text-field>
-    <v-text-field
-      v-if="type === 'major'"
-      v-model="classNumber"
-      :rules="[rules.required]"
-      class="mt-5"
-      hint="请输入专业班级"
-      label="专业班级"
-      outlined
-      prepend-icon="mdi-format-color-highlight"
-    >
-    </v-text-field>
-    <v-text-field
-      v-if="type == 'exp'"
-      v-model="classNumber"
-      :rules="[rules.required]"
-      class="mt-5"
-      hint="请输入修改后的经验值"
-      label="经验值"
+      :hint="hint"
+      :label="label"
       outlined
       prepend-icon="mdi-format-color-highlight"
     >
     </v-text-field>
 
+    <v-text-field
+      v-if="type === 'changePass'"
+      v-model="classNumber"
+      :rules="[rules.required]"
+      hint="请输入新密码"
+      label="新密码"
+      outlined
+      prepend-icon="mdi-format-color-highlight"
+    >
+    </v-text-field>
+    <v-text-field
+      v-if="type === 'changePass'"
+      v-model="classNumber"
+      :rules="[rules.required]"
+      hint="请输入再次输入新密码"
+      label="再次输入新密码"
+      outlined
+      prepend-icon="mdi-format-color-highlight"
+    >
+    </v-text-field>
     <!--
       <v-alert
           type="warning"
@@ -66,7 +41,7 @@
       >请填写班课信息</v-alert>
 -->
     <div class="text-center d-flex justify-space-around">
-      <v-btn color="primary" dark @click="judgeEnterClass"> 确定 </v-btn>
+      <v-btn color="primary" dark @click="judgeInput"> 确定 </v-btn>
       <v-btn color="green lighten" dark @click="back"> 返回 </v-btn>
     </div>
 
@@ -97,12 +72,14 @@ export default {
       type: "classCode",
       text: `加入班课成功`,
       isSuccess: false,
+      hint: "",
+      label: "",
     };
   },
   methods: {
-    judgeEnterClass() {
+    judgeInput() {
       //判断是否都已填写
-      if (this.classNumber < 1) {
+      if (this.type == "classCode" && this.classNumber < 1) {
         this.snackbar = true;
         this.text = "请填写正确的班级号";
       } else {
@@ -138,6 +115,25 @@ export default {
   mounted: function () {
     if (this.$route.query.type !== "") {
       this.type = this.$route.query.type;
+      if (this.type == "classCode") {
+        this.hint = "请输入专业班级";
+        this.label = "班级";
+      } else if (this.type == "school") {
+        this.hint = "请输入学校名称";
+        this.label = "学校";
+      } else if (this.type == "grade") {
+        this.hint = "请输入年级";
+        this.label = "年级";
+      } else if (this.type == "major") {
+        this.hint = "请输入专业班级";
+        this.label = "专业班级";
+      } else if (this.type == "exp") {
+        this.hint = "请输入修改后的经验值";
+        this.label = "经验值";
+      } else if (this.type == "changePass") {
+        this.hint = "请输入原密码";
+        this.label = "原密码";
+      }
     }
     console.log(this.type);
   },
