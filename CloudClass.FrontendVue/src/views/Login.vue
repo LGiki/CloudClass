@@ -162,7 +162,8 @@ export default {
             this.snackbar = true;
             this.$store.commit("token/SET_TOKEN", result.data.token);
             //设置是教师还是学生
-            this.$store.commit("userInfo/SET_TEA_TYPE", "1");
+
+            this.$store.commit("userInfo/SET_TEA_TYPE", result.data.role);
             this.$router.push("/class");
             break;
           default:

@@ -38,6 +38,10 @@
                 </v-icon>
                 签到
               </v-btn>
+              <v-btn class="ml-1 mt-1 mb-1 elevation-0" small @click="setup">
+                <v-icon left dark color="blue darken-2">mdi-cog </v-icon>
+                设置
+              </v-btn>
             </div>
           </v-card-actions>
         </div>
@@ -116,6 +120,8 @@
 <script>
 // import { initClassList } from "@/api/class";
 
+import { enterClass } from "@/api/class";
+
 export default {
   name: "lookup_classes",
   data() {
@@ -131,23 +137,16 @@ export default {
         {
           title: "工程实践",
           imgUrl: "",
-          teacher: "池芝标",
-          time: "2021-1",
-          classNumber: 10004,
+          teacher: "A老师",
+          time: "2021-2022-1",
+          classNumber: 27715,
         },
         {
           title: "工程实践",
           imgUrl: "",
-          teacher: "池芝标",
-          time: "2021-1",
-          classNumber: 10003,
-        },
-        {
-          title: "工程实践",
-          imgUrl: "",
-          teacher: "池芝标",
-          time: "2021-1",
-          classNumber: 10002,
+          teacher: "A老师",
+          time: "2020-2021-2",
+          classNumber: 74570,
         },
       ],
     };
@@ -178,7 +177,26 @@ export default {
     },
     enterByQrCode() {
       this.window.cordova.plugins.barcodeScanner.scan(
-        function (result) {
+        async function (result) {
+          let response = await enterClass(result.text);
+          switch (response.data.code) {
+            case "200":
+              this.text = "加入成功";
+              this.snackbar = true;
+              this.enterSuccess = true;
+
+              //      this.$router.push({
+              //         path: "/class",
+              //      });
+
+              break;
+            default:
+              this.text = response.data.msg;
+              this.snackbar = true;
+
+              alert(response.data.msg);
+          }
+          /*
           alert(
             "We got a barcode\n" +
               "Result: " +
@@ -190,9 +208,10 @@ export default {
               "Cancelled: " +
               result.cancelled
           );
+          */
         },
         function (error) {
-          alert("Scanning failed: " + error);
+          alert("扫码失败: " + error);
         },
         {
           preferFrontCamera: false, // iOS and Android
@@ -214,6 +233,14 @@ export default {
         path: "/classDetail/",
         query: {
           id: classId,
+        },
+      });
+    },
+    setup() {
+      this.$router.push({
+        path: "/classSetup",
+        query: {
+          classNumber: 27715,
         },
       });
     },

@@ -95,8 +95,8 @@ const routes = [
         name: "ClassDetail",
         path: "/classDetail",
         meta: {
-          title: "班课详情",
-          stuTitle: "班级详情",
+          title: "班课成员",
+          stuTitle: "班级成员",
         },
         component: () => import("../views/ClassDetail"),
       },
@@ -126,6 +126,24 @@ const routes = [
           stuTitle: "个人信息修改",
         },
         component: () => import("../views/PersonalEdit"),
+      },
+      {
+        name: "ClassSetup",
+        path: "/classSetup",
+        meta: {
+          title: "班课设置",
+          stuTitle: "班课设置",
+        },
+        component: () => import("../views/ClassSetupMenu"),
+      },
+      {
+        name: "ClassSetupDetail",
+        path: "/classSetupDetail",
+        meta: {
+          title: "班课设置",
+          stuTitle: "班课设置",
+        },
+        component: () => import("../views/ClassSetupDetail"),
       },
     ],
   },

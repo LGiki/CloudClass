@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <v-text-field
+      v-if="type != ''"
       v-model="classNumber"
       :rules="[rules.required]"
       class="mt-5"
@@ -31,6 +32,25 @@
       prepend-icon="mdi-format-color-highlight"
     >
     </v-text-field>
+
+    <div class="d-flex flex-no-wrap justify-space-between" v-if="type === ''">
+      <div>
+        <v-card-title class="headline" v-text="classes.title"></v-card-title>
+
+        <v-card-subtitle class="mt-0 font-weight-bold">
+          班级号: {{ this.classNumber }}
+          <br />
+          任课教师: {{ classes.teacher }}
+          <br />
+          学期: {{ classes.semester }}
+        </v-card-subtitle>
+      </div>
+      <div style="display: flex; align-items: center">
+        <v-avatar class="ma-3" size="125" tile>
+          <div ref="qrCodeUrl" class="qrcode"></div>
+        </v-avatar>
+      </div>
+    </div>
     <!--
       <v-alert
           type="warning"
@@ -40,8 +60,20 @@
 
       >请填写班课信息</v-alert>
 -->
-    <div class="text-center d-flex justify-space-around">
-      <v-btn color="primary" dark @click="judgeInput"> 确定 </v-btn>
+    <div class="text-center d-flex justify-space-around" v-if="type != ''">
+      <v-btn color="primary" dark @click="judgeEnterClass"> 确定 </v-btn>
+      <v-btn color="green lighten" dark @click="back"> 返回 </v-btn>
+    </div>
+
+    <div class="text-center d-flex justify-space-around" v-if="type == ''">
+      <v-btn
+        color="primary"
+        dark
+        @click="confirmEnterClass"
+        v-if="!enterSuccess"
+      >
+        加入
+      </v-btn>
       <v-btn color="green lighten" dark @click="back"> 返回 </v-btn>
     </div>
 
@@ -58,7 +90,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import { enterClass, getClassData } from "@/api/class";
 
 export default {
   data() {
@@ -72,42 +104,59 @@ export default {
       type: "classCode",
       text: `加入班课成功`,
       isSuccess: false,
+      enterSuccess: false,
       hint: "",
       label: "",
+      classes: {
+        title: "工程实践",
+        teacher: "池芝标",
+        semester: "2021-1",
+        classNumber: 10004,
+      },
     };
   },
   methods: {
-    judgeInput() {
+    async judgeEnterClass() {
       //判断是否都已填写
       if (this.type == "classCode" && this.classNumber < 1) {
         this.snackbar = true;
         this.text = "请填写正确的班级号";
       } else {
-        axios
-          .post("", {
-            username: this.GLOBAL.username,
-            classNumber: this.classNumber,
-          })
-          .then(function (res) {
-            this.isSuccess = res.data.isSuccess;
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        if (this.isSuccess) {
-          this.snackbar = true;
-          this.text = "加入班课成功";
-        } else {
-          this.snackbar = true;
-          this.text = "加入班课失败";
-        }
+        let result2 = await getClassData(this.classNumber + "");
 
-        this.$router.push({
-          path: "/class",
-        });
+        switch (result2.data.code) {
+          case "200":
+            this.type = "";
+            this.classes.teacher = result2.data.data.teacher;
+            this.classes.semester = result2.data.data.term;
+            this.classes.title = result2.data.data.ccName;
+
+            break;
+          default:
+            this.text = result2.data.msg;
+            this.snackbar = true;
+        }
       }
     },
+    async confirmEnterClass() {
+      let result = await enterClass(this.classNumber + "");
 
+      switch (result.data.code) {
+        case "200":
+          this.text = "加入成功";
+          this.snackbar = true;
+          this.enterSuccess = true;
+
+          //      this.$router.push({
+          //         path: "/class",
+          //      });
+
+          break;
+        default:
+          this.text = result.data.msg;
+          this.snackbar = true;
+      }
+    },
     back() {
       this.$router.back();
     },
@@ -116,8 +165,8 @@ export default {
     if (this.$route.query.type !== "") {
       this.type = this.$route.query.type;
       if (this.type == "classCode") {
-        this.hint = "请输入专业班级";
-        this.label = "班级";
+        this.hint = "请输入班课号";
+        this.label = "班课号";
       } else if (this.type == "school") {
         this.hint = "请输入学校名称";
         this.label = "学校";

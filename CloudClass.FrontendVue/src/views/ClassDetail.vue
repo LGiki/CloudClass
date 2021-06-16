@@ -5,12 +5,12 @@
         <div>
           <v-card-title class="headline" v-text="classes.title"></v-card-title>
 
-          <v-card-subtitle class="mt-0">
+          <v-card-subtitle class="mt-0 font-weight-bold">
             班级号: {{ this.$route.query.id }}
             <br />
             任课教师: {{ classes.teacher }}
             <br />
-            学期: {{ classes.time }}
+            学期: {{ classes.semester }}
           </v-card-subtitle>
         </div>
         <div style="display: flex; align-items: center">
@@ -54,21 +54,35 @@
         </template>
       </v-list>
     </v-card>
+
+    <v-snackbar v-model="snackbar" timeout="3000">
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
+          关闭
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
 <script>
+import { getClassData } from "@/api/class";
 import QRCode from "qrcodejs2";
 export default {
   name: "ClassDetail",
   data() {
     return {
+      snackbar: false,
+      text: "",
       classes: {
         title: "工程实践",
         teacher: "池芝标",
-        time: "2021-1",
+        semester: "2021-1",
         classNumber: 10004,
       },
+      /*
       items: [
         { header: "成员列表" },
         {
@@ -98,7 +112,7 @@ export default {
           subtitle: "2003270xx",
           grade: 29,
         },
-      ],
+      ],*/
     };
   },
   methods: {
@@ -112,9 +126,23 @@ export default {
         correctLevel: QRCode.CorrectLevel.H,
       });
     },
+    judgeShowSuccess() {
+      if (this.$route.query.showSuccess) {
+        this.snackbar = true;
+        this.text = "创建成功";
+      }
+    },
+    async setClassData() {
+      let result = await getClassData(this.$route.query.id);
+      this.classes.teacher = result.data.data.teacher;
+      this.classes.semester = result.data.data.term;
+      this.classes.title = result.data.data.ccName;
+    },
   },
-  mounted() {
+  async mounted() {
     this.createQrCode();
+    this.judgeShowSuccess();
+    this.setClassData();
   },
 };
 </script>
