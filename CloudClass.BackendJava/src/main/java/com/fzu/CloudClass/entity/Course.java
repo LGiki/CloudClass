@@ -27,7 +27,7 @@ public class Course implements Serializable {
 
     private String cName;
 
-    private String description;
+    //private String description;
 
     /**
      * ѧ
@@ -42,11 +42,21 @@ public class Course implements Serializable {
     /**
      * ѧ
      */
-    private Double score;
+    //private Double score;
 
-    private Double dailyWeight;
+    //private Double dailyWeight;
 
-    private Double finalWeight;
+    //private Double finalWeight;
+
+    private Integer ccId;
+
+    private Integer universityId;
+
+    private Integer collegeId;
+
+    private Integer canAttend;
+
+    private Integer isEnd;
 
 
 }

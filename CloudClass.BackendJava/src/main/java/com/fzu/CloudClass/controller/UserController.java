@@ -66,7 +66,7 @@ public class UserController {
         }
 
         if(code.equals(verifyCode)){
-            result.put("token", jwtTokenUtil.generateToken(phone,phone));
+            result.put("token", jwtTokenUtil.generateToken(personService.getManPersonByPhone(phone).getPeId().toString()));
             result.put("msg", "ok");
             result.put("code", "200");
         }else{
@@ -85,14 +85,16 @@ public class UserController {
         String phone = (String) jsonParam.get("phone");
         String password = (String) jsonParam.get("password");
 
-        if(personService.getManPersonByPhone(phone) == null){
+
+        if(userService.getUserByPhone(phone) == null){
             result.put("msg", "用户不存在");
             result.put("code", "201");
             return result;
         }
-        Person user = personService.getManPersonByPhone(phone);
+        User user = userService.getUserByPhone(phone);
+        //Person user = personService.getManPersonByPhone(phone);
         if(user.getPassword().equals(password)){
-            result.put("token", jwtTokenUtil.generateToken(phone,password));
+            result.put("token", jwtTokenUtil.generateToken(user.getUId().toString()));
             result.put("msg", "ok");
             result.put("code", "200");
         }else{
@@ -117,7 +119,7 @@ public class UserController {
         }
         Person user = personService.getManPersonByPhone(phone);;
         if(user.getPassword().equals(password)){
-            result.put("token", jwtTokenUtil.generateToken(phone,password));
+            result.put("token", jwtTokenUtil.generateToken(user.getPeId().toString()));
             result.put("msg", "ok");
             result.put("code", "200");
         }else{

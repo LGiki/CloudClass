@@ -68,4 +68,11 @@ public class ParameterServiceImpl extends ServiceImpl<ParameterMapper, Parameter
         one.setStatus(status);
         parameterMapper.updateById(one);
     }
+
+    @Override
+    public int countByDescription(String description) {
+        QueryWrapper<Parameter> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("description",description);
+        return parameterMapper.selectCount(queryWrapper);
+    }
 }

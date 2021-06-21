@@ -26,4 +26,6 @@ public interface IParameterService extends IService<Parameter> {
 
     void modifyParameter(int pa_id,String pa_name,String description,double value,int status);
 
+    int countByDescription(String description);
+
 }

@@ -21,11 +21,11 @@ public class JwtTokenUtil {
      * @Param: 传入需要设置的payload信息
      * @return: 返回token
      */
-    public static String generateToken(String username, String pwd) {
+    public static String generateToken(String Id) {
         JWTCreator.Builder builder = JWT.create();
 
         // 将map内的信息传入JWT的payload中
-        builder.withClaim(username, pwd);
+        builder.withClaim("Id", Id);
 
         // 设置JWT令牌的过期时间为60
         Calendar instance = Calendar.getInstance();
@@ -48,9 +48,12 @@ public class JwtTokenUtil {
      * @Param: 传入token
      * @return: 解密的token信息
      */
-    public static DecodedJWT getTokenInfo(String token) {
-        return JWT.require(Algorithm.HMAC256(SECRET)).build().verify(token);
+    public static String getTokenInfo(String token) {
+        return JWT.decode(token).getClaims().get("Id").asString();
+        //return JWT.require(Algorithm.HMAC256(SECRET)).build().verify(token);
     }
+
+
 
 
 }

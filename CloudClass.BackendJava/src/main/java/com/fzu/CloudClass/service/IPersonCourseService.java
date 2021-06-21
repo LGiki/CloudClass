@@ -13,4 +13,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IPersonCourseService extends IService<PersonCourse> {
 
+    void addPersonCourse(int pe_id,int c_id,int status);
+
+    int countByCIdAndPeId(int c_id,int pe_id);
+
+    PersonCourse getByCId(int c_id,int status);
+
 }

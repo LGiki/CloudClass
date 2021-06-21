@@ -20,7 +20,7 @@ public interface IDictionaryService extends IService<Dictionary> {
 
     List<Dictionary> getAllDictionary(int pageNo, int pageSize);
 
-    void addDictionary(String chineseName,String englishName);
+    int addDictionary(String chineseName,String englishName);
 
     void delDictionary(int d_id);
 

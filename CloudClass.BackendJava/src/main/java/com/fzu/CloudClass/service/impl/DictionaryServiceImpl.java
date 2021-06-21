@@ -44,11 +44,12 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
     }
 
     @Override
-    public void addDictionary(String chineseName, String englishName) {
+    public int addDictionary(String chineseName, String englishName) {
         Dictionary one = new Dictionary();
         one.setChineseName(chineseName);
         one.setEnglishName(englishName);
         dictionaryMapper.insert(one);
+        return one.getDId();
     }
 
     @Override

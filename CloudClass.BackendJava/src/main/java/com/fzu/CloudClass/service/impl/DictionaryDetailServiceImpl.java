@@ -1,6 +1,8 @@
 package com.fzu.CloudClass.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fzu.CloudClass.entity.Dictionary;
 import com.fzu.CloudClass.entity.DictionaryDetail;
 import com.fzu.CloudClass.mapper.DictionaryDetailMapper;
@@ -30,16 +32,17 @@ public class DictionaryDetailServiceImpl extends ServiceImpl<DictionaryDetailMap
 
         QueryWrapper<DictionaryDetail> queryWrapper =  new QueryWrapper<>();
         queryWrapper.eq("d_id",d_id);
-
+        queryWrapper.orderByAsc("sort");
         return dictionaryDetailMapper.selectList(queryWrapper);
     }
 
     @Override
-    public void addDictionaryDetail(int d_id, String dd_name, int isDefault) {
+    public void addDictionaryDetail(int d_id, String dd_name, int isDefault,int sort) {
         DictionaryDetail one = new DictionaryDetail();
         one.setDId(d_id);
         one.setDdName(dd_name);
-        one.setIsDefault(0);
+        one.setIsDefault(isDefault);
+        one.setSort(sort);
         dictionaryDetailMapper.insert(one);
     }
 
@@ -57,10 +60,12 @@ public class DictionaryDetailServiceImpl extends ServiceImpl<DictionaryDetailMap
     }
 
     @Override
-    public void modifyDictionaryDetail(int dd_id, String dd_name) {
+    public void modifyDictionaryDetail(int dd_id, String dd_name,int is_default,int sort) {
         DictionaryDetail one = new DictionaryDetail();
         one.setDdId(dd_id);
         one.setDdName(dd_name);
+        one.setIsDefault(is_default);
+        one.setSort(sort);
         dictionaryDetailMapper.updateById(one);
     }
 
@@ -68,6 +73,13 @@ public class DictionaryDetailServiceImpl extends ServiceImpl<DictionaryDetailMap
     public void modifyDictionaryDetailDefault(int dd_id) {
 
 
+    }
+
+    @Override
+    public int getCountAllDictionaryDetailByDId(int d_id) {
+        QueryWrapper<DictionaryDetail> queryWrapper =  new QueryWrapper<>();
+        queryWrapper.eq("d_id",d_id);
+        return dictionaryDetailMapper.selectCount(queryWrapper);
     }
 
 

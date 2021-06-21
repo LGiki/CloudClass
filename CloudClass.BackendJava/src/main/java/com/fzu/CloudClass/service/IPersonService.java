@@ -30,4 +30,6 @@ public interface IPersonService extends IService<Person> {
 
     Person getManPersonByUsername(String username);
 
+    Person getPersonById(int pe_id);
+
 }
