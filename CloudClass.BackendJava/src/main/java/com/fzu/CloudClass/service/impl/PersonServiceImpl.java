@@ -66,4 +66,9 @@ public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> impleme
     public Person getManPersonByUsername(String username) {
         return personMapper.selectOne(new QueryWrapper<Person>().eq("username",username).ne("type",0));
     }
+
+    @Override
+    public Person getPersonById(int pe_id) {
+        return personMapper.selectById(pe_id);
+    }
 }

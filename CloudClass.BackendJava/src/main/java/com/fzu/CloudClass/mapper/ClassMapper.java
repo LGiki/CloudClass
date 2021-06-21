@@ -1,7 +1,8 @@
 package com.fzu.CloudClass.mapper;
 
-import com.fzu.CloudClass.entity.PersonCourse;
+import com.fzu.CloudClass.entity.Class;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
 
 /**
  * <p>
@@ -11,10 +12,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author djk
  * @since 2021-04-13
  */
-public interface PersonCourseMapper extends BaseMapper<PersonCourse> {
-
-
-
-
-
+public interface ClassMapper extends BaseMapper<Class> {
 }

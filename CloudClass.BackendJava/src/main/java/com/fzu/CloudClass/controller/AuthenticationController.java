@@ -60,7 +60,8 @@ public class AuthenticationController {
         }
 
         if(person.getPassword().equals(password) == true){
-            result.put("token", jwtTokenUtil.generateToken(person.getPhone(),person.getPhone()));
+            result.put("role",person.getIsTeacher());
+            result.put("token", jwtTokenUtil.generateToken(String.valueOf(person.getPeId())));
             result.put("msg", "ok");
             result.put("code", "200");
         }else{
@@ -96,7 +97,8 @@ public class AuthenticationController {
         }
 
         if(code.equals(verifyCode)){
-            result.put("token", jwtTokenUtil.generateToken(phone,phone));
+            result.put("role",personService.getPersonByPhone(phone).getIsTeacher());
+            result.put("token", jwtTokenUtil.generateToken(personService.getPersonByPhone(phone).getPeId().toString()));
             result.put("msg", "ok");
             result.put("code", "200");
         }else{
@@ -121,7 +123,8 @@ public class AuthenticationController {
         }
         Person person = personService.getPersonByPhone(phone);
         if(person.getPassword().equals(password) == true){
-            result.put("token", jwtTokenUtil.generateToken(phone,phone));
+            result.put("role",person.getIsTeacher());
+            result.put("token", jwtTokenUtil.generateToken(person.getPeId().toString()));
             result.put("msg", "ok");
             result.put("code", "200");
         }else{

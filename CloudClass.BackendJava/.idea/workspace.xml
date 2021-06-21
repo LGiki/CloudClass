@@ -5,20 +5,44 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="01042bfc-f3a0-4203-a0b3-ceaf341237b8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/ClassController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/DictionaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/DictionaryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/AuthenticationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/CourseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/DictionaryDetailController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/DictionaryDetailController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/ParameterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/ParameterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/PersonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/PersonController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/PersonCourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/PersonCourseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/SchoolController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/SchoolController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/Course.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/DictionaryDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/DictionaryDetail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/School.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/entity/School.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/CourseMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/CourseMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/PersonCourseMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/mapper/PersonCourseMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/ICourseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/ICourseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IDictionaryDetailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IDictionaryDetailService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IDictionaryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IDictionaryService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IParameterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IParameterService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IPersonCourseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IPersonCourseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IPersonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/IPersonService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/ISchoolService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/ISchoolService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/CourseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/CourseServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/DictionaryDetailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/DictionaryDetailServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/DictionaryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/DictionaryServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/ParameterServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/ParameterServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/PersonCourseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/PersonCourseServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/PersonServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/PersonServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/SchoolServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/service/impl/SchoolServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/util/JwtTokenUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/CloudClass/util/JwtTokenUtil.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
   </component>
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
@@ -116,6 +140,9 @@
       </expand>
       <select />
     </treeState>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-18" />
@@ -310,7 +337,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../Internship/tyrfing-spring-boot-start" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -425,7 +452,26 @@
       <workItem from="1622858081311" duration="18884000" />
       <workItem from="1622960912138" duration="6305000" />
       <workItem from="1622996633433" duration="615000" />
-      <workItem from="1623030261855" duration="3869000" />
+      <workItem from="1623030261855" duration="13993000" />
+      <workItem from="1623064269333" duration="2008000" />
+      <workItem from="1623068509643" duration="527000" />
+      <workItem from="1623070044348" duration="9339000" />
+      <workItem from="1623113596045" duration="12765000" />
+      <workItem from="1623141110224" duration="1333000" />
+      <workItem from="1623208391949" duration="220000" />
+      <workItem from="1623218803657" duration="190000" />
+      <workItem from="1623225516185" duration="595000" />
+      <workItem from="1623241448247" duration="130000" />
+      <workItem from="1623285835531" duration="109000" />
+      <workItem from="1623589051873" duration="596000" />
+      <workItem from="1623656797082" duration="3573000" />
+      <workItem from="1623721472485" duration="29528000" />
+      <workItem from="1623813294855" duration="755000" />
+      <workItem from="1623826990736" duration="248000" />
+      <workItem from="1623827342111" duration="370000" />
+      <workItem from="1623895421050" duration="74000" />
+      <workItem from="1623984546316" duration="977000" />
+      <workItem from="1624237670929" duration="8885000" />
     </task>
     <servers />
   </component>
@@ -484,6 +530,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />

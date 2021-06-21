@@ -2,13 +2,14 @@ package com.fzu.CloudClass.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
+
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author djk
@@ -16,20 +17,15 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class DictionaryDetail implements Serializable {
+public class Class implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "dd_id", type = IdType.AUTO)
-    private Integer ddId;
+    @TableId(value = "cc_id", type = IdType.AUTO)
+    private Integer ccId;
 
-    private Integer dId;
+    private String ccName;
 
-    private String ddName;
-
-    private Integer isDefault;
-
-    private Integer sort;
 
 
 }

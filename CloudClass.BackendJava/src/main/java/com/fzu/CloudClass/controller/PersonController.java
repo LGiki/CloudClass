@@ -113,7 +113,7 @@ public class PersonController {
         Person person = new Person();
         person.setPhone((String) jsonParam.get("phone"));
         person.setIsTeacher((Integer.parseInt((String) jsonParam.get("is_teacher"))));
-        person.setType(2);
+        person.setType(0);
         personService.addPerson(person);
         int id = person.getPeId();
         //System.out.println(id);

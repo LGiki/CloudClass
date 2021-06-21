@@ -18,14 +18,16 @@ public interface IDictionaryDetailService extends IService<DictionaryDetail> {
 
     List<DictionaryDetail> getAllDictionaryDetailById(int d_id);
 
-    void addDictionaryDetail(int d_id,String dd_name,int isDefault);
+    void addDictionaryDetail(int d_id,String dd_name,int isDefault,int sort);
 
     void delDictionaryDetail(int dd_id);
 
     void delDictionaryDetailBydId(int d_id);
 
-    void modifyDictionaryDetail(int dd_id,String dd_name);
+    void modifyDictionaryDetail(int dd_id,String dd_name,int is_default,int sort);
 
     void modifyDictionaryDetailDefault(int dd_id);
+
+    int getCountAllDictionaryDetailByDId(int d_id);
 
 }
