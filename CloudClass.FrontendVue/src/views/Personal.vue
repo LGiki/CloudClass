@@ -53,7 +53,6 @@ export default {
   data() {
     return {
       items: [
-        { header: " " },
         {
           title: "个人信息修改",
           subtitle: ``,
@@ -75,11 +74,11 @@ export default {
   methods: {
     goEdit(index) {
       console.log(index);
-      if (index === 3) {
+      if (index === 2) {
         this.$router.push("/signRecord");
-      } else if (index === 1) {
+      } else if (index === 0) {
         this.$router.push("/personalEdit");
-      } else if (index === 5) {
+      } else if (index === 4) {
         this.$router.push({
           path: "enterClass",
           query: { type: "changePass" },

@@ -82,7 +82,7 @@ export default {
         semester: "2021-1",
         classNumber: 10004,
       },
-      /*
+
       items: [
         { header: "成员列表" },
         {
@@ -112,7 +112,7 @@ export default {
           subtitle: "2003270xx",
           grade: 29,
         },
-      ],*/
+      ],
     };
   },
   methods: {

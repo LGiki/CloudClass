@@ -9,17 +9,17 @@
         <div>
           <v-card-title
             class="headline"
-            v-text="classInfo.title"
+            v-text="classInfo.ccName"
           ></v-card-title>
           <v-card-subtitle
-            v-text="classInfo.teacher + classInfo.time"
+            v-text="classInfo.peName + classInfo.term"
           ></v-card-subtitle>
           <v-card-actions>
             <div style="display: flex; flex-direction: row; flex-wrap: wrap">
               <v-btn
                 class="ml-1 mt-1 mb-1 elevation-0"
                 small
-                @click="goClassDetail(classInfo.classNumber)"
+                @click="goClassDetail(index)"
               >
                 <v-icon left dark color="red darken-2"
                   >mdi-account-circle
@@ -38,7 +38,11 @@
                 </v-icon>
                 签到
               </v-btn>
-              <v-btn class="ml-1 mt-1 mb-1 elevation-0" small @click="setup">
+              <v-btn
+                class="ml-1 mt-1 mb-1 elevation-0"
+                small
+                @click="goClassSetup(index)"
+              >
                 <v-icon left dark color="blue darken-2">mdi-cog </v-icon>
                 设置
               </v-btn>
@@ -118,7 +122,7 @@
 </template>
 
 <script>
-// import { initClassList } from "@/api/class";
+import { initClassList } from "@/api/class";
 
 import { enterClass } from "@/api/class";
 
@@ -135,18 +139,11 @@ export default {
       isTeacher: localStorage.getItem("isTeacher"),
       classes: [
         {
-          title: "工程实践",
-          imgUrl: "",
-          teacher: "A老师",
-          time: "2021-2022-1",
-          classNumber: 27715,
-        },
-        {
-          title: "工程实践",
-          imgUrl: "",
-          teacher: "A老师",
-          time: "2020-2021-2",
-          classNumber: 74570,
+          ccName: "工程实践",
+          peName: "A老师",
+          term: "2021-2022-1",
+          cId: 1,
+          cNumber: 10001,
         },
       ],
     };
@@ -179,6 +176,8 @@ export default {
       this.window.cordova.plugins.barcodeScanner.scan(
         async function (result) {
           let response = await enterClass(result.text);
+          alert(response.data.code);
+          alert(response.data.msg);
           switch (response.data.code) {
             case "200":
               this.text = "加入成功";
@@ -228,27 +227,31 @@ export default {
         }
       );
     },
-    goClassDetail(classId) {
+    goClassDetail(index) {
       this.$router.push({
         path: "/classDetail/",
         query: {
-          id: classId,
+          id: this.classes[index].cNumber,
         },
       });
     },
-    setup() {
+
+    goClassSetup(index) {
       this.$router.push({
         path: "/classSetup",
         query: {
-          classNumber: 27715,
+          cNumber: this.classes[index].cNumber,
         },
       });
     },
   },
-  mounted: function () {
-    // initClassList(this.pageNo,this.pageSize,localStorage.getItem("teacherId"));
+  async mounted() {
+    let result = await initClassList(1, 3);
+    this.classes = result.data.data;
 
+    // initClassList(this.pageNo,this.pageSize,localStorage.getItem("teacherId"));
     // console.log(this.$route.query.className);
+    /*
     if (this.$route.query.className != null) {
       this.classes.push({
         title: this.$route.query.className,
@@ -258,7 +261,7 @@ export default {
         classNumber: this.$route.query.classNumber,
       });
     }
-
+*/
     // console.log(this.classes);
   },
 };

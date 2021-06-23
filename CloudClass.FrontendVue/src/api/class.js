@@ -24,26 +24,26 @@ export function addClass(
     },
   });
 }
-
-export function initClassList(pageNo, pageSize, peid) {
+//初始化班级列表
+export function initClassList(pageNo, pageSize) {
   return request({
     url: "/course/Course",
     method: "get",
-    data: {
+    params: {
       pageNo: pageNo,
       pageSize: pageSize,
-      peid: peid,
+      //   peid: peid,
     },
   });
 }
-
+//查询所有可选学校
 export function queryAllCollege() {
   return request({
     url: "/school/AllCollege",
     method: "get",
   });
 }
-
+//取得班课信息  返回cId以及classNumber之类
 export function getClassData(classCode) {
   return request({
     url: "/course/CourseDetail",
@@ -59,7 +59,7 @@ export function enterClass(classCode) {
     data: { cNumber: classCode },
   });
 }
-
+//更新是否允许加入
 export function updateClassPermitAdd(cId, canAttend) {
   return request({
     url: "/course/CourseCanAttend",
@@ -67,11 +67,28 @@ export function updateClassPermitAdd(cId, canAttend) {
     data: { cId: cId, canAttend: canAttend },
   });
 }
-
+//更新班课状态是否结束
 export function updateClassFinished(cId, IsEnd) {
   return request({
     url: "/course/CourseIsEnd",
     method: "put",
     data: { cId: cId, IsEnd: IsEnd },
+  });
+}
+
+//更新班课状态是否结束
+export function queryClassFinished(cNumber) {
+  return request({
+    url: "/course/CourseIsEnd",
+    method: "get",
+    params: { cNumber: cNumber },
+  });
+}
+//更新是否允许加入
+export function queryClassPermitAdd(cNumber) {
+  return request({
+    url: "/course/CourseCanAttend",
+    method: "get",
+    params: { cNumber: cNumber },
   });
 }

@@ -50,6 +50,8 @@
 </template>
 
 <script>
+import { getClassData } from "@/api/class";
+
 export default {
   name: "Personal",
   data() {
@@ -63,11 +65,12 @@ export default {
         },
       ],
       classInfo: {
-        className: "工程实践",
-        semester: "2021-2022-1",
-        classNumber: 27715,
-        school: "福州大学",
-        depart: "数学科学与计算机学院",
+        className: "",
+        semester: "",
+        classNumber: 10001,
+        school: "",
+        depart: "",
+        cId: "1",
       },
     };
   },
@@ -77,10 +80,25 @@ export default {
       if (index === 2) {
         this.$router.push({
           path: "/classSetupDetail",
-          query: {},
+          query: {
+            cId: this.classInfo.cId,
+            cNumber: this.$route.query.cNumber,
+          },
         });
       }
     },
+    async initClassData() {
+      let result = await getClassData(this.$route.query.cNumber);
+      this.classInfo.semester = result.data.data.term;
+      this.classInfo.className = result.data.data.ccName;
+      this.classInfo.classNumber = this.$route.query.cNumber;
+      this.classInfo.school = result.data.data.university;
+      this.classInfo.depart = result.data.data.college;
+      this.classInfo.cId = result.data.data.cId;
+    },
+  },
+  async mounted() {
+    this.initClassData();
   },
 };
 </script>

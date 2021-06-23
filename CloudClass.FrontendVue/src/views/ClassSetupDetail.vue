@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-list>
-      <template v-for="(item, index) in items">
+      <template v-for="(item, index) in items" :index="listIndex">
         <v-subheader
           class="font-weight-bold"
           v-if="item.header"
@@ -21,7 +21,7 @@
             <div class="text-center">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn v-bind="attrs" v-on="on">
+                  <v-btn v-bind="attrs" :on="On" v-on="on">
                     {{ initContent[index - 1] }}
                   </v-btn>
                 </template>
@@ -64,7 +64,12 @@
   </v-container>
 </template>
 <script>
-import { updateClassFinished, updateClassPermitAdd } from "@/api/class";
+import {
+  updateClassFinished,
+  updateClassPermitAdd,
+  queryClassFinished,
+  queryClassPermitAdd,
+} from "@/api/class";
 
 export default {
   name: "ClassSetupDetail",
@@ -74,8 +79,10 @@ export default {
       snackbar: false,
       condition: [],
       permitMember: [],
+      listIndex: 0,
       classCondtion: "1",
       permitAdding: "1",
+      On: "1",
       items: [
         { header: "基本信息设置" },
         {
@@ -121,20 +128,20 @@ export default {
         this.initContent[2] = "不允许加入";
       }
     },
-    updateSetup() {
-      updateClassFinished(
+    async updateSetup() {
+      let result1 = await updateClassFinished(
         // this.$route.query.cid,
-        "20",
+        this.$route.query.cId,
         this.classCondtion
       );
-      updateClassPermitAdd(
+      let result2 = await updateClassPermitAdd(
         //   this.$route.query.cid,
-        "20",
+        this.$route.query.cId,
         this.permitAdding
       );
-      this.snackbar = true;
-      this.text = "保存成功";
-      /*
+      // this.snackbar = true;
+      // this.text = "保存成功";
+
       if (result1.data.code === "200" && result2.data.code === "200") {
         this.snackbar = true;
         this.text = "保存成功";
@@ -142,8 +149,32 @@ export default {
         this.snackbar = true;
         this.text = "保存失败";
       }
-      */
     },
+    async initSetup() {
+      let isPermit = await queryClassPermitAdd(this.$route.query.cNumber);
+      let isClassEnd = await queryClassFinished(this.$route.query.cNumber);
+
+      this.permitAdding = isPermit.data.canAttend + "";
+      this.classCondtion = isClassEnd.data.isEnd + "";
+
+      if (this.permitAdding === "1") {
+        this.On = 1;
+        this.initContent[2] = "允许加入";
+      } else {
+        this.On = 1;
+        this.initContent[2] = "不允许加入";
+      }
+      if (this.classCondtion === "1") {
+        this.On = 1;
+        this.initContent[0] = "结束";
+      } else {
+        this.On = 1;
+        this.initContent[0] = "正常";
+      }
+    },
+  },
+  async mounted() {
+    this.initSetup();
   },
 };
 </script>
