@@ -15,11 +15,15 @@ export function startSignUp(type, cId, lng, lat, time) {
   });
 }
 //学生签到
-export function signUpBySid(si_id, lng, lat) {
+export function signUpBySid(si_id, lat, lng) {
   return request({
     url: "/sign-record/SignRecord",
     method: "post",
-    data: { si_id: si_id, lng: lng, lat: lat },
+    data: {
+      si_id: si_id,
+      lat: lat,
+      lng: lng,
+    },
   });
 }
 //获取已结束的签到
@@ -43,6 +47,6 @@ export function endSignUp(siId) {
   return request({
     url: "/sign-in/SignInCode",
     method: "put",
-    params: { siId: siId },
+    data: { siId: siId },
   });
 }

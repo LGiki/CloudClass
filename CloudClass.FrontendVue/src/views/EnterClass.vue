@@ -161,8 +161,8 @@ export default {
       this.$router.back();
     },
   },
-  mounted: function () {
-    if (this.$route.query.type !== "") {
+  async mounted() {
+    if (this.$route.query.type !== null) {
       this.type = this.$route.query.type;
       if (this.type == "classCode") {
         this.hint = "请输入班课号";
@@ -182,6 +182,11 @@ export default {
       } else if (this.type == "changePass") {
         this.hint = "请输入原密码";
         this.label = "原密码";
+      } else if (this.type == "") {
+        let result = await getClassData(this.$route.query.classNumber);
+        this.classes.teacher = result.data.data.teacher;
+        this.classes.semester = result.data.data.term;
+        this.classes.title = result.data.data.ccName;
       }
     }
     console.log(this.type);

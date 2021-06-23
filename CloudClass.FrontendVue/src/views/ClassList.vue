@@ -32,7 +32,11 @@
                 </v-icon>
                 统计
               </v-btn>
-              <v-btn class="ml-1 mt-1 mb-1 elevation-0" small @click="sign">
+              <v-btn
+                class="ml-1 mt-1 mb-1 elevation-0"
+                small
+                @click="goClassSignUp(index)"
+              >
                 <v-icon left dark color="green darken-2"
                   >mdi-check-circle
                 </v-icon>
@@ -149,9 +153,6 @@ export default {
     };
   },
   methods: {
-    sign() {
-      this.$router.push("/sign");
-    },
     //创建班课
     showList() {
       this.overlay = !this.overlay;
@@ -183,10 +184,11 @@ export default {
               this.text = "加入成功";
               this.snackbar = true;
               this.enterSuccess = true;
-
-              //      this.$router.push({
-              //         path: "/class",
-              //      });
+              alert("ing");
+              this.$router.push({
+                path: "/enterClass",
+                query: { type: "", classNumber: result.text },
+              });
 
               break;
             default:
@@ -241,6 +243,14 @@ export default {
         path: "/classSetup",
         query: {
           cNumber: this.classes[index].cNumber,
+        },
+      });
+    },
+    goClassSignUp(index) {
+      this.$router.push({
+        path: "/sign",
+        query: {
+          cId: this.classes[index].cId + "",
         },
       });
     },
