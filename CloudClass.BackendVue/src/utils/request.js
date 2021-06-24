@@ -3,14 +3,14 @@ import { Message } from 'element-ui'
 import store from '@/store'
 
 const service = axios.create({
-  baseURL: 'http://8.140.0.237:8080/api/CloudClass', // url = base url + request url
+  baseURL: 'http://119.91.75.131:8080/api/CloudClass', // url = base url + request url
   timeout: 5000
 })
 
 service.interceptors.request.use(
   config => {
     if (store.state.token) {
-      config.headers['Authorization'] = `Bearer ${store.state.token}`
+      config.headers['Authorization'] = `Bearer ${store.state.token.token}`
     }
     return config
   },
