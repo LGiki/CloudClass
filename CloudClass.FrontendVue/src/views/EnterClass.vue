@@ -184,6 +184,7 @@ export default {
         this.label = "原密码";
       } else if (this.type == "") {
         let result = await getClassData(this.$route.query.classNumber);
+        this.classNumber = this.$route.query.classNumber;
         this.classes.teacher = result.data.data.teacher;
         this.classes.semester = result.data.data.term;
         this.classes.title = result.data.data.ccName;

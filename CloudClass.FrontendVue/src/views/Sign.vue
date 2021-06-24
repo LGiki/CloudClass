@@ -1,9 +1,9 @@
 <template>
   <v-container>
-    <div class="font-weight-bold mb-16 mt-2 text-h6 ml-2">班级：工程实践</div>
-    <div class="justify-space-around d-flex">
+    <div class="font-weight-bold mb-6 mt-2 text-h6 ml-2">班级：工程实践</div>
+    <div class="justify-space-around d-flex mt-8">
       <v-btn
-        large
+        medium
         fab
         color="red"
         @click="onSelect(1)"
@@ -12,7 +12,7 @@
         <v-icon color="white" medium>mdi-check</v-icon>
       </v-btn>
       <v-btn
-        large
+        medium
         fab
         color="orange"
         @click="onSelect(2)"
@@ -31,11 +31,33 @@
       </div>
     </div>
 
-    <div class="justify-space-around d-flex mt-3" v-if="!startSign">
+    <div class="justify-space-around d-flex mt-1" v-if="!startSign">
       <v-icon :color="color1" large>mdi-pan-up</v-icon>
 
       <v-icon :color="color2" large>mdi-pan-up</v-icon>
     </div>
+
+    <template v-if="startSign < 1 && selectType === 'time'">
+      <div class="text-center d-flex justify-center align-content-center">
+        <div>限时：</div>
+        <v-menu offset-y>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn v-bind="attrs" v-on="on">
+              {{ selectTime }}
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item
+              v-for="(time, index) in times"
+              :key="index"
+              @click="changeSelectTime(index)"
+            >
+              <v-list-item-title>{{ time.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </div>
+    </template>
 
     <div
       class="font-weight-bold mt-5"
@@ -44,8 +66,54 @@
     >
       已发起签到：{{ minute }}分{{ second }}秒
     </div>
+    <v-card
+      v-if="isSuccess === true && isTeacher === '1'"
+      class="mt-4 mr-4 ml-4"
+    >
+      <div class="d-flex justify-end">
+        <v-card-text class="font-weight-bold">已签到学生</v-card-text>
+        <v-card-text class="ml-10">18/20</v-card-text>
+      </div>
+      <virtual-list
+        style="height: 170px; overflow-y: auto"
+        scrollable
+        :data-key="'uid'"
+        :data-sources="items"
+        :data-component="itemComponent"
+      />
+      <!--
+      <v-list max-height="230px" height="230px">
+        <template v-for="(item, index) in items">
+          <v-subheader
+            class="font-weight-bold"
+            v-if="item.header"
+            :key="item.header"
+            v-text="item.header"
+          >
+          </v-subheader>
 
-    <div class="d-flex justify-center align-self-center pt-16 pb-16">
+          <v-divider
+            v-else-if="item.divider"
+            :key="index"
+            :inset="item.inset"
+          ></v-divider>
+
+          <v-list-item v-else :key="item.title">
+            <v-list-item-content>
+              <v-list-item-title
+                v-html="item.title"
+                style="font-size: 13px"
+              ></v-list-item-title>
+              <v-list-item-subtitle
+                v-html="item.subtitle"
+              ></v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+      </v-list>
+      -->
+    </v-card>
+    <div class="d-flex justify-center align-self-center pt-8 pb-16">
       <v-btn
         x-large
         class="primary mb-16 mt-16"
@@ -77,7 +145,7 @@
       <v-btn
         v-if="isSuccess === true && isTeacher === '1'"
         x-large
-        class="mb-16 mt-16 white--text"
+        class="white--text"
         elevation="4"
         color="red darken"
         shaped
@@ -105,6 +173,8 @@ import {
   signUpBySid,
   startSignUp,
 } from "@/api/sign";
+import Item from "./item-component";
+import VirtualList from "vue-virtual-scroll-list";
 
 export default {
   data: () => ({
@@ -123,8 +193,46 @@ export default {
     longtitude: "",
     latitude: "",
     siId: "",
+    selectTime: "30秒",
+    itemComponent: Item,
+    items: [
+      { uid: "1", name: "魏璐炜", stuNumber: "2003270xx" },
+      { uid: "2", name: "22", stuNumber: "2003270xx" },
+      { uid: "3", name: "33", stuNumber: "2003270xx" },
+      { uid: "4", name: "44", stuNumber: "2003270xx" },
+      { uid: "5", name: "55", stuNumber: "2003270xx" },
+      { uid: "6", name: "66", stuNumber: "2003270xx" },
+      { uid: "7", name: "77", stuNumber: "2003270xx" },
+      { uid: "8", name: "88", stuNumber: "2003270xx" },
+    ],
+    times: [{ title: "10秒" }, { title: "30秒" }, { title: "60秒" }],
+    /*
+    items: [
+      {
+        title: "魏璐炜",
+        subtitle: `2003270xx`,
+      },
+      { divider: true, inset: true },
+      {
+        title: "林家琪",
+        subtitle: `2003270xx`,
+      },
+      { divider: true, inset: true },
+      {
+        title: "林声睿",
+        subtitle: "2003270xx",
+      },
+      { divider: true, inset: true },
+      {
+        title: "戴锦坤",
+        subtitle: "2003270xx",
+      },
+    ],
+    */
   }),
+  components: { "virtual-list": VirtualList },
   methods: {
+    //根据选择的签到类型改变UI
     onSelect(color) {
       if (color === 1) {
         this.selectType = "once";
@@ -136,6 +244,7 @@ export default {
         this.color1 = "white";
       }
     },
+    //获取位置
     getPositon(val) {
       var me = this;
       //获取精度，纬度
@@ -187,6 +296,7 @@ export default {
         enableHighAccuracy: val,
       });
     },
+    //学生进行签到
     async sign(val) {
       await this.getPositon(val);
       var me = this;
@@ -233,6 +343,7 @@ export default {
       //   alert(me.msg);
       // }, 1000);
     },
+    //发起签到
     async startSignUp() {
       let me = this;
       await this.getPositon(1);
@@ -254,7 +365,7 @@ export default {
             ""
           );
 
-          this.siId = result.data.siId;
+          me.siId = result.data.siId;
 
           if (result.data == null) {
             me.text = "参数错误";
@@ -285,7 +396,7 @@ export default {
             "60"
           );
 
-          this.siId = result.data.siId;
+          me.siId = result.data.siId;
 
           if (result.data == null) {
             me.text = "参数错误";
@@ -344,8 +455,18 @@ export default {
           this.snackbar = true;
       }
     },
+    changeSelectTime(index) {
+      if (index === 0) {
+        this.selectTime = "10秒";
+      } else if (index === 1) {
+        this.selectTime = "30秒";
+      } else {
+        this.selectTime = "60秒";
+      }
+    },
   },
   async mounted() {
+    //若签到还未结束，改变UI
     let activeSignUpResult = await getActiveSignUp(this.$route.query.cId);
 
     if (activeSignUpResult.data.data.siId != null) {
