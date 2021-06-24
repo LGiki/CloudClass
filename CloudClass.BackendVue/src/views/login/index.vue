@@ -26,7 +26,7 @@
             <el-input
               ref="username"
               v-model="passwordLoginForm.username"
-              placeholder="用户名"
+              placeholder="手机号"
               name="username"
               type="text"
               tabindex="1"
@@ -145,7 +145,7 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (value.length === 0) {
-        callback(new Error('用户名不能为空'))
+        callback(new Error('手机号不能为空'))
       } else {
         callback()
       }
