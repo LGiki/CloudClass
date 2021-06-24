@@ -123,7 +123,7 @@ export default {
             required: true,
             trigger: 'blur',
             validator: (rule, value, callback) => {
-              if (!value || value.length === 0) {
+              if (value === null || value.length === 0) {
                 callback(new Error('关键字不能为空'))
                 return
               }
