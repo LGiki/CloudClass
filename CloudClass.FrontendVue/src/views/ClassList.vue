@@ -153,10 +153,11 @@ export default {
     };
   },
   methods: {
-    //创建班课
+    //展示创建班课按钮
     showList() {
       this.overlay = !this.overlay;
     },
+    //创建班课
     addClass() {
       // if (this.GLOBAL.user == "student") {
       this.$router.push("addClass");
@@ -164,6 +165,7 @@ export default {
       //   this.$router.push("/addClass");
       // }
     },
+    //班课号加入班课
     enterByClassCode() {
       this.$router.push({
         path: "/enterClass",
@@ -173,7 +175,9 @@ export default {
       });
       this.$route.meta.stuTitle = "加入班课";
     },
+    //二维码加入班课
     enterByQrCode() {
+      var me = this;
       this.window.cordova.plugins.barcodeScanner.scan(
         async function (result) {
           let response = await enterClass(result.text);
@@ -181,19 +185,18 @@ export default {
           alert(response.data.msg);
           switch (response.data.code) {
             case "200":
-              this.text = "加入成功";
-              this.snackbar = true;
-              this.enterSuccess = true;
-              alert("ing");
-              this.$router.push({
+              me.text = "加入成功";
+              me.snackbar = true;
+              me.enterSuccess = true;
+              me.$router.push({
                 path: "/enterClass",
                 query: { type: "", classNumber: result.text },
               });
 
               break;
             default:
-              this.text = response.data.msg;
-              this.snackbar = true;
+              me.text = response.data.msg;
+              me.snackbar = true;
 
               alert(response.data.msg);
           }
@@ -229,6 +232,7 @@ export default {
         }
       );
     },
+    //点击成员按钮
     goClassDetail(index) {
       this.$router.push({
         path: "/classDetail/",
@@ -237,7 +241,7 @@ export default {
         },
       });
     },
-
+    //点击设置按钮
     goClassSetup(index) {
       this.$router.push({
         path: "/classSetup",
@@ -246,6 +250,7 @@ export default {
         },
       });
     },
+    //点击签到按钮
     goClassSignUp(index) {
       this.$router.push({
         path: "/sign",
@@ -256,6 +261,7 @@ export default {
     },
   },
   async mounted() {
+    //初始化班课列表
     let result = await initClassList(1, 3);
     this.classes = result.data.data;
 
