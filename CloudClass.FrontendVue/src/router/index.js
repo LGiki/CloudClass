@@ -17,15 +17,6 @@ const routes = [
     component: () => import("../views/Login"),
   },
   {
-    name: "Login",
-    path: "/login",
-    meta: {
-      title: "登录",
-      stuTitle: "登录",
-    },
-    component: () => import("../views/Login"),
-  },
-  {
     name: "Register",
     path: "/register",
     meta: {
@@ -46,15 +37,6 @@ const routes = [
     path: "/",
     component: AfterLoginLayout,
     children: [
-      {
-        name: "About",
-        path: "/about",
-        meta: {
-          title: "关于",
-          stuTitle: "关于",
-        },
-        component: () => import("../views/About"),
-      },
       {
         name: "Class",
         path: "/class",
@@ -155,6 +137,9 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  if (to.path === "/" && store.state.token.token !== null && store.state.token.token !== "") {
+    next({ path: "/class" });
+  }
   if (
     to.name !== "Login" &&
     to.name !== "Register" &&

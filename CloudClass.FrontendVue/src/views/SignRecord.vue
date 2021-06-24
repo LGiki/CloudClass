@@ -11,6 +11,8 @@
             班级: {{ 123 }}
             <br />
             专业: {{ 123 }}
+            <br />
+            经验值： 100
           </v-card-subtitle>
         </div>
         <div style="display: flex; align-items: center">
@@ -19,6 +21,7 @@
           </v-avatar>
         </div>
       </div>
+    </v-card>
 
       <v-list>
         <template v-for="(item, index) in items">
@@ -40,7 +43,6 @@
           </v-list-item>
         </template>
       </v-list>
-    </v-card>
   </v-container>
 </template>
 

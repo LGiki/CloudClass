@@ -74,10 +74,10 @@
         elevation="6"
         fab
         color="primary"
-        medium
         bottom
+        right
         fixed
-        class="mr-4"
+        style="bottom: 75px"
         @click="showList"
       >
         <v-icon dark>mdi-plus</v-icon>
