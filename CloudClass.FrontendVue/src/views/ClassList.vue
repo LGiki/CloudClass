@@ -69,20 +69,20 @@
         </div>
       </div>
     </v-card>
-    <div style="width: 100%; display: flex; justify-content: center">
-      <v-btn
-        elevation="6"
-        fab
-        color="primary"
-        bottom
-        right
-        fixed
-        style="bottom: 75px"
-        @click="showList"
-      >
-        <v-icon dark>mdi-plus</v-icon>
-      </v-btn>
-    </div>
+<!--    <div style="width: 100%; display: flex; justify-content: center">-->
+<!--      <v-btn-->
+<!--        elevation="6"-->
+<!--        fab-->
+<!--        color="primary"-->
+<!--        bottom-->
+<!--        right-->
+<!--        fixed-->
+<!--        style="bottom: 75px"-->
+<!--        @click="showList"-->
+<!--      >-->
+<!--        <v-icon dark>mdi-plus</v-icon>-->
+<!--      </v-btn>-->
+<!--    </div>-->
     <v-overlay :absolute="absolute" :value="overlay" opacity="0.7">
       <div class="d-flex flex-no-wrap flex-column">
         <v-btn
@@ -260,11 +260,17 @@ export default {
       });
     },
   },
+  destroyed() {
+    this.$emit("buttons", []);
+  },
   async mounted() {
     //初始化班课列表
     let result = await initClassList(1, 3);
     this.classes = result.data.data;
-
+    this.$emit("buttons", [{
+      icon: "mdi-plus",
+      click: this.showList,
+    }]);
     // initClassList(this.pageNo,this.pageSize,localStorage.getItem("teacherId"));
     // console.log(this.$route.query.className);
     /*

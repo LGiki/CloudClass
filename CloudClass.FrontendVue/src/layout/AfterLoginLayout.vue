@@ -19,6 +19,9 @@
         >
       </div>
       <v-spacer />
+      <v-btn icon v-for="(button, index,) in additionButtons" :key="index" @click="button.click">
+        <v-icon> {{ button.icon }}</v-icon>
+      </v-btn>
       <v-btn icon @click="toggleDarkMode">
         <v-icon> {{ darkModeIcon }}</v-icon>
       </v-btn>
@@ -50,7 +53,7 @@
 <!--      </v-list>-->
 <!--    </v-navigation-drawer>-->
     <v-main>
-      <RouterView style="margin-bottom: 56px"/>
+      <RouterView style="margin-bottom: 56px" @buttons="getButtons"/>
     </v-main>
     <v-bottom-navigation
       :value="value"
@@ -74,12 +77,9 @@
 export default {
   name: "App",
   components: {},
-  mounted() {
-    // if (document.body.clientWidth > 1264) {
-    //   this.drawer = true;
-    // }
-    // console.log(this.$router.history)
-  },
+  // mounted() {
+  //
+  // },
   data: () => ({
     value: 0,
     // drawer: false,
@@ -98,6 +98,7 @@ export default {
         to: "/personal",
       },
     ],
+    additionButtons: [],
     // items: [
     //   {
     //     icon: "mdi-google-classroom",
@@ -122,6 +123,9 @@ export default {
     // ],
   }),
   methods: {
+    getButtons: function (payload) {
+      this.additionButtons = payload;
+    },
     toggleDarkMode: function () {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
       this.darkModeIcon = this.$vuetify.theme.dark
