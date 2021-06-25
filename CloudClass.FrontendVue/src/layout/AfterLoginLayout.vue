@@ -78,7 +78,7 @@ export default {
     // if (document.body.clientWidth > 1264) {
     //   this.drawer = true;
     // }
-    console.log(this.$router.history)
+    // console.log(this.$router.history)
   },
   data: () => ({
     value: 0,
