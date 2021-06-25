@@ -15,6 +15,13 @@
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
       <el-table-column
+        prop="mId"
+        label="ID"
+        width="100"
+        align="center"
+      >
+      </el-table-column>
+      <el-table-column
         prop="menuName"
         label="名称"
         align="center"
@@ -117,15 +124,27 @@
       </el-pagination>
     </div>
     <el-dialog
-:title="`${isAdd ? '创建' : '编辑'}菜单`"
-:visible.sync="updateMenuDialogVisible" @closed="dialogClosed"
-      width="60%">
+      :title="`${isAdd ? '创建' : '编辑'}菜单`"
+      :visible.sync="updateMenuDialogVisible"
+      width="60%"
+    >
       <el-form ref="menuDetail" :model="menuDetail" :rules="checkRules">
         <el-form-item label="菜单名称" prop="menuName">
           <el-input v-model="menuDetail.menuName" placeholder="请输入菜单名称"/>
         </el-form-item>
         <el-form-item label="菜单顺序" prop="sort">
           <el-input v-model="menuDetail.sort" placeholder="请输入菜单顺序" type="number"/>
+        </el-form-item>
+        <el-form-item label="菜单页面" prop="Link">
+          <el-select v-model="menuDetail.Link" placeholder="请选择菜单页面">
+            <el-option
+              v-for="item in menuLinkOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+          <!--          <el-input v-model="menuDetail.Link" placeholder="请输入菜单顺序" type="number"/>-->
         </el-form-item>
         <template v-if="isAdd">
           <el-form-item label="是否有上级菜单" prop="hasParent">
@@ -170,9 +189,22 @@
 </template>
 
 <script>
-import {getAllMenu, getAllParentMenu, addMenu, updateMenu} from "@/api/menu";
+import {getAllMenu, getAllParentMenu, addMenu, updateMenu, deleteMenu} from "@/api/menu";
+import menuMap from "@/menu_map";
 
 export default {
+  computed: {
+    menuLinkOptions: function() {
+      const result = []
+      for (const key of Object.keys(menuMap)) {
+        result.push({
+          value: key,
+          label: menuMap[key].label
+        })
+      }
+      return result
+    }
+  },
   data() {
     return {
       updateMenuDialogVisible: false,
@@ -203,6 +235,13 @@ export default {
             trigger: 'blur'
           }
         ]
+        // Link: [
+        //   {
+        //     required: true,
+        //     message: '菜单页面不能为空',
+        //     trigger: 'visible-change'
+        //   }
+        // ]
       }
     }
   },
@@ -213,6 +252,8 @@ export default {
     initMenuDetail() {
       this.menuDetail = {
         // sort: this.totalPage + 1,
+        sort: '',
+        Link: '',
         menuName: '',
         hasParent: false,
         isDisplay: true,
@@ -225,11 +266,16 @@ export default {
       this.isAdd = true
       this.updateMenuDialogVisible = true
     },
-    dialogClosed() {
-
-    },
     handleUpdate(row) {
-      this.menuDetail = Object.assign({}, row)
+      this.menuDetail = {
+        Link: row.Link === null ? '' : row.Link,
+        isDisplay: row.isDisplay,
+        isPage: row.isPage,
+        mId: row.mId,
+        menuName: row.menuName,
+        sort: row.sort
+      }
+      console.log(this.menuDetail)
       this.isAdd = false
       this.updateMenuDialogVisible = true
     },
@@ -249,21 +295,23 @@ export default {
             this.$message.error('父级菜单不能为空')
             return
           }
-          addMenu(this.menuDetail.menuName, this.menuDetail.sort, this.menuDetail.isDisplay, this.menuDetail.isPage, this.menuDetail.hasParent ? this.menuDetail.parentId : -1).then(res => {
+          addMenu(this.menuDetail.menuName, this.menuDetail.sort, this.menuDetail.isDisplay, this.menuDetail.isPage, this.menuDetail.hasParent ? this.menuDetail.parentId : -1, this.menuDetail.Link).then(res => {
             if (res.data.code === '200') {
               this.getMenuList()
               this.updateMenuDialogVisible = false
               this.$message.success('添加成功')
+              this.$store.commit('menus/SET_IS_MENU_UPDATED', true)
             } else {
               this.$message.error(res.data.msg)
             }
           })
         } else {
-          updateMenu(this.menuDetail.mId, this.menuDetail.menuName, this.menuDetail.sort, this.menuDetail.isDisplay, this.menuDetail.isPage).then(res => {
+          updateMenu(this.menuDetail.mId, this.menuDetail.menuName, this.menuDetail.sort, this.menuDetail.isDisplay, this.menuDetail.isPage, this.menuDetail.Link).then(res => {
             if (res.data.code === '200') {
               this.getMenuList()
               this.updateMenuDialogVisible = false
               this.$message.success('更新成功')
+              this.$store.commit('menus/SET_IS_MENU_UPDATED', true)
             } else {
               this.$message.error(res.data.msg)
             }
@@ -275,10 +323,15 @@ export default {
       this.$alert('您确定要删除该菜单吗？', '删除确认', {
         confirmButtonText: '确定',
         callback: action => {
-          // this.$message({
-          //   type: 'success',
-          //   message: '删除成功'
-          // })
+          deleteMenu(row.mId).then(res => {
+            if (res.data.code === '200') {
+              this.getMenuList()
+              this.$message.success('删除成功')
+              this.$store.commit('menus/SET_IS_MENU_UPDATED', true)
+            } else {
+              this.$message.error('删除失败')
+            }
+          })
         }
       })
     },
@@ -299,7 +352,7 @@ export default {
     currentChangeHandle(newCurrent) {
       this.pageIndex = newCurrent
       this.getMenuList()
-    },
+    }
   }
 }
 </script>

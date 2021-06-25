@@ -1,21 +1,8 @@
 <template>
   <div class="app-container">
     <div class="operation-button">
-      <el-input
-        v-model="keywords"
-        prefix-icon="el-icon-search"
-        placeholder="请输入搜索关键字"
-        style="width: 200px;margin-right: 10px"
-        class="filter-item"
-      />
-      <el-button type="primary" @click="onSearch">
-        <svg-icon icon-class="search" />&nbsp;搜索
-      </el-button>
-      <el-button v-if="inSearch" type="primary" @click="onCancelSearch">
-        <i class="el-icon-close" />&nbsp;取消搜索
-      </el-button>
-      <el-button type="danger" @click="dialogVisible = true">
-        <i class="el-icon-plus" />&nbsp;新建用户
+      <el-button type="danger" @click="initUserDetail(); isAdd = true; dialogVisible = true">
+        <i class="el-icon-plus"/>&nbsp;新建用户
       </el-button>
     </div>
     <el-table
@@ -27,44 +14,41 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column label="用户ID" prop="id" align="center" width="80px">
+      <el-table-column label="用户ID" prop="id" align="center" width="80">
         <template slot-scope="{row}">
-          <span>{{ row.id }}</span>
+          <span>{{ row.peId }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="用户名" width="150px" align="center">
+      <el-table-column label="用户名" align="center">
         <template slot-scope="{row}">
           <span>{{ row.username }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="昵称" min-width="150px" align="center">
+      <el-table-column label="姓名" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.nickname }}</span>
+          <span>{{ row.peName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="所属角色" width="100px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.role }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="性别" width="80px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.sex }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="手机号" width="110px" align="center">
+<!--      <el-table-column label="性别" width="100" align="center">-->
+<!--        <template slot-scope="{row}">-->
+<!--          <span>{{ row.gender }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="专业" width="100" align="center">-->
+<!--        <template slot-scope="{row}">-->
+<!--          <span>{{ row.major }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+      <el-table-column label="手机号" align="center">
         <template slot-scope="{row}">
           <span>{{ row.phone }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="邮箱" width="180px" align="center">
+      <el-table-column label="身份" width="100" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.email }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="注册日期" width="120px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.registerData }}</span>
+          <el-tag v-if="row.isTeacher === -1" size="small" type="success">管理员</el-tag>
+          <el-tag v-else-if="row.isTeacher === 0" size="small" type="info">学生</el-tag>
+          <el-tag v-else-if="row.isTeacher === 1" size="small" type="warning">老师</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="150" class-name="small-padding fixed-width">
@@ -72,32 +56,44 @@
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(row,$index)">
-            删除
-          </el-button>
+          <!--          <el-button size="mini" type="danger" @click="handleDelete(row,$index)">-->
+          <!--            删除-->
+          <!--          </el-button>-->
         </template>
       </el-table-column>
     </el-table>
     <div class="pagination-center">
-      <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+      <el-pagination
+        :current-page="pageIndex"
+        :page-sizes="[10, 20, 50, 100]"
+        :page-size="pageSize"
+        :total="totalPage"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="sizeChangeHandle"
+        @current-change="currentChangeHandle"
+      />
     </div>
     <el-dialog
-      title="新建用户"
+      :title="`${isAdd ? '新增' : '编辑'}用户`"
       :visible.sync="dialogVisible"
-      width="60%"
+      width="50%"
     >
       <el-form ref="userDetail" :model="userDetail" :rules="checkRules" label-width="120px">
-        <!--        <el-form-item label="用户ID">-->
-        <!--          <el-input v-model="userDetail.id" disabled />-->
-        <!--        </el-form-item>-->
         <el-form-item label="用户名" prop="username">
-          <el-input v-model="userDetail.username" placeholder="请输入用户名" />
+          <el-input v-model="userDetail.username" placeholder="请输入用户名"/>
         </el-form-item>
-        <el-form-item label="昵称" prop="nickname">
-          <el-input v-model="userDetail.nickname" placeholder="请输入昵称" />
+        <el-form-item label="姓名" prop="peName">
+          <el-input v-model="userDetail.peName" placeholder="请输入姓名"/>
+        </el-form-item>
+        <el-form-item label="用户身份" prop="isTeacher">
+          <el-radio-group v-model="userDetail.isTeacher" size="medium">
+            <el-radio-button label="-1">管理员</el-radio-button>
+            <el-radio-button label="1">老师</el-radio-button>
+            <el-radio-button label="0">学生</el-radio-button>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="手机号" prop="phone">
-          <el-input v-model="userDetail.phone" type="number" placeholder="请输入手机号" />
+          <el-input v-model="userDetail.phone" type="number" placeholder="请输入手机号"/>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -109,12 +105,15 @@
 </template>
 
 <script>
-import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import Pagination from '@/components/Pagination'
+import {getUserList, addUser, updateUser} from '@/api/user'
+import {validatePhone} from "@/utils/validate"; // secondary package based on el-pagination
 
 export default {
-  components: { Pagination },
+  components: {Pagination},
   data() {
     return {
+      isAdd: false,
       userDetail: {},
       checkRules: {
         username: [
@@ -124,17 +123,24 @@ export default {
             trigger: 'blur'
           }
         ],
-        nickname: [
+        peName: [
           {
             required: true,
-            message: '昵称不能为空',
+            message: '姓名不能为空',
             trigger: 'blur'
           }
         ],
         phone: [
           {
             required: true,
-            message: '手机号不能为空',
+            trigger: 'blur',
+            validator: validatePhone
+          }
+        ],
+        isTeacher: [
+          {
+            required: true,
+            message: '用户身份不能为空',
             trigger: 'blur'
           }
         ]
@@ -146,46 +152,70 @@ export default {
       list: null,
       total: 0,
       listLoading: false,
-      listQuery: {
-        page: 1,
-        limit: 20,
-        importance: undefined,
-        title: undefined,
-        type: undefined,
-        sort: '+id'
-      }
+      pageIndex: 1,
+      pageSize: 10,
+      totalPage: 0
     }
   },
   mounted() {
-    this.list = []
-    this.total = 10
-    for (let i = 0; i < 10; i++) {
-      this.list.push({
-        id: i,
-        username: 'Admin',
-        nickname: '张三',
-        role: '管理员',
-        sex: '男',
-        phone: '13800138000',
-        email: 'example@example.org',
-        registerData: '2020年1月1日'
-      })
-    }
+    this.getUserList()
   },
   methods: {
-    onNewUser() {
-
+    getUserList() {
+      getUserList(this.pageIndex, this.pageSize).then(res => {
+        if (res.data.code === '200') {
+          this.list = res.data.data
+          this.totalPage = res.data.total
+        } else {
+          this.$message.error(res.data.msg)
+        }
+      })
     },
-    onSearch() {
+    initUserDetail() {
+      this.userDetail = {
+        username: '',
+        peName: '',
+        isTeacher: -1,
+        phone: ''
+      }
     },
-    onCancelSearch() {
-    },
-    getSortClass(key) {
-      const sort = this.listQuery.sort
-      return sort === `+${key}` ? 'ascending' : 'descending'
+    async onNewUser() {
+      this.$refs.userDetail.validate().then(isValidate => {
+        if (isValidate) {
+          if (this.isAdd) {
+            addUser(this.userDetail.peName, this.userDetail.isTeacher, this.userDetail.username, this.userDetail.phone).then(res => {
+              if (res.data.code === '200') {
+                this.dialogVisible = false
+                this.getUserList()
+                this.$message.success('创建成功')
+              } else {
+                this.$message.error(res.data.msg)
+              }
+            })
+          } else {
+            updateUser(this.userDetail.peId, this.userDetail.peName, this.userDetail.isTeacher, this.userDetail.username, this.userDetail.phone, this.userDetail.password).then(res => {
+              if (res.data.code === '200') {
+                this.dialogVisible = false
+                this.getUserList()
+                this.$message.success('更新成功')
+              } else {
+                this.$message.error(res.data.msg)
+              }
+            })
+          }
+        }
+      }).catch(e => {})
     },
     handleUpdate(row) {
-      this.$router.push('/user/edit/' + row.id)
+      this.userDetail = {
+        peId: row.peId,
+        username: row.username,
+        peName: row.peName,
+        isTeacher: row.isTeacher,
+        phone: row.phone
+      }
+      this.isAdd = false
+      this.dialogVisible = true
     },
     handleDelete(row, index) {
       this.$alert('您确定要删除该用户吗？', '删除确认', {
@@ -198,7 +228,13 @@ export default {
         }
       })
     },
-    getList() {
+    sizeChangeHandle(newSize) {
+      this.pageSize = newSize
+      this.getUserList()
+    },
+    currentChangeHandle(newCurrent) {
+      this.pageIndex = newCurrent
+      this.getUserList()
     }
   }
 }

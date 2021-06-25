@@ -32,19 +32,41 @@ export function loginBySMS(username, verifyCode) {
   })
 }
 
-export function getInfo() {
+export function getUserList(pageNo, pageSize) {
   return request({
-    url: '/vue-admin-template/user/info',
-    method: 'get'
+    url: '/allPerson',
+    method: 'get',
+    params: {
+      pageNo: pageNo,
+      pageSize: pageSize
+    }
   })
 }
 
-export function logout(token) {
+export function addUser(peName, isTeacher, username, phone) {
   return request({
-    url: '/vue-admin-template/user/logout',
+    url: '/PersonMan',
     method: 'post',
     data: {
-      token: token
+      peName: peName,
+      isTeacher: `${isTeacher}`,
+      username: username,
+      phone: phone
+    }
+  })
+}
+
+export function updateUser(peId, peName, isTeacher, username, phone, password) {
+  return request({
+    url: '/PersonMan',
+    method: 'put',
+    data: {
+      peId: `${peId}`,
+      peName: peName,
+      isTeacher: `${isTeacher}`,
+      username: username,
+      phone: phone,
+      password: password
     }
   })
 }

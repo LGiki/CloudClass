@@ -25,7 +25,8 @@ export function getAllParentMenu() {
   })
 }
 
-export function updateMenu(mId, menuName, sort, isDisplay, isPage) {
+export function updateMenu(mId, menuName, sort, isDisplay, isPage, link) {
+  console.log(link)
   return request({
     url: '/menu/Menu',
     method: 'put',
@@ -34,12 +35,13 @@ export function updateMenu(mId, menuName, sort, isDisplay, isPage) {
       menuName: menuName,
       sort: `${sort}`,
       isDisplay: isDisplay,
-      isPage: isPage
+      isPage: isPage,
+      Link: link
     }
   })
 }
 
-export function addMenu(menuName, sort, isDisplay, isPage, parentId) {
+export function addMenu(menuName, sort, isDisplay, isPage, parentId, link) {
   return request({
     url: '/menu/Menu',
     method: 'post',
@@ -48,7 +50,19 @@ export function addMenu(menuName, sort, isDisplay, isPage, parentId) {
       sort: `${sort}`,
       isDisplay: isDisplay,
       isPage: isPage,
-      parentId: `${parentId}`
+      parentId: `${parentId}`,
+      Link: link
     }
   })
 }
+
+export function deleteMenu(mId) {
+  return request({
+    url: '/menu/Menu',
+    method: 'delete',
+    data: {
+      mId: `${mId}`
+    }
+  })
+}
+
