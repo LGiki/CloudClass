@@ -39,7 +39,7 @@
 
     <template v-if="startSign < 1 && selectType === 'time'">
       <div class="text-center d-flex justify-center align-content-center">
-        <div>限时：</div>
+        <div class="mt-2">限时：</div>
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
             <v-btn v-bind="attrs" v-on="on">
@@ -62,9 +62,16 @@
     <div
       class="font-weight-bold mt-5"
       style="color: red; text-align: center"
-      v-if="startSign > 0"
+      v-if="startSign > 0 && this.selectType === 'once'"
     >
       已发起签到：{{ minute }}分{{ second }}秒
+    </div>
+    <div
+        class="font-weight-bold mt-5"
+        style="color: red; text-align: center"
+        v-if="startSign > 0 && this.selectType ==='time'"
+    >
+      签到倒计时：{{ minute2 }}分{{ second2 }}秒
     </div>
     <v-card
       v-if="isSuccess === true && isTeacher === '1'"
@@ -188,7 +195,9 @@ export default {
     color1: "purple",
     color2: "white",
     minute: 0,
+    minute2: 0,
     second: 0,
+    second2: 60,
     startSign: false, //控制倒计时
     longtitude: "",
     latitude: "",
@@ -393,12 +402,12 @@ export default {
             me.$route.query.cId,
             me.longtitude,
             me.latitude,
-            "60"
+            me.selectTime.substring(0,2),
           );
 
           me.siId = result.data.siId;
 
-          if (result.data == null) {
+          if (result.data === null) {
             me.text = "参数错误";
             me.snackbar = true;
             return;
@@ -411,7 +420,8 @@ export default {
 
               me.startSign = true;
               me.isSuccess = true;
-              me.startCount();
+              me.second2 = parseInt(me.selectTime.substring(0,2));
+              me.startReverseCount();
               break;
             default:
               me.text = result.data.msg;
@@ -420,7 +430,7 @@ export default {
         }
       }, 1000);
     },
-    //倒计时
+    //正计时
     startCount() {
       if (this.startSign === false) return;
 
@@ -431,6 +441,23 @@ export default {
         this.minute++;
       }
       setTimeout(this.startCount, 1000);
+    },
+    //倒计时
+    startReverseCount() {
+      if (this.startSign === false) return;
+
+      console.log(this.second2);
+      this.second2--;
+      if (this.second2 === 0) {
+        this.startSign = false;
+        this.isSuccess = false;
+        this.minute2 = 0;
+
+        this.text = "签到已结束";
+        this.snackbar = true;
+        return;
+      }
+      setTimeout(this.startReverseCount, 1000);
     },
     //结束签到
     async endSignUp() {
