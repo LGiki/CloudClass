@@ -41,11 +41,7 @@
         </v-list-item>
       </template>
     </v-list>
-    <v-dialog
-      v-model="changePasswordDialog"
-      persistent
-      max-width="600px"
-    >
+    <v-dialog v-model="changePasswordDialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
           <span class="text-h5">修改密码</span>
@@ -89,11 +85,7 @@
           >
             取消
           </v-btn>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="handleChangePassword"
-          >
+          <v-btn color="blue darken-1" text @click="handleChangePassword">
             确定
           </v-btn>
         </v-card-actions>
@@ -112,31 +104,31 @@ export default {
       newPassword: "",
       reNewPassword: "",
       rules: {
-        required: (value) => !!value || "必填"
+        required: (value) => !!value || "必填",
       },
       items: [
         { divider: true, inset: true },
         {
           title: "个人信息修改",
-          subtitle: ``
+          subtitle: ``,
         },
         { divider: true, inset: true },
         {
           title: "签到记录",
-          subtitle: ``
+          subtitle: ``,
         },
         { divider: true, inset: true },
         {
           title: "修改密码",
-          subtitle: ""
+          subtitle: "",
         },
         { divider: true, inset: true },
         {
           title: "退出登录",
-          subtitle: ""
+          subtitle: "",
         },
-        { divider: true, inset: true }
-      ]
+        { divider: true, inset: true },
+      ],
     };
   },
   methods: {
@@ -164,8 +156,8 @@ export default {
       } else if (index === 7) {
         this.logout();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -23,26 +23,26 @@
       </div>
     </v-card>
 
-      <v-list>
-        <template v-for="(item, index) in items">
-          <v-subheader
-            class="font-weight-bold"
-            v-if="item.header"
-            :key="item.header"
-            style="font-size: large"
-            >{{ item.header }}
-          </v-subheader>
+    <v-list>
+      <template v-for="(item, index) in items">
+        <v-subheader
+          class="font-weight-bold"
+          v-if="item.header"
+          :key="item.header"
+          style="font-size: large"
+          >{{ item.header }}
+        </v-subheader>
 
-          <v-divider v-else-if="item.divider" :key="index"></v-divider>
+        <v-divider v-else-if="item.divider" :key="index"></v-divider>
 
-          <v-list-item v-else :key="item.title">
-            <v-list-item-content> {{ item.title }}</v-list-item-content>
-            <v-list-item-content>{{ item.time }}</v-list-item-content>
-            <v-list-item-content> {{ item.change }}</v-list-item-content>
-            <v-list-item-content> {{ item.exp }}</v-list-item-content>
-          </v-list-item>
-        </template>
-      </v-list>
+        <v-list-item v-else :key="item.title">
+          <v-list-item-content> {{ item.title }}</v-list-item-content>
+          <v-list-item-content>{{ item.time }}</v-list-item-content>
+          <v-list-item-content> {{ item.change }}</v-list-item-content>
+          <v-list-item-content> {{ item.exp }}</v-list-item-content>
+        </v-list-item>
+      </template>
+    </v-list>
   </v-container>
 </template>
 

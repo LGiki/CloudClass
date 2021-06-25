@@ -137,7 +137,11 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.path === "/" && store.state.token.token !== null && store.state.token.token !== "") {
+  if (
+    to.path === "/" &&
+    store.state.token.token !== null &&
+    store.state.token.token !== ""
+  ) {
     next({ path: "/class" });
   }
   if (
