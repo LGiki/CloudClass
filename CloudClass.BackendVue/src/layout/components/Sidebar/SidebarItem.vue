@@ -20,7 +20,7 @@
         :base-path="resolvePath(child.path)"
         class="nest-menu"
       />
-      <span :key="child.meta.title + '1'" v-for="child in item.children">{{child}}</span>
+<!--      <span :key="child.meta.title + '1'" v-for="child in item.children">{{child}}</span>-->
     </el-submenu>
   </div>
 </template>

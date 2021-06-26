@@ -128,7 +128,23 @@ export const constantRoutes = [
     ]
   },
   {
-
+    path: '/class',
+    name: 'Class',
+    redirect: '/class/index',
+    component: Layout,
+    meta: {
+      title: '菜单管理'
+    },
+    children: [{
+      path: 'index',
+      name: 'Class List',
+      component: () => import('@/views/class/list'),
+      meta: {
+        title: '菜单管理'
+      }
+    }]
+  },
+  {
     path: '/system',
     component: Layout,
     // redirect: '/system/menu',

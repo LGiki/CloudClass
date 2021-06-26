@@ -127,6 +127,7 @@
       :title="`${isAdd ? '创建' : '编辑'}菜单`"
       :visible.sync="updateMenuDialogVisible"
       width="60%"
+      @closed="dialogClosed"
     >
       <el-form ref="menuDetail" :model="menuDetail" :rules="checkRules">
         <el-form-item label="菜单名称" prop="menuName">
@@ -249,6 +250,9 @@ export default {
     this.getMenuList()
   },
   methods: {
+    dialogClosed() {
+      this.$refs.menuDetail.resetFields()
+    },
     initMenuDetail() {
       this.menuDetail = {
         // sort: this.totalPage + 1,

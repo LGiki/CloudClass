@@ -22,6 +22,10 @@ const menuMap = {
   '/system/parameter': {
     label: '系统参数',
     icon: 'params'
+  },
+  '/class': {
+    label: '班课管理',
+    icon: 'class'
   }
 }
 export default menuMap
