@@ -295,6 +295,10 @@ export default {
             this.$message.error('父级菜单不能为空')
             return
           }
+          if (this.menuDetail.hasParent && this.menuDetail.Link === '') {
+            this.$message.error('菜单页面不能为空')
+            return
+          }
           addMenu(this.menuDetail.menuName, this.menuDetail.sort, this.menuDetail.isDisplay, this.menuDetail.isPage, this.menuDetail.hasParent ? this.menuDetail.parentId : -1, this.menuDetail.Link).then(res => {
             if (res.data.code === '200') {
               this.getMenuList()

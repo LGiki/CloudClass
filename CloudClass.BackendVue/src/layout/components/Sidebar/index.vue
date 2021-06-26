@@ -3,7 +3,6 @@
     <logo v-if="showLogo" :collapse="isCollapse"/>
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
-        :default-active="activeMenu"
         :collapse="isCollapse"
         :background-color="variables.menuBg"
         :text-color="variables.menuText"
@@ -14,7 +13,7 @@
       >
         <sidebar-item
           v-for="route in menus"
-          :key="route.meta.label"
+          :key="route.meta.title"
           :item="route"
           :base-path="route.path"
         />
@@ -44,7 +43,7 @@ export default {
   },
   methods: {
     async getMenus() {
-      // console.log(this.$router.options.routes)
+      let hasMenuConfig = false
       const menuResponse = await getAllMenuWithoutPagination()
       const roleMenuResponse = await getRoleMenu()
       const menuList = menuResponse.data.data
@@ -60,15 +59,17 @@ export default {
         const menus = []
         for (const item of menuList) {
           const menuInfo = menuMap[item.Link]
-          if (menuInfo === null || menuInfo === undefined) {
+          if (!((item.Link === null || item.Link === '') && item.items.length > 0) && (menuInfo === null || menuInfo === undefined)) {
             continue
+          }
+          if (item.Link === '/system/menu' && item.items.length === 0) {
+            hasMenuConfig = true
           }
           const menuItem = {
             path: item.Link,
             meta: {
-              // title: menuInfo.label,
               title: item.menuName,
-              icon: menuInfo.icon
+              icon: menuInfo === undefined ? 'setting' : menuInfo.icon
             }
           }
           if (item.items.length > 0) {
@@ -77,6 +78,9 @@ export default {
               const childMenuInfo = menuMap[childItem.link]
               if (childMenuInfo === null || childMenuInfo === undefined) {
                 continue
+              }
+              if (childItem.link === '/system/menu') {
+                hasMenuConfig = true
               }
               menuItem.children.push(
                 {
@@ -94,6 +98,18 @@ export default {
           }
           menus.push(menuItem)
         }
+        // TODO：这里还需要判断用户是否是管理员
+        if (!hasMenuConfig) {
+          const menuConfigItem = menuMap['/system/menu']
+          menus.push({
+            path: '/system/menu',
+            meta: {
+              title: menuConfigItem.label,
+              icon: menuConfigItem.icon
+            }
+          })
+        }
+        // console.log(menus)
         this.menus = menus
       }
     }

@@ -6,3 +6,14 @@ export function getRoleMenu() {
     method: 'get'
   })
 }
+
+export function updateRoleMenu(rmId, status) {
+  return request({
+    url: '/role-menu/RoleMenu',
+    method: 'put',
+    data: {
+      rmId: `${rmId}`,
+      status: `${status}`
+    }
+  })
+}

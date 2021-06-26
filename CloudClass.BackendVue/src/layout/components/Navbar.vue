@@ -11,11 +11,11 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
+          <a href="https://github.com/LGiki/CloudClass" target="_blank">
             <el-dropdown-item>
-              个人资料
+              项目仓库
             </el-dropdown-item>
-          </router-link>
+          </a>
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">注销</span>
           </el-dropdown-item>
