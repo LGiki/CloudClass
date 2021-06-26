@@ -62,7 +62,7 @@
     <div
       class="font-weight-bold mt-5"
       style="color: red; text-align: center"
-      v-if="startSign > 0 && this.selectType === 'once'"
+      v-if="startSign > 0 && this.selectType === 'once' && this.minute >= 0"
     >
       已发起签到：{{ minute }}分{{ second }}秒
     </div>
@@ -78,13 +78,13 @@
       class="mt-4 mr-4 ml-4"
     >
       <div class="d-flex justify-end">
-        <v-card-text class="font-weight-bold">已签到学生</v-card-text>
-        <v-card-text class="ml-10">18/20</v-card-text>
+        <v-card-text class="font-weight-bold">未签到学生</v-card-text>
+        <v-card-text class="ml-10">{{studentNum-items.length}}/{{studentNum}}</v-card-text>
       </div>
       <virtual-list
         style="height: 170px; overflow-y: auto"
         scrollable
-        :data-key="'uid'"
+        :data-key="'pe_id'"
         :data-sources="items"
         :data-component="itemComponent"
       />
@@ -182,6 +182,7 @@ import {
 } from "@/api/sign";
 import Item from "./item-component";
 import VirtualList from "vue-virtual-scroll-list";
+import {getSignUpRemainTime, getUnSignedStudents} from "./api/sign";
 
 export default {
   data: () => ({
@@ -198,6 +199,7 @@ export default {
     minute2: 0,
     second: 0,
     second2: 60,
+    studentNum: 1,
     startSign: false, //控制倒计时
     longtitude: "",
     latitude: "",
@@ -205,14 +207,7 @@ export default {
     selectTime: "30秒",
     itemComponent: Item,
     items: [
-      { uid: "1", name: "魏璐炜", stuNumber: "2003270xx" },
-      { uid: "2", name: "22", stuNumber: "2003270xx" },
-      { uid: "3", name: "33", stuNumber: "2003270xx" },
-      { uid: "4", name: "44", stuNumber: "2003270xx" },
-      { uid: "5", name: "55", stuNumber: "2003270xx" },
-      { uid: "6", name: "66", stuNumber: "2003270xx" },
-      { uid: "7", name: "77", stuNumber: "2003270xx" },
-      { uid: "8", name: "88", stuNumber: "2003270xx" },
+      { pe_id: "1", peName: "魏璐炜", username: "2003270xx" },
     ],
     times: [{ title: "10秒" }, { title: "30秒" }, { title: "60秒" }],
     /*
@@ -375,6 +370,7 @@ export default {
           );
 
           me.siId = result.data.siId;
+          me.studentNum = result.data.StudentNum;
 
           if (result.data == null) {
             me.text = "参数错误";
@@ -406,6 +402,7 @@ export default {
           );
 
           me.siId = result.data.siId;
+          me.studentNum = result.data.StudentNum;
 
           if (result.data === null) {
             me.text = "参数错误";
@@ -431,10 +428,13 @@ export default {
       }, 1000);
     },
     //正计时
-    startCount() {
+    async startCount() {
       if (this.startSign === false) return;
 
-      console.log(this.second);
+      let result = await getUnSignedStudents(this.siId);
+      if (result.data != null)
+        this.items = result.data.data;
+
       this.second++;
       if (this.second === 60) {
         this.second = 0;
@@ -446,7 +446,6 @@ export default {
     startReverseCount() {
       if (this.startSign === false) return;
 
-      console.log(this.second2);
       this.second2--;
       if (this.second2 === 0) {
         this.startSign = false;
@@ -495,11 +494,28 @@ export default {
   async mounted() {
     //若签到还未结束，改变UI
     let activeSignUpResult = await getActiveSignUp(this.$route.query.cId);
+    this.studentNum = activeSignUpResult.data.StudentNum;
+    let remainTime = await getSignUpRemainTime(activeSignUpResult.data.data.siId);
 
     if (activeSignUpResult.data.data.siId != null) {
       this.siId = activeSignUpResult.data.data.siId;
 
+      //更改UI
       this.isSuccess = true;
+      this.startSign = true;
+      if(activeSignUpResult.data.data.type === 1){
+        this.selectType = "once";
+      }else if(activeSignUpResult.data.data.type ===2){
+        this.selectType = "time";
+      }
+    }
+    //更新剩余时间
+    if(remainTime.data != null && remainTime.data.data >= 0){
+      this.second2 = remainTime.data.data;
+      this.startReverseCount();
+    }else{
+      //让已签到时间的UI不再限时，适用于一键签到情况
+      this.minute = -1;
     }
   },
 };

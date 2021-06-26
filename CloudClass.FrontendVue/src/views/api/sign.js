@@ -50,3 +50,35 @@ export function endSignUp(siId) {
     data: { siId: siId },
   });
 }
+//获取签到剩余时间
+export function getSignUpRemainTime(siId) {
+  return request({
+    url: "/sign-in/RemainTime",
+    method: "get",
+    params: { siId: siId },
+  });
+}
+//获取签到成功的学生
+export function getSignedStudents(siId) {
+  return request({
+    url: "/sign-in/SignInStudent",
+    method: "get",
+    params: { siId: siId },
+  });
+}
+//获取未签到成功的学生
+export function getUnSignedStudents(siId) {
+  return request({
+    url: "/sign-in/NotSignInStudent",
+    method: "get",
+    params: { siId: siId },
+  });
+}
+//补签   siId,签到号   peId 教师号
+export function reSignUp(siId,peId) {
+  return request({
+    url: "/sign-record/SupplementSignRecord",
+    method: "get",
+    params: { siId: siId,peId : peId },
+  });
+}
