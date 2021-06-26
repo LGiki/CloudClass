@@ -1,15 +1,20 @@
 const state = {
-  token: localStorage.getItem('token') || ''
+  token: localStorage.getItem('token') || '',
+  role: localStorage.getItem('role') || ''
 }
 
 const mutations = {
-  SET_TOKEN(state, token) {
+  SET_TOKEN(state, { token, role }) {
     state.token = token
+    state.role = role
     localStorage.setItem('token', token)
+    localStorage.setItem('role', role)
   },
   REMOVE_TOKEN(state) {
     state.token = ''
+    state.role = ''
     localStorage.removeItem('token')
+    localStorage.removeItem('role')
   }
 }
 

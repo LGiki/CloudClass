@@ -1,18 +1,19 @@
 import request from '@/utils/request'
 
-export function getRoleMenu() {
+export function getRoleMenu(role) {
   return request({
-    url: '/role-menu/AllRoleMenu',
+    url: `/role-menu/AllRoleMenu?rId=${role}`,
     method: 'get'
   })
 }
 
-export function updateRoleMenu(rmId, status) {
+export function updateRoleMenu(rId, mId, status) {
   return request({
     url: '/role-menu/RoleMenu',
     method: 'put',
     data: {
-      rmId: `${rmId}`,
+      rId: `${rId}`,
+      mId: `${mId}`,
       status: `${status}`
     }
   })

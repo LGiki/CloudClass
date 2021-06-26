@@ -146,54 +146,60 @@ export default {
       pageSize: 10,
       totalPage: 0,
       dataListLoading: false,
-      toUpdateList: {}
+      toUpdateList: {},
+      updateRoleId: 1
     }
   },
   async mounted() {
-    await this.getData()
+    // await this.getData()
   },
   methods: {
-    async getData() {
-      const currentRoleId = 2
+    async getData(roleId) {
+      const roleMenuResponse = await getRoleMenu(roleId)
+      const roleMenuData = roleMenuResponse.data.data
+      console.log(roleMenuData)
+      const enableMenuIds = []
+      for (const item of roleMenuData) {
+        if (item.status === 1) {
+          enableMenuIds.push(item.mid)
+        }
+      }
       await getAllMenuWithoutPagination().then(res => {
-        // console.log(res.data.data)
         const menus = []
         for (const item of res.data.data) {
           const menuItem = {
             id: item.mId,
+            // name: item.menuName + item.mId
             name: item.menuName
           }
+          let childrenEnableCount = 0
           if (item.items.length > 0) {
             menuItem.children = []
             for (const childItem of item.items) {
               menuItem.children.push({
                 id: childItem.mid,
                 name: childItem.menuName
+                // name: childItem.menuName + childItem.mid
               })
+              if (enableMenuIds.includes(menuItem.mid)) {
+                childrenEnableCount++
+              }
+            }
+            if (childrenEnableCount !== item.items.length) {
+              enableMenuIds.splice(enableMenuIds.indexOf(item.mId), 1)
             }
           }
           menus.push(menuItem)
         }
-        // console.log(menus)
         this.menus = menus
-      })
-      getRoleMenu().then(res => {
-        const enableMenuIds = []
-        for (const item of res.data.data) {
-          if (item.rid === currentRoleId && item.status === 1) {
-            enableMenuIds.push(item.mid)
-          }
-          // for(const menuItem of this.menus) {
-          //   if (menuItem.id === )
-          // }
-        }
         this.enableMenuIds = enableMenuIds
       })
     },
     handleUpdateSubmit() {
       let updateResult = true
+      console.log(this.toUpdateList)
       for (const key of Object.keys(this.toUpdateList)) {
-        updateRoleMenu(key, this.toUpdateList[key].status).then(
+        updateRoleMenu(this.updateRoleId, key, this.toUpdateList[key].status).then(
           res => {
             if (res.data.code !== '200') {
               updateResult = false
@@ -202,24 +208,37 @@ export default {
         )
       }
       if (updateResult) {
-        this.$store.commit('menus/SET_IS_MENU_UPDATED', false)
+        this.$store.commit('menus/SET_IS_MENU_UPDATED', true)
         this.$message.success('更新成功')
+        this.dialogVisible = false
       } else {
         this.$message.error('更新失败')
       }
     },
     handleCheckChange(data, checked, indeterminate) {
+      // console.log(data, checked, indeterminate)
       this.toUpdateList[data.id] = {}
-      this.toUpdateList[data.id].status = checked ? 1 : 0
+      this.toUpdateList[data.id].status = indeterminate ? 1 : (checked ? 1 : 0)
       if (data.children !== undefined && data.children.length > 0) {
         for (const item of data.children) {
-          this.toUpdateList[item.id] = {}
-          this.toUpdateList[item.id].status = checked ? 1 : 0
+          if (item.id === data.id) {
+            this.toUpdateList[item.id] = {}
+            this.toUpdateList[item.id].status = checked ? 1 : 0
+          }
         }
       }
+      // console.log(this.toUpdateList)
     },
-    handleUpdate(row) {
-      this.toUpdateList = []
+    async handleUpdate(row) {
+      this.menus = []
+      this.enableMenuIds = []
+      this.toUpdateList = {}
+      if (row.id === 1) {
+        this.updateRoleId = 1
+      } else if (row.id === 2) {
+        this.updateRoleId = -1
+      }
+      await this.getData(this.updateRoleId)
       this.dialogVisible = true
     }
   }

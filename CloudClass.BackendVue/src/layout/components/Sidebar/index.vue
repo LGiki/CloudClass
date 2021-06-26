@@ -43,21 +43,26 @@ export default {
   },
   methods: {
     async getMenus() {
+      // console.log('getMenus:', this.$store.state.token.role)
       let hasMenuConfig = false
       const menuResponse = await getAllMenuWithoutPagination()
-      const roleMenuResponse = await getRoleMenu()
+      const roleMenuResponse = await getRoleMenu(this.$store.state.token.role)
       const menuList = menuResponse.data.data
       const roleMenu = roleMenuResponse.data.data
-      const currentUserRid = 2
       if (menuList !== null && roleMenu !== null) {
+        // 获取当前用户拥有的菜单ID列表
         const currentUserMenuIds = []
         for (const item of roleMenu) {
-          if (item.rid === currentUserRid && item.status === 1) {
+          if (item.status === 1) {
             currentUserMenuIds.push(item.mid)
           }
         }
         const menus = []
         for (const item of menuList) {
+          // console.log(item)
+          if (!currentUserMenuIds.includes(item.mId)) {
+            continue
+          }
           const menuInfo = menuMap[item.Link]
           if (!((item.Link === null || item.Link === '') && item.items.length > 0) && (menuInfo === null || menuInfo === undefined)) {
             continue
@@ -75,6 +80,9 @@ export default {
           if (item.items.length > 0) {
             menuItem.children = []
             for (const childItem of item.items) {
+              if (!currentUserMenuIds.includes(childItem.mid)) {
+                continue
+              }
               const childMenuInfo = menuMap[childItem.link]
               if (childMenuInfo === null || childMenuInfo === undefined) {
                 continue

@@ -257,7 +257,7 @@ export default {
           loginBySMS(this.smsLoginForm.phone.trim(), this.smsLoginForm.verifyCode.trim()).then(res => {
             this.loading = false
             if (res.data.code === '200') {
-              this.$store.commit('token/SET_TOKEN', res.data.token)
+              this.$store.commit('token/SET_TOKEN', {token: res.data.token, role: res.data.role})
               this.$router.push({path: this.redirect || '/'})
             } else {
               this.$message.error(res.data.msg)
@@ -280,7 +280,7 @@ export default {
           loginByPassword(this.passwordLoginForm.username.trim(), passwordMD5).then(res => {
             this.loading = false
             if (res.data.code === '200') {
-              this.$store.commit('token/SET_TOKEN', res.data.token)
+              this.$store.commit('token/SET_TOKEN', {token: res.data.token, role: res.data.role})
               this.$router.push({path: this.redirect || '/'})
             } else {
               this.$message.error(res.data.msg)
