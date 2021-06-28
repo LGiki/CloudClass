@@ -53,10 +53,10 @@
               <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"/>
             </span>
           </el-form-item>
-          <div style="display: flex; justify-content: flex-end">
-            <!--            <el-button type="text" @click="$router.push('/signup')">注册</el-button>-->
-            <el-button type="text" @click="$router.push('/reset-password')">找回密码</el-button>
-          </div>
+<!--          <div style="display: flex; justify-content: flex-end">-->
+<!--            &lt;!&ndash;            <el-button type="text" @click="$router.push('/signup')">注册</el-button>&ndash;&gt;-->
+<!--            <el-button type="text" @click="$router.push('/reset-password')">找回密码</el-button>-->
+<!--          </div>-->
           <el-button
             :loading="loading"
             type="primary"
@@ -118,10 +118,10 @@
               {{ sendValidationButton.title }}
             </el-button>
           </div>
-          <div style="display: flex; justify-content: flex-end">
-            <!--            <el-button type="text" @click="$router.push('/signup')">注册</el-button>-->
-            <el-button type="text" @click="$router.push('/reset-password')">找回密码</el-button>
-          </div>
+<!--          <div style="display: flex; justify-content: flex-end">-->
+<!--            &lt;!&ndash;            <el-button type="text" @click="$router.push('/signup')">注册</el-button>&ndash;&gt;-->
+<!--            <el-button type="text" @click="$router.push('/reset-password')">找回密码</el-button>-->
+<!--          </div>-->
           <el-button
             :loading="loading"
             type="primary"

@@ -95,6 +95,9 @@
         <el-form-item label="手机号" prop="phone">
           <el-input v-model="userDetail.phone" type="number" placeholder="请输入手机号"/>
         </el-form-item>
+        <el-form-item label="用户默认密码为" v-if="isAdd">
+          <u><b>12345678</b></u>
+        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
