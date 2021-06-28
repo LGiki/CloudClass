@@ -8,10 +8,17 @@ export function getPersonInfo() {
     });
 }
 //修改个人信息
-export function setPersonInfo() {
+export function setPersonInfo(name,classes,grade,isTeacher) {
     return request({
         url: "/PersonInfo",
         method: "put",
+        data: {
+            peName: name,//名字
+            classes: classes,//班级
+            grade: grade,//年级
+            isTeacher: isTeacher,//是否教师
+
+        },
     });
 }
 //修改密码

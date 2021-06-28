@@ -20,25 +20,26 @@
     <!--          </v-avatar>-->
     <!--        </div>-->
     <!--      </div>-->
-
     <v-text-field
-      prepend-icon="mdi-account"
-      v-model="personDetail.schoolName"
-      label="学校"
-      :rules="[rules.required]"
+        prepend-icon="mdi-pen"
+        v-model="personDetail.name"
+        label="姓名"
+        :rules="[rules.required]"
     ></v-text-field>
+
+
 
     <v-text-field
       prepend-icon="mdi-android-studio"
-      v-model="personDetail.grade"
-      label="年级"
+      v-model="personDetail.className"
+      label="班级"
       :rules="[rules.required]"
     ></v-text-field>
 
     <v-text-field
       prepend-icon="mdi-google-classroom"
-      v-model="personDetail.major"
-      label="专业班级"
+      v-model="personDetail.grade"
+      label="年级"
       :rules="[rules.required]"
     ></v-text-field>
     <v-icon>mdi-account-box</v-icon>
@@ -55,7 +56,7 @@
 
     <div style="display: grid; grid-template-columns: repeat(2, 1fr)">
       <v-btn class="mr-2" @click="$router.back()">取消</v-btn>
-      <v-btn class="ml-2" color="primary">保存</v-btn>
+      <v-btn class="ml-2" color="primary" @click="updatePersonalInfo">保存</v-btn>
     </div>
     <!--      <v-list>-->
     <!--        <template v-for="(item, index) in items">-->
@@ -78,32 +79,49 @@
     <!--          </v-list-item>-->
     <!--        </template>-->
     <!--      </v-list>-->
+
+    <div class="text-center">
+      <v-snackbar v-model="snackbar" timeout="3000">
+        {{ alertMessage }}
+
+        <template v-slot:action="{ attrs }">
+          <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
+            关闭
+          </v-btn>
+        </template>
+      </v-snackbar>
+    </div>
   </v-container>
 </template>
 
 <script>
+import {getPersonInfo, setPersonInfo} from "./api/person";
+
 export default {
   name: "PersonalEdit",
   data() {
     return {
       isTeacher: localStorage.getItem("isTeacher"),
+      alertMessage: "",
+      snackbar: false,
       personDetail: {
-        schoolName: "福州大学",
-        grade: "研究生一年级",
-        major: "专业班级",
+        name: "",
+        schoolName: "",
+        className: "",
+        major: "",
         isTeacher: 0,
       },
       items: [
         {
-          title: "学校",
+          title: "姓名",
+        },
+        { divider: true, inset: true },
+        {
+          title: "班级",
         },
         { divider: true, inset: true },
         {
           title: "年级",
-        },
-        { divider: true, inset: true },
-        {
-          title: "专业班级",
         },
         { divider: true, inset: true },
       ],
@@ -149,15 +167,47 @@ export default {
           break;
       }
     },
+    async updatePersonalInfo() {
+
+      console.log(this.personDetail);
+      let result = await setPersonInfo(this.personDetail.name,this.personDetail.className,this.personDetail.grade,this.personDetail.isTeacher);
+      switch (result.data.code) {
+        case "200":
+          this.alertMessage = "保存成功";
+          this.snackbar = true;
+          this.$router.push("/class");
+          break;
+        default:
+          this.alertMessage = result.data.msg;
+          this.snackbar = true;
+      }
+      console.log(result);
+
+    }
   },
-  mounted() {
+  async mounted() {
+    let result = await getPersonInfo();
+    if (result.data.data != null) {
+
+      if (result.data.data.peName != null && result.data.data.peName !== "")
+        this.personDetail.name = result.data.data.peName;
+      if (result.data.data.classes != null && result.data.data.classes !== "")
+        this.personDetail.className = result.data.data.classes;
+      if (result.data.data.grade != null && result.data.data.grade !== "")
+        this.personDetail.grade = result.data.data.grade;
+      if (result.data.data.isTeacher != null )
+        this.personDetail.isTeacher = result.data.data.isTeacher;
+    } else {
+      this.snackbar = true;
+      this.alertMessage = "数据初始化失败";
+    }
     if (this.isTeacher === "1") {
       this.items.splice(0, this.items.length);
       this.items.push(
-        {
-          title: "经验值",
-        },
-        { divider: true, inset: true }
+          {
+            title: "经验值",
+          },
+          {divider: true, inset: true}
       );
     }
   },

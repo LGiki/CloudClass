@@ -23,6 +23,48 @@
           </v-avatar>
         </div>
       </div>
+<!-- 确认退出班课对话框 -->
+      <template>
+        <div class="text-center">
+          <v-dialog
+              v-model="dialog"
+              width="500"
+          >
+
+
+            <v-card>
+              <v-card-title class="text-h5 grey lighten-2">
+                提示
+              </v-card-title>
+
+              <v-card-text class="mt-2">
+                确认退出班课?
+                 </v-card-text>
+
+              <v-divider></v-divider>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="primary"
+                    text
+                    @click="exit"
+                >
+                  确认
+                </v-btn>
+                <v-btn
+                    color="primary"
+                    text
+                    @click="dialog = false"
+                >
+                  取消
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </div>
+      </template>
+
 
       <v-list>
         <template v-for="(item, index) in items">
@@ -46,21 +88,42 @@
         </template>
       </v-list>
     </v-card>
+
+    <div class="text-center">
+      <v-snackbar v-model="snackbar" timeout="3000">
+        {{ alertMessage }}
+
+        <template v-slot:action="{ attrs }">
+          <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
+            关闭
+          </v-btn>
+        </template>
+      </v-snackbar>
+    </div>
   </v-container>
 </template>
 
 <script>
 import { getClassData } from "@/api/class";
+import {exitClass} from "./api/sign";
 
 export default {
   name: "Personal",
   data() {
     return {
+      dialog: false,
+      alertMessage: "",
+      snackbar: false,
       items: [
         { header: " " },
         { divider: true, inset: true },
         {
           title: "班课状态设置",
+          subtitle: ``,
+        },
+        { divider: true, inset: true },
+        {
+          title: "退出班课",
           subtitle: ``,
         },
       ],
@@ -75,7 +138,7 @@ export default {
     };
   },
   methods: {
-    goEdit(index) {
+    async goEdit(index) {
       console.log(index);
       if (index === 2) {
         this.$router.push({
@@ -85,6 +148,24 @@ export default {
             cNumber: this.$route.query.cNumber,
           },
         });
+      }else if(index === 4){
+        this.dialog = true;
+      }
+    },
+    async exit() {
+      this.dialog = false;
+
+      let result = await exitClass(this.classInfo.cId + "");
+      switch (result.data.code) {
+        case "200":
+          this.alertMessage = "退出班课成功";
+          this.snackbar = true;
+
+          this.$router.push("class");
+          break;
+        default:
+          this.alertMessage = result.data.msg;
+          this.snackbar = true;
       }
     },
     async initClassData() {
