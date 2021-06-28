@@ -127,6 +127,24 @@ const routes = [
         },
         component: () => import("../views/ClassSetupDetail"),
       },
+      {
+        name: "SignHistory",
+        path: "/signHistory",
+        meta: {
+          title: "签到历史记录",
+          stuTitle: "签到历史记录",
+        },
+        component: () => import("../views/SignHistory"),
+      },
+      {
+        name: "SignDetail",
+        path: "/signDetail",
+        meta: {
+          title: "签到详情",
+          stuTitle: "签到详情",
+        },
+        component: () => import("../views/SignDetail"),
+      },
     ],
   },
 ];

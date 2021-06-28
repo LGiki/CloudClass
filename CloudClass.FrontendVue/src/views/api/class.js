@@ -92,11 +92,11 @@ export function queryClassPermitAdd(cNumber) {
     params: { cNumber: cNumber },
   });
 }
-//获取班课成员
-export function queryClassMembers(cId) {
+//获取班课成员, 1 -> desc, other -> asc
+export function queryClassMembers(cId, type = 1) {
   return request({
     url: "/person-course/CourseMember",
     method: "get",
-    params: { cId: cId },
+    params: { cId: cId, type: type },
   });
 }

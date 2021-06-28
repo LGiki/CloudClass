@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div class="font-weight-bold mb-6 mt-2 text-h6 ml-2">班级：{{classRealName}}</div>
+    <div class="font-weight-bold mb-6 mt-2 text-h6 ml-2">班级：{{ classRealName }}</div>
     <div class="justify-space-around d-flex mt-8">
       <v-btn
         medium
@@ -67,8 +67,7 @@
       已发起签到：{{ minute }}分{{ second }}秒
     </div>
     <div
-      class="font-weight-b
-      old mt-5"
+      class="font-weight-bold mt-5"
       style="color: red; text-align: center"
       v-if="startSign > 0 && this.selectType === 'time'"
     >
@@ -81,7 +80,8 @@
       <div class="d-flex justify-end">
         <v-card-text class="font-weight-bold">未签到学生</v-card-text>
         <v-card-text class="ml-10"
-          >{{ studentNum - items.length }}/{{ studentNum }}</v-card-text
+        >{{ studentNum - items.length }}/{{ studentNum }}
+        </v-card-text
         >
       </div>
       <virtual-list
@@ -132,14 +132,27 @@
       >
         签到
       </v-btn>
-      <v-btn
-        x-large
-        class="primary mb-16 mt-16"
-        @click="startSignUp"
-        v-if="isSuccess === false && isTeacher === '1'"
-      >
-        发起签到
-      </v-btn>
+      <div style="display: flex; flex-direction: column; width: 60%">
+        <v-btn
+          x-large
+          block
+          class="primary mt-16"
+          @click="startSignUp"
+          v-if="isSuccess === false && isTeacher === '1'"
+        >
+          发起签到
+        </v-btn>
+
+        <v-btn
+          x-large
+          block
+          class="success mt-16"
+          @click="() => $router.push({name: 'SignHistory', query: $route.query})"
+          v-if="isSuccess === false && isTeacher === '1'"
+        >
+          签到记录
+        </v-btn>
+      </div>
       <v-btn
         v-if="stuIsSuccess === true && isTeacher === '0'"
         x-large
@@ -181,12 +194,12 @@ import {
   endSignUp,
   getActiveSignUp,
   signUpBySid,
-  startSignUp,
+  startSignUp
 } from "@/api/sign";
 import Item from "./item-component";
 import VirtualList from "vue-virtual-scroll-list";
 import { getSignUpRemainTime, getUnSignedStudents } from "./api/sign";
-import {getClassData} from "../api/class";
+import { getClassData } from "../api/class";
 
 export default {
   data: () => ({
@@ -212,7 +225,7 @@ export default {
     classRealName: "工程实践",
     itemComponent: Item,
     items: [{ pe_id: "1", peName: "魏璐炜", username: "2003270xx" }],
-    times: [{ title: "10秒" }, { title: "30秒" }, { title: "60秒" }],
+    times: [{ title: "10秒" }, { title: "30秒" }, { title: "60秒" }]
     /*
     items: [
       {
@@ -255,7 +268,7 @@ export default {
     getPositon(val) {
       var me = this;
       //获取精度，纬度
-      var onSuccess = async function (position) {
+      var onSuccess = async function(position) {
         me.msg =
           "纬度:\t" +
           position.coords.latitude +
@@ -290,7 +303,7 @@ export default {
           "\n";
           */
       };
-      var error = function (error) {
+      var error = function(error) {
         console.log(error.message);
         me.msg =
           "code: " + error.code + "\n" + "message: " + error.message + "\n";
@@ -300,14 +313,14 @@ export default {
       navigator.geolocation.getCurrentPosition(onSuccess, error, {
         maximumAge: 30000,
         timeout: 3000,
-        enableHighAccuracy: val,
+        enableHighAccuracy: val
       });
     },
     //学生进行签到
     async sign(val) {
       await this.getPositon(val);
       var me = this;
-      setTimeout(async function () {
+      setTimeout(async function() {
         let activeSignUpResult = await getActiveSignUp(me.$route.query.cId);
         if (
           activeSignUpResult.data.data.siId === null ||
@@ -355,7 +368,7 @@ export default {
       let me = this;
       await this.getPositon(1);
 
-      setTimeout(async function () {
+      setTimeout(async function() {
         if (me.latitude === "" || me.longtitude === "") {
           me.text = "位置信息获取失败，请重试";
           me.snackbar = true;
@@ -495,7 +508,7 @@ export default {
     async setClassData() {
       let result = await getClassData(this.$route.query.id);
       this.classRealName = result.data.data.ccName;
-    },
+    }
   },
   async mounted() {
 
@@ -528,6 +541,6 @@ export default {
       this.minute = -1;
     }
 
-  },
+  }
 };
 </script>

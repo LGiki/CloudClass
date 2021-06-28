@@ -78,8 +78,11 @@ export function getUnSignedStudents(siId) {
 export function reSignUp(siId, peId) {
   return request({
     url: "/sign-record/SupplementSignRecord",
-    method: "get",
-    params: { siId: siId, peId: peId },
+    method: "post",
+    data: {
+      siId: `${siId}`,
+      peId: `${peId}`,
+    },
   });
 }
 //获取某班课的详细签到记录

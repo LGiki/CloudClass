@@ -12,7 +12,6 @@ export function addClass(
   return request({
     url: "/course/Course",
     method: "post",
-
     data: {
       //      peId: peId,
       cName: cName,

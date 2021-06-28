@@ -2,7 +2,6 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import AfterLoginLayout from "../layout/AfterLoginLayout";
 import store from "../store/index";
-
 Vue.use(VueRouter);
 
 const routes = [
