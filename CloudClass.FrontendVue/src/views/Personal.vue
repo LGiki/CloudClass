@@ -3,16 +3,16 @@
     <v-card class="mb-5">
       <div class="d-flex flex-no-wrap justify-space-between">
         <div>
-          <v-card-title class="headline">林声睿</v-card-title>
+          <v-card-title class="headline">{{user.name}}</v-card-title>
 
-          <v-card-subtitle class="mt-0">
-            学号: {{ 200327063 }}
+          <v-card-subtitle class="mt-0" v-if="user.classes !== ''">
             <br />
-            班级: {{ 123 }}
+            班级: {{ user.classes }}
             <br />
-            专业: {{ 123 }}
-            <br />
-            经验值： 100
+            年级: {{ user.grade }}
+          </v-card-subtitle>
+          <v-card-subtitle class="mt-0" v-if="user.classes === ''">
+            还未完善个人信息
           </v-card-subtitle>
         </div>
         <div style="display: flex; align-items: center">
@@ -91,10 +91,24 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <div class="text-center">
+      <v-snackbar v-model="snackbar" timeout="3000">
+        {{ alertMessage }}
+
+        <template v-slot:action="{ attrs }">
+          <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
+            关闭
+          </v-btn>
+        </template>
+      </v-snackbar>
+    </div>
   </v-container>
 </template>
 
 <script>
+import {getPersonInfo} from "./api/person";
+
 export default {
   name: "Personal",
   data() {
@@ -103,6 +117,8 @@ export default {
       oldPassword: "",
       newPassword: "",
       reNewPassword: "",
+      alertMessage: "",
+      snackbar : false,
       rules: {
         required: (value) => !!value || "必填",
       },
@@ -129,6 +145,11 @@ export default {
         },
         { divider: true, inset: true },
       ],
+      user: {
+        name: "用户0203",
+        classes:  "",
+        major: "",
+      },
     };
   },
   methods: {
@@ -158,6 +179,21 @@ export default {
       }
     },
   },
+  async mounted() {
+    let result = await getPersonInfo();
+    if(result.data.data != null){
+
+      if(result.data.data.peName != null && result.data.data.peName !== "")
+        this.user.name = result.data.data.peName;
+      if(result.data.data.classes != null && result.data.data.classes !== "")
+        this.user.classes = result.data.data.classes;
+      if(result.data.data.grade != null && result.data.data.grade !== "")
+         this.user.grade = result.data.data.grade;
+    }else{
+      this.snackbar = true;
+      this.alertMessage = "数据初始化失败";
+    }
+  }
 };
 </script>
 
