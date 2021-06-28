@@ -218,6 +218,8 @@ export default {
       this.schoolId = this.schools[index1].s_id;
       this.department = "";
       this.departmentId = 0;
+
+      this.schoolIndex = index1;
     },
     addClaContent(index1) {
       this.courseName = this.classes[index1].title;

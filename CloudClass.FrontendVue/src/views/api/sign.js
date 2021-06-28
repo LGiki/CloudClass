@@ -75,10 +75,36 @@ export function getUnSignedStudents(siId) {
   });
 }
 //补签   siId,签到号   peId 教师号
-export function reSignUp(siId,peId) {
+export function reSignUp(siId, peId) {
   return request({
     url: "/sign-record/SupplementSignRecord",
     method: "get",
-    params: { siId: siId,peId : peId },
+    params: { siId: siId, peId: peId },
   });
 }
+//获取某班课的详细签到记录
+export function getDetailSignUpRecord(cId) {
+  return request({
+    url: "sign-record/StudentSignRecord",
+    method: "get",
+    params: { cId: cId },
+  });
+}
+//手动结束签到
+export function exitClass(cId) {
+  return request({
+    url: "person-course/personCourse",
+    method: "put",
+    data: { cId: cId },
+  });
+}
+//获取班课内学生个人信息
+export function getStudentInfo(peId) {
+  return request({
+    url: "person-course/StudentInfo",
+    method: "get",
+    params: { peId : peId },
+  });
+}
+
+

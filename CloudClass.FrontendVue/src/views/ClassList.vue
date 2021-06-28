@@ -128,7 +128,6 @@
 <script>
 import { initClassList } from "@/api/class";
 
-import { enterClass } from "@/api/class";
 
 export default {
   name: "lookup_classes",
@@ -180,26 +179,14 @@ export default {
       var me = this;
       this.window.cordova.plugins.barcodeScanner.scan(
         async function (result) {
-          let response = await enterClass(result.text);
-          alert(response.data.code);
-          alert(response.data.msg);
-          switch (response.data.code) {
-            case "200":
-              me.text = "加入成功";
-              me.snackbar = true;
-              me.enterSuccess = true;
+          // let response = await enterClass(result.text);
+          // alert(response.data.code);
+          // alert(response.data.msg);
               me.$router.push({
                 path: "/enterClass",
                 query: { type: "", classNumber: result.text },
               });
 
-              break;
-            default:
-              me.text = response.data.msg;
-              me.snackbar = true;
-
-              alert(response.data.msg);
-          }
           /*
           alert(
             "We got a barcode\n" +
@@ -238,6 +225,7 @@ export default {
         path: "/classDetail/",
         query: {
           id: this.classes[index].cNumber,
+          cId: this.classes[index].cId + "",
         },
       });
     },
@@ -256,6 +244,7 @@ export default {
         path: "/sign",
         query: {
           cId: this.classes[index].cId + "",
+          id: this.classes[index].cNumber,
         },
       });
     },
@@ -265,7 +254,7 @@ export default {
   },
   async mounted() {
     //初始化班课列表
-    let result = await initClassList(1, 3);
+    let result = await initClassList(1, 5);
     this.classes = result.data.data;
     this.$emit("buttons", [
       {

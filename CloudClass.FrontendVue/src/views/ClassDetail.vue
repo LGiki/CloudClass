@@ -43,12 +43,14 @@
 
             <v-list-item-content>
               <v-list-item-title v-html="item.title"></v-list-item-title>
+              <!--
               <v-list-item-subtitle
                 v-html="item.subtitle"
               ></v-list-item-subtitle>
+              -->
             </v-list-item-content>
             <v-list-item-content class="ml-16 font-weight-bold red--text">
-              {{ item.grade }}积分</v-list-item-content
+              {{ item.grade }}经验值</v-list-item-content
             >
           </v-list-item>
         </template>
@@ -70,6 +72,7 @@
 <script>
 import { getClassData } from "@/api/class";
 import QRCode from "qrcodejs2";
+import {queryClassMembers} from "./api/class";
 export default {
   name: "ClassDetail",
   data() {
@@ -85,33 +88,6 @@ export default {
 
       items: [
         { header: "成员列表" },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-          title: "魏璐炜",
-          subtitle: `2003270xx`,
-          grade: 27,
-        },
-        { divider: true, inset: true },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-          title: "林家琪",
-          subtitle: `2003270xx`,
-          grade: 28,
-        },
-        { divider: true, inset: true },
-        {
-          avatar: require("../assets/images/pikaqiu1.jpg"),
-          title: "林声睿",
-          subtitle: "2003270xx",
-          grade: 26,
-        },
-        { divider: true, inset: true },
-        {
-          avatar: require("../assets/images/pikaqiu2.jpg"),
-          title: "戴锦坤",
-          subtitle: "2003270xx",
-          grade: 29,
-        },
       ],
     };
   },
@@ -138,11 +114,30 @@ export default {
       this.classes.semester = result.data.data.term;
       this.classes.title = result.data.data.ccName;
     },
+    async setClassMembersData() {
+      let result = await queryClassMembers(this.$route.query.cId);
+      if(result.data != null){
+        for(let i=1;i <=result.data.data.length;i++){
+          let item = {
+            title : result.data.data[i-1].peName,
+            grade : result.data.data[i-1].exp,
+            avatar : require("../assets/images/pikaqiu1.jpg"),
+          };
+          let divider =    { divider: true, inset: true };
+          this.items.push(item);
+          this.items.push(divider);
+        }
+      }
+
+    //  this.items.teacher = result.data.data.teacher;
+
+    },
   },
   async mounted() {
     this.createQrCode();
     this.judgeShowSuccess();
     this.setClassData();
+    this.setClassMembersData();
   },
 };
 </script>
