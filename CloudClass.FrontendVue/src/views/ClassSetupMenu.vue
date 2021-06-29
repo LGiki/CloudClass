@@ -95,7 +95,6 @@ export default {
       alertMessage: "",
       snackbar: false,
       items: [
-        { header: " " },
         { divider: true, inset: true },
         {
           title: "班课状态设置",
@@ -119,8 +118,7 @@ export default {
   },
   methods: {
     async goEdit(index) {
-      console.log(index);
-      if (index === 2) {
+      if (index === this.items.length - 3) {
         this.$router.push({
           path: "/classSetupDetail",
           query: {
@@ -128,7 +126,7 @@ export default {
             cNumber: this.$route.query.cNumber,
           },
         });
-      } else if (index === 4) {
+      } else if (index === this.items.length - 1) {
         this.dialog = true;
       }
     },
@@ -160,6 +158,9 @@ export default {
   },
   async mounted() {
     this.initClassData();
+    if (localStorage.getItem("isTeacher") !== "1") {
+      this.items.splice(0, 2);
+    }
   },
 };
 </script>

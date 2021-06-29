@@ -27,6 +27,7 @@
                 成员
               </v-btn>
               <v-btn
+                v-if="isTeacher === '1'"
                 class="ml-1 mt-1 mb-1 elevation-0"
                 small
                 @click="goSignHistory(index)"
@@ -185,10 +186,13 @@ export default {
           // let response = await enterClass(result.text);
           // alert(response.data.code);
           // alert(response.data.msg);
-          me.$router.push({
-            path: "/enterClass",
-            query: { type: "", classNumber: result.text },
-          });
+          if (result.text !== "") {
+            me.$router.push({
+              path: "/enterClass",
+              query: { type: "", classNumber: result.text },
+            });
+          }
+
 
           /*
           alert(

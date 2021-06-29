@@ -21,7 +21,7 @@
               <v-text-field
                 prepend-icon="mdi-account"
                 v-model="username"
-                label="用户名"
+                label="用户名/手机号"
                 :rules="[rules.required]"
                 outlined
               ></v-text-field>
@@ -82,7 +82,7 @@
           <v-btn class="ma-2" elevation="0" small @click="registerByPhone"
             >注册
           </v-btn>
-          <v-btn class="ma-2" elevation="0" small>忘记密码？ </v-btn>
+<!--          <v-btn class="ma-2" elevation="0" small>忘记密码？ </v-btn>-->
         </div>
       </div>
       <v-btn class="mt-2" color="primary" block @click="login">登录</v-btn>

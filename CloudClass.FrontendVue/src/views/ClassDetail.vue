@@ -62,7 +62,7 @@
           v-else
           :key="item.title"
           class="font-weight-bold"
-          @click="editExp(index)"
+          @click="isTeacher === '1' ? editExp(index) : () => {}"
         >
           <v-list-item-avatar>
             <v-img :src="item.avatar"></v-img>
@@ -79,8 +79,7 @@
           <v-list-item-content class="ml-16 font-weight-bold red--text">
             {{ item.grade }}经验值
           </v-list-item-content>
-
-          >
+          {{ isTeacher === "1" ? ">" : "" }}
         </v-list-item>
       </template>
     </v-list>
@@ -151,6 +150,7 @@ export default {
       peId: 0,
       cId: 0,
       exp: 0,
+      isTeacher: localStorage.getItem("isTeacher"),
       rules: {
         required: (value) => !!value || "必填",
       },
