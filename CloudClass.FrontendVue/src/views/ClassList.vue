@@ -142,7 +142,7 @@ export default {
     //创建班课
     addClass() {
       // if (this.GLOBAL.user == "student") {
-        this.overlay = !this.overlay;
+      this.overlay = !this.overlay;
       // } else {
       //   this.$router.push("/addClass");
       // }

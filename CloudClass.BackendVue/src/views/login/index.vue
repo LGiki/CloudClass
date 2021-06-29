@@ -26,7 +26,7 @@
             <el-input
               ref="username"
               v-model="passwordLoginForm.username"
-              placeholder="用户名"
+              placeholder="手机号"
               name="username"
               type="text"
               tabindex="1"
@@ -35,9 +35,9 @@
           </el-form-item>
 
           <el-form-item prop="password">
-        <span class="svg-container">
-          <svg-icon icon-class="password"/>
-        </span>
+            <span class="svg-container">
+              <svg-icon icon-class="password"/>
+            </span>
             <el-input
               :key="passwordType"
               ref="password"
@@ -50,13 +50,13 @@
               @keyup.enter.native="handlePasswordLogin"
             />
             <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"/>
-        </span>
+              <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"/>
+            </span>
           </el-form-item>
-          <div style="display: flex; justify-content: flex-end">
-            <el-button type="text" @click="$router.push('/signup')">注册</el-button>
-            <el-button type="text" @click="$router.push('/reset-password')">找回密码</el-button>
-          </div>
+<!--          <div style="display: flex; justify-content: flex-end">-->
+<!--            &lt;!&ndash;            <el-button type="text" @click="$router.push('/signup')">注册</el-button>&ndash;&gt;-->
+<!--            <el-button type="text" @click="$router.push('/reset-password')">找回密码</el-button>-->
+<!--          </div>-->
           <el-button
             :loading="loading"
             type="primary"
@@ -77,9 +77,9 @@
         >
           <div style="width: 100%;">
             <el-form-item prop="phone">
-            <span class="svg-container">
-              <svg-icon icon-class="user"/>
-            </span>
+              <span class="svg-container">
+                <svg-icon icon-class="user"/>
+              </span>
               <el-input
                 key="phone"
                 ref="phone"
@@ -94,9 +94,9 @@
           </div>
           <div style="width: 100%;display: inline-grid;grid-template-columns: 3fr 1fr;grid-column-gap: 20px;">
             <el-form-item prop="verifyCode">
-                <span class="svg-container">
-                  <svg-icon icon-class="phone"/>
-                </span>
+              <span class="svg-container">
+                <svg-icon icon-class="phone"/>
+              </span>
               <el-input
                 key="verifyCode"
                 ref="verifyCode"
@@ -118,10 +118,10 @@
               {{ sendValidationButton.title }}
             </el-button>
           </div>
-          <div style="display: flex; justify-content: flex-end">
-            <el-button type="text" @click="$router.push('/signup')">注册</el-button>
-            <el-button type="text" @click="$router.push('/reset-password')">找回密码</el-button>
-          </div>
+<!--          <div style="display: flex; justify-content: flex-end">-->
+<!--            &lt;!&ndash;            <el-button type="text" @click="$router.push('/signup')">注册</el-button>&ndash;&gt;-->
+<!--            <el-button type="text" @click="$router.push('/reset-password')">找回密码</el-button>-->
+<!--          </div>-->
           <el-button
             :loading="loading"
             type="primary"
@@ -138,14 +138,14 @@
 <script>
 import md5 from 'md5'
 import {loginByPassword, loginBySMS, sendSMS} from '@/api/user'
-import {validatePhone} from "@/utils/validate";
+import {validatePhone} from '@/utils/validate'
 
 export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
       if (value.length === 0) {
-        callback(new Error('用户名不能为空'))
+        callback(new Error('手机号不能为空'))
       } else {
         callback()
       }
@@ -191,27 +191,19 @@ export default {
       redirect: undefined,
       countDownIntervalId: null
     }
-  }
-  ,
+  },
   watch: {
     $route: {
       handler: function (route) {
         this.redirect = route.query && route.query.redirect
-      }
-      ,
+      },
       immediate: true
     }
-  }
-  ,
+  },
   destroyed() {
     this.clearCountDown()
-  }
-  ,
+  },
   methods: {
-    handleClick(tab, event) {
-      console.log(tab, event)
-    }
-    ,
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -221,8 +213,7 @@ export default {
       this.$nextTick(() => {
         this.$refs.password.focus()
       })
-    }
-    ,
+    },
     startCountDown() {
       this.sendValidationButton.disabled = true
       const TIME_COUNT = 60
@@ -238,8 +229,7 @@ export default {
           }
         }, 1000)
       }
-    }
-    ,
+    },
     clearCountDown() {
       if (this.countDownIntervalId) {
         clearInterval(this.countDownIntervalId)
@@ -247,8 +237,7 @@ export default {
         this.sendValidationButton.title = '发送验证码'
         this.sendValidationButton.disabled = false
       }
-    }
-    ,
+    },
     handleSendValidationCode() {
       sendSMS(this.smsLoginForm.phone).then(res => {
         if (res.data.code === '200') {
@@ -260,8 +249,7 @@ export default {
         console.log(err)
         this.$message.error('发送验证码失败')
       })
-    }
-    ,
+    },
     handleSMSLogin() {
       this.$refs.smsLoginForm.validate(valid => {
         if (valid) {
@@ -269,7 +257,7 @@ export default {
           loginBySMS(this.smsLoginForm.phone.trim(), this.smsLoginForm.verifyCode.trim()).then(res => {
             this.loading = false
             if (res.data.code === '200') {
-              this.$store.commit('token/SET_TOKEN', res.data.token)
+              this.$store.commit('token/SET_TOKEN', {token: res.data.token, role: res.data.role})
               this.$router.push({path: this.redirect || '/'})
             } else {
               this.$message.error(res.data.msg)
@@ -283,8 +271,7 @@ export default {
           return false
         }
       })
-    }
-    ,
+    },
     handlePasswordLogin() {
       this.$refs.passwordLoginForm.validate(valid => {
         if (valid) {
@@ -293,7 +280,7 @@ export default {
           loginByPassword(this.passwordLoginForm.username.trim(), passwordMD5).then(res => {
             this.loading = false
             if (res.data.code === '200') {
-              this.$store.commit('token/SET_TOKEN', res.data.token)
+              this.$store.commit('token/SET_TOKEN', {token: res.data.token, role: res.data.role})
               this.$router.push({path: this.redirect || '/'})
             } else {
               this.$message.error(res.data.msg)
@@ -332,12 +319,27 @@ $cursor: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: $bg;
-
+  //background-color: $bg;
+  background: url("../../assets/login-background.jpg") no-repeat;
+  background-size: cover;
 }
 
 /* reset element-ui css */
 .login-container {
+  backdrop-filter: blur(30px) saturate(1.9);
+  background-color: rgba(255, 255, 255, .2);
+  border-radius: 25px;
+  padding: 25px;
+  box-shadow:
+    0 0.8px 4.7px rgba(0, 0, 0, 0.028),
+    0 2px 9.9px rgba(0, 0, 0, 0.04),
+    0 3.8px 16.2px rgba(0, 0, 0, 0.05),
+    0 6.7px 25.2px rgba(0, 0, 0, 0.06),
+    0 12.5px 41.1px rgba(0, 0, 0, 0.072),
+    0 30px 86px rgba(0, 0, 0, 0.1)
+;
+
+
   .el-input {
     display: inline-block;
     height: 47px;

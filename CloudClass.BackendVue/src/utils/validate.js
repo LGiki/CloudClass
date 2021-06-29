@@ -11,7 +11,7 @@ export function isExternal(path) {
 }
 
 export function validatePhone(rule, value, callback) {
-  if (!value || value.length === 0) {
+  if (value === null || value.length === 0) {
     callback(new Error('手机号不能为空'))
   } else if (!/^1[3456789]\d{9}$/.test(value)) {
     callback(new Error('手机号格式不正确'))
