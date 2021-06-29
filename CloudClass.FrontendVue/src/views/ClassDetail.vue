@@ -51,7 +51,7 @@
           :inset="item.inset"
         ></v-divider>
 
-        <v-list-item v-else :key="item.title">
+        <v-list-item v-else :key="item.title" class="font-weight-bold" @click="editExp(index)">
           <v-list-item-avatar>
             <v-img :src="item.avatar"></v-img>
           </v-list-item-avatar>
@@ -66,7 +66,8 @@
           </v-list-item-content>
           <v-list-item-content class="ml-16 font-weight-bold red--text">
             {{ item.grade }}经验值
-          </v-list-item-content
+          </v-list-item-content>
+
           >
         </v-list-item>
       </template>
@@ -99,7 +100,8 @@ export default {
         title: "工程实践",
         teacher: "池芝标",
         semester: "2021-1",
-        classNumber: 10004
+        classNumber: 10004,
+        cId: '',
       },
       items: [],
       expOrder: 1
@@ -131,9 +133,10 @@ export default {
       this.classes.teacher = result.data.data.teacher;
       this.classes.semester = result.data.data.term;
       this.classes.title = result.data.data.ccName;
+      this.classes.cId = result.data.data.cId + "";
     },
     async setClassMembersData() {
-      let result = await queryClassMembers(this.$route.query.cId, this.expOrder);
+      var result = await queryClassMembers(this.$route.query.cId, this.expOrder);
       if (result.data != null) {
         this.items = [];
         let divider = { divider: true };
@@ -141,7 +144,8 @@ export default {
           let item = {
             title: result.data.data[i - 1].peName,
             grade: result.data.data[i - 1].exp,
-            avatar: require("../assets/images/pikaqiu1.jpg")
+            avatar: require("../assets/images/pikaqiu1.jpg"),
+            peId: result.data.data[i-1].peId,
           };
           this.items.push(item);
           this.items.push(divider);
@@ -151,6 +155,16 @@ export default {
         }
       }
     }
+  },
+  editExp(index){
+    this.$router.push({
+      path: "/expEdit",
+      query: {
+        peId: this.items[index].peId,
+        cId: this.classes.cId,
+        exp: this.items[index].grade + "",
+      }
+    })
   },
   async mounted() {
     this.createQrCode();

@@ -201,15 +201,6 @@ export default {
       this.snackbar = true;
       this.alertMessage = "数据初始化失败";
     }
-    if (this.isTeacher === "1") {
-      this.items.splice(0, this.items.length);
-      this.items.push(
-          {
-            title: "经验值",
-          },
-          {divider: true, inset: true}
-      );
-    }
   },
 };
 </script>

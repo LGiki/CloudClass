@@ -22,11 +22,11 @@ export function setPersonInfo(name,classes,grade,isTeacher) {
     });
 }
 //修改密码
-export function changePassword(newPassword) {
+export function changePassword(oldPassword,newPassword) {
     return request({
         url: "personPwd",
         method: "put",
-        data: { newPassword: newPassword },
+        data: { password: oldPassword,newPassword: newPassword },
     });
 }
 //找回密码
@@ -37,5 +37,11 @@ export function findPassword(phone,newPassword) {
         data: { phone:phone ,newPassword: newPassword },
     });
 }
-
-
+//修改经验值
+export function editExp(peId,cId,exp) {
+    return request({
+        url: "person-course/StudentExp",
+        method: "put",
+        data: { peId:peId ,cId: cId,exp : exp },
+    });
+}

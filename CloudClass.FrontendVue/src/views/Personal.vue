@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import {getPersonInfo} from "./api/person";
+import {changePassword, getPersonInfo} from "./api/person";
 
 export default {
   name: "Personal",
@@ -157,10 +157,34 @@ export default {
       this.$store.commit("token/REMOVE_TOKEN");
       this.$router.replace({ path: "/" });
     },
-    handleChangePassword() {
+    async handleChangePassword() {
       if (this.$refs.changePasswordForm.validate()) {
+        if (this.newPassword !== this.reNewPassword) {
+          this.alertMessage = "两次密码不一致";
+          this.snackbar = true;
+          return;
+        }
+        if (this.newPassword.length < 8) {
+          this.alertMessage = "密码长度至少8位";
+          this.snackbar = true;
+          return;
+        }
+
+        let result = await changePassword(this.oldPassword, this.newPassword);
+        switch (result.data.code) {
+          case "200":
+            this.alertMessage = "修改成功";
+            this.snackbar = true;
+            this.changePasswordDialog = false;
+            break;
+          default:
+            console.log("in");
+            this.alertMessage = result.data.msg;
+            this.snackbar = true;
+        }
         //TODO: 完成修改密码
       }
+
     },
     goEdit(index) {
       console.log(index);
