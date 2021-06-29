@@ -26,7 +26,11 @@
                 </v-icon>
                 成员
               </v-btn>
-              <v-btn class="ml-1 mt-1 mb-1 elevation-0" small @click="goSignHistory(index)">
+              <v-btn
+                class="ml-1 mt-1 mb-1 elevation-0"
+                small
+                @click="goSignHistory(index)"
+              >
                 <v-icon left dark color="orange darken-2"
                   >mdi-clipboard-text-outline
                 </v-icon>
@@ -128,7 +132,6 @@
 <script>
 import { initClassList } from "@/api/class";
 
-
 export default {
   name: "lookup_classes",
   data() {
@@ -182,10 +185,10 @@ export default {
           // let response = await enterClass(result.text);
           // alert(response.data.code);
           // alert(response.data.msg);
-              me.$router.push({
-                path: "/enterClass",
-                query: { type: "", classNumber: result.text },
-              });
+          me.$router.push({
+            path: "/enterClass",
+            query: { type: "", classNumber: result.text },
+          });
 
           /*
           alert(
@@ -256,7 +259,7 @@ export default {
           id: this.classes[index].cNumber,
         },
       });
-    }
+    },
   },
   destroyed() {
     this.$emit("buttons", []);

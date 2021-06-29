@@ -3,18 +3,10 @@
     <template v-if="items.length !== 0">
       <v-list class="overflow-x-hidden">
         <v-subheader>未签到学生 ({{ items.length }})</v-subheader>
-        <v-list-item-group
-          color="primary"
-        >
+        <v-list-item-group color="primary">
           <template v-for="(item, i) in items">
-            <v-divider
-              :key="i"
-              v-if="item.divider"
-              :inset="item.inset" />
-            <v-list-item
-              :key="i"
-              v-else
-            >
+            <v-divider :key="i" v-if="item.divider" :inset="item.inset" />
+            <v-list-item :key="i" v-else>
               <template>
                 <v-list-item-icon>
                   <v-icon>mdi-account</v-icon>
@@ -66,7 +58,7 @@ export default {
     return {
       items: [],
       snackbar: false,
-      snackbarText: ""
+      snackbarText: "",
     };
   },
   methods: {
@@ -89,7 +81,7 @@ export default {
             this.items.push({
               peName: item.peName,
               username: item.username,
-              peId: item["pe_id"]
+              peId: item["pe_id"],
             });
             this.items.push(divider);
           }
@@ -101,10 +93,10 @@ export default {
           this.snackbar = true;
         }
       });
-    }
+    },
   },
   mounted() {
     this.getUnSignedList();
-  }
+  },
 };
 </script>

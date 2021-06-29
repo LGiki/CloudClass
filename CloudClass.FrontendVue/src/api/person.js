@@ -5,7 +5,7 @@ import request from "../utils/request";
 export function getPersonInfo() {
   return request({
     url: "/PersonInfo",
-    method: "get"
+    method: "get",
   });
 }
 
@@ -15,12 +15,11 @@ export function setPersonInfo(name, classes, grade, isTeacher) {
     url: "/PersonInfo",
     method: "put",
     data: {
-      peName: name,//名字
-      classes: classes,//班级
-      grade: grade,//年级
-      isTeacher: isTeacher//是否教师
-
-    }
+      peName: name, //名字
+      classes: classes, //班级
+      grade: grade, //年级
+      isTeacher: isTeacher, //是否教师
+    },
   });
 }
 
@@ -29,7 +28,7 @@ export function changePassword(oldPassword, newPassword) {
   return request({
     url: "personPwd",
     method: "put",
-    data: { password: oldPassword, newPassword: newPassword }
+    data: { password: oldPassword, newPassword: newPassword },
   });
 }
 
@@ -38,7 +37,7 @@ export function findPassword(phone, newPassword) {
   return request({
     url: "personPwdByPhone",
     method: "put",
-    data: { phone: phone, newPassword: newPassword }
+    data: { phone: phone, newPassword: newPassword },
   });
 }
 

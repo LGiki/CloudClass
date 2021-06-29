@@ -21,18 +21,10 @@
     </v-card>
     <v-list class="overflow-x-hidden">
       <v-subheader>签到历史</v-subheader>
-      <v-list-item-group
-        color="primary"
-      >
+      <v-list-item-group color="primary">
         <template v-for="(item, i) in items">
-          <v-divider
-            :key="i"
-            v-if="item.divider"
-            :inset="item.inset" />
-          <v-list-item
-            :key="i"
-            v-else
-          >
+          <v-divider :key="i" v-if="item.divider" :inset="item.inset" />
+          <v-list-item :key="i" v-else>
             <template>
               <v-list-item-icon>
                 <v-icon>mdi-calendar</v-icon>
@@ -81,11 +73,11 @@ export default {
         title: "",
         teacher: "",
         semester: "",
-        classNumber: ""
+        classNumber: "",
       },
       items: [],
       snackbar: false,
-      snackbarText: ""
+      snackbarText: "",
     };
   },
   methods: {
@@ -96,7 +88,7 @@ export default {
         height: 100,
         colorDark: "#00aa00",
         colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H
+        correctLevel: QRCode.CorrectLevel.H,
       });
     },
     async setClassData() {
@@ -106,14 +98,14 @@ export default {
       this.classes.title = result.data.data.ccName;
     },
     getSignHistory() {
-      getFinishedSignUp(this.$route.query.cId).then(res => {
+      getFinishedSignUp(this.$route.query.cId).then((res) => {
         if (res.data.code === "200") {
           this.items = [];
           let divider = { divider: true };
           for (const item of res.data.data) {
             this.items.push({
               title: item.date.replaceAll("T", " "),
-              siId: item.siId
+              siId: item.siId,
             });
             this.items.push(divider);
           }
@@ -125,12 +117,12 @@ export default {
           this.snackbar = true;
         }
       });
-    }
+    },
   },
   mounted() {
     this.createQrCode();
     this.setClassData();
     this.getSignHistory();
-  }
+  },
 };
 </script>

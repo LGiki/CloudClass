@@ -3,7 +3,7 @@
     <v-card class="mb-5">
       <div class="d-flex flex-no-wrap justify-space-between">
         <div>
-          <v-card-title class="headline">{{user.name}}</v-card-title>
+          <v-card-title class="headline">{{ user.name }}</v-card-title>
 
           <v-card-subtitle class="mt-0" v-if="user.classes !== ''">
             <br />
@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import {changePassword, getPersonInfo} from "./api/person";
+import { changePassword, getPersonInfo } from "./api/person";
 
 export default {
   name: "Personal",
@@ -118,7 +118,7 @@ export default {
       newPassword: "",
       reNewPassword: "",
       alertMessage: "",
-      snackbar : false,
+      snackbar: false,
       rules: {
         required: (value) => !!value || "必填",
       },
@@ -147,7 +147,7 @@ export default {
       ],
       user: {
         name: "用户0203",
-        classes:  "",
+        classes: "",
         major: "",
       },
     };
@@ -184,40 +184,32 @@ export default {
         }
         //TODO: 完成修改密码
       }
-
     },
     goEdit(index) {
       console.log(index);
       if (index === 1) {
         this.$router.push("/personalEdit");
       } else if (index === 3) {
-        this.$router.push("/signRecord");
-      } else if (index === 5) {
-        // this.$router.push({
-        //   path: "enterClass",
-        //   query: { type: "changePass" }
-        // });
         this.changePasswordDialog = true;
-      } else if (index === 7) {
+      } else if (index === 5) {
         this.logout();
       }
     },
   },
   async mounted() {
     let result = await getPersonInfo();
-    if(result.data.data != null){
-
-      if(result.data.data.peName != null && result.data.data.peName !== "")
+    if (result.data.data != null) {
+      if (result.data.data.peName != null && result.data.data.peName !== "")
         this.user.name = result.data.data.peName;
-      if(result.data.data.classes != null && result.data.data.classes !== "")
+      if (result.data.data.classes != null && result.data.data.classes !== "")
         this.user.classes = result.data.data.classes;
-      if(result.data.data.grade != null && result.data.data.grade !== "")
-         this.user.grade = result.data.data.grade;
-    }else{
+      if (result.data.data.grade != null && result.data.data.grade !== "")
+        this.user.grade = result.data.data.grade;
+    } else {
       this.snackbar = true;
       this.alertMessage = "数据初始化失败";
     }
-  }
+  },
 };
 </script>
 

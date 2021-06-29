@@ -106,8 +106,6 @@ export function getStudentInfo(peId) {
   return request({
     url: "person-course/StudentInfo",
     method: "get",
-    params: { peId : peId },
+    params: { peId: peId },
   });
 }
-
-

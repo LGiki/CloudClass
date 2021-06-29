@@ -8,7 +8,6 @@
       :rules="[rules.required]"
     ></v-text-field>
 
-
     <v-text-field
       prepend-icon="mdi-android-studio"
       v-model="personDetail.className"
@@ -33,7 +32,6 @@
       :rules="[rules.required]"
     ></v-text-field>
     <v-icon>mdi-account-box</v-icon>
-
 
     <div style="display: grid; grid-template-columns: repeat(2, 1fr)">
       <v-btn class="mr-2" @click="$router.back()">取消</v-btn>
@@ -70,18 +68,21 @@ export default {
         schoolName: "",
         className: "",
         major: "",
-        exp: ""
+        exp: "",
       },
       rules: {
         required: (value) => !!value || "必填.",
         phone: (v) =>
-          /^[1][3,4,5,7,8,9][0-9]{9}$/.test(v) || "手机号码格式不正确"
-      }
+          /^[1][3,4,5,7,8,9][0-9]{9}$/.test(v) || "手机号码格式不正确",
+      },
     };
-
   },
   async updateExp() {
-    let result = await editExp(this.$route.query.peId, this.$route.query.cId, this.personDetail.exp);
+    let result = await editExp(
+      this.$route.query.peId,
+      this.$route.query.cId,
+      this.personDetail.exp
+    );
     switch (result.data.code) {
       case "200":
         this.alertMessage = "修改成功";
@@ -97,7 +98,6 @@ export default {
     let result = await getStudentInfo(this.$route.query.peId);
     this.personDetail.exp = this.$route.query.exp;
     if (result.data.data != null) {
-
       if (result.data.data.peName != null && result.data.data.peName !== "")
         this.personDetail.name = result.data.data.peName;
       if (result.data.data.classes != null && result.data.data.classes !== "")
@@ -108,10 +108,8 @@ export default {
       this.snackbar = true;
       this.alertMessage = "数据初始化失败";
     }
-  }
+  },
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

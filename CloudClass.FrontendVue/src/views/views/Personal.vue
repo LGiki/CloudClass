@@ -75,14 +75,12 @@ export default {
     goEdit(index) {
       console.log(index);
       if (index === 2) {
-        this.$router.push("/signRecord");
-      } else if (index === 0) {
-        this.$router.push("/personalEdit");
-      } else if (index === 4) {
         this.$router.push({
           path: "enterClass",
           query: { type: "changePass" },
         });
+      } else if (index === 0) {
+        this.$router.push("/personalEdit");
       }
     },
   },

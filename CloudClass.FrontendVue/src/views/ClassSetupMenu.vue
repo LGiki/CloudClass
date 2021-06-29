@@ -23,40 +23,21 @@
           </v-avatar>
         </div>
       </div>
-<!-- 确认退出班课对话框 -->
+      <!-- 确认退出班课对话框 -->
       <template>
         <div class="text-center">
-          <v-dialog
-              v-model="dialog"
-              width="500"
-          >
-
-
+          <v-dialog v-model="dialog" width="500">
             <v-card>
-              <v-card-title class="text-h5 grey lighten-2">
-                提示
-              </v-card-title>
+              <v-card-title class="text-h5 grey lighten-2"> 提示 </v-card-title>
 
-              <v-card-text class="mt-2">
-                确认退出班课?
-                 </v-card-text>
+              <v-card-text class="mt-2"> 确认退出班课? </v-card-text>
 
               <v-divider></v-divider>
 
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn
-                    color="primary"
-                    text
-                    @click="exit"
-                >
-                  确认
-                </v-btn>
-                <v-btn
-                    color="primary"
-                    text
-                    @click="dialog = false"
-                >
+                <v-btn color="primary" text @click="exit"> 确认 </v-btn>
+                <v-btn color="primary" text @click="dialog = false">
                   取消
                 </v-btn>
               </v-card-actions>
@@ -64,7 +45,6 @@
           </v-dialog>
         </div>
       </template>
-
 
       <v-list>
         <template v-for="(item, index) in items">
@@ -105,7 +85,7 @@
 
 <script>
 import { getClassData } from "@/api/class";
-import {exitClass} from "./api/sign";
+import { exitClass } from "./api/sign";
 
 export default {
   name: "Personal",
@@ -148,7 +128,7 @@ export default {
             cNumber: this.$route.query.cNumber,
           },
         });
-      }else if(index === 4){
+      } else if (index === 4) {
         this.dialog = true;
       }
     },

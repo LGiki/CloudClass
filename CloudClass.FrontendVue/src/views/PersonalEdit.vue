@@ -21,13 +21,11 @@
     <!--        </div>-->
     <!--      </div>-->
     <v-text-field
-        prepend-icon="mdi-pen"
-        v-model="personDetail.name"
-        label="姓名"
-        :rules="[rules.required]"
+      prepend-icon="mdi-pen"
+      v-model="personDetail.name"
+      label="姓名"
+      :rules="[rules.required]"
     ></v-text-field>
-
-
 
     <v-text-field
       prepend-icon="mdi-android-studio"
@@ -50,13 +48,15 @@
       >选择身份</span
     >
     <v-radio-group v-model="personDetail.isTeacher" mandatory class="pl-6">
-      <v-radio label="我是学生" value="0"></v-radio>
-      <v-radio label="我是老师" value="1"></v-radio>
+      <v-radio label="我是学生" :value="0"></v-radio>
+      <v-radio label="我是老师" :value="1"></v-radio>
     </v-radio-group>
 
     <div style="display: grid; grid-template-columns: repeat(2, 1fr)">
       <v-btn class="mr-2" @click="$router.back()">取消</v-btn>
-      <v-btn class="ml-2" color="primary" @click="updatePersonalInfo">保存</v-btn>
+      <v-btn class="ml-2" color="primary" @click="updatePersonalInfo"
+        >保存</v-btn
+      >
     </div>
     <!--      <v-list>-->
     <!--        <template v-for="(item, index) in items">-->
@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import {getPersonInfo, setPersonInfo} from "./api/person";
+import { getPersonInfo, setPersonInfo } from "./api/person";
 
 export default {
   name: "PersonalEdit",
@@ -168,34 +168,39 @@ export default {
       }
     },
     async updatePersonalInfo() {
-
       console.log(this.personDetail);
-      let result = await setPersonInfo(this.personDetail.name,this.personDetail.className,this.personDetail.grade,this.personDetail.isTeacher);
+      let result = await setPersonInfo(
+        this.personDetail.name,
+        this.personDetail.className,
+        this.personDetail.grade,
+        this.personDetail.isTeacher
+      );
       switch (result.data.code) {
         case "200":
+          if (this.personDetail.isTeacher != localStorage.getItem("isTeacher")) {
+            localStorage.setItem("isTeacher", this.personDetail.isTeacher);
+          }
           this.alertMessage = "保存成功";
           this.snackbar = true;
-          this.$router.push("/class");
+          this.$router.back()
           break;
         default:
           this.alertMessage = result.data.msg;
           this.snackbar = true;
       }
       console.log(result);
-
-    }
+    },
   },
   async mounted() {
     let result = await getPersonInfo();
     if (result.data.data != null) {
-
       if (result.data.data.peName != null && result.data.data.peName !== "")
         this.personDetail.name = result.data.data.peName;
       if (result.data.data.classes != null && result.data.data.classes !== "")
         this.personDetail.className = result.data.data.classes;
       if (result.data.data.grade != null && result.data.data.grade !== "")
         this.personDetail.grade = result.data.data.grade;
-      if (result.data.data.isTeacher != null )
+      if (result.data.data.isTeacher != null)
         this.personDetail.isTeacher = result.data.data.isTeacher;
     } else {
       this.snackbar = true;

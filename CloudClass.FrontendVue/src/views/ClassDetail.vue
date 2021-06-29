@@ -25,13 +25,20 @@
           <v-subheader>成员列表</v-subheader>
         </v-col>
         <v-col>
-          <div style="height: 100%;display: flex; justify-content: flex-end; align-items: center;margin-right: 16px">
+          <div
+            style="
+              height: 100%;
+              display: flex;
+              justify-content: flex-end;
+              align-items: center;
+              margin-right: 16px;
+            "
+          >
             <span>经验值排序：</span>
-            <v-btn
-              icon
-              @click="handleOrderByExp"
-            >
-              <v-icon>{{ expOrder === 1 ? "mdi-sort-ascending" : "mdi-sort-descending" }}</v-icon>
+            <v-btn icon @click="handleOrderByExp">
+              <v-icon>{{
+                expOrder === 1 ? "mdi-sort-ascending" : "mdi-sort-descending"
+              }}</v-icon>
             </v-btn>
           </div>
         </v-col>
@@ -51,7 +58,12 @@
           :inset="item.inset"
         ></v-divider>
 
-        <v-list-item v-else :key="item.title" class="font-weight-bold" @click="editExp(index)">
+        <v-list-item
+          v-else
+          :key="item.title"
+          class="font-weight-bold"
+          @click="editExp(index)"
+        >
           <v-list-item-avatar>
             <v-img :src="item.avatar"></v-img>
           </v-list-item-avatar>
@@ -93,11 +105,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="updateExpDialog = false"
-          >
+          <v-btn color="blue darken-1" text @click="updateExpDialog = false">
             取消
           </v-btn>
           <v-btn color="blue darken-1" text @click="handleUpdateExp">
@@ -115,7 +123,6 @@
         </v-btn>
       </template>
     </v-snackbar>
-
   </v-container>
 </template>
 
@@ -136,7 +143,7 @@ export default {
         teacher: "池芝标",
         semester: "2021-1",
         classNumber: 10004,
-        cId: ""
+        cId: "",
       },
       items: [],
       expOrder: 1,
@@ -145,23 +152,23 @@ export default {
       cId: 0,
       exp: 0,
       rules: {
-        required: (value) => !!value || "必填"
-      }
+        required: (value) => !!value || "必填",
+      },
     };
   },
   methods: {
     handleUpdateExp() {
-      editExp(this.peId, this.cId, this.exp).then(res => {
+      editExp(this.peId, this.cId, this.exp).then((res) => {
         if (res.data.code === "200") {
-          this.setClassMembersData()
+          this.setClassMembersData();
           this.text = "经验值修改成功";
-          this.snackbar = true
-          this.updateExpDialog = false
+          this.snackbar = true;
+          this.updateExpDialog = false;
         } else {
           this.text = "经验值修改失败，请稍后再试";
-          this.snackbar = true
+          this.snackbar = true;
         }
-      })
+      });
     },
     editExp(index) {
       this.updateExpDialog = true;
@@ -180,7 +187,7 @@ export default {
         height: 100,
         colorDark: "#00aa00",
         colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H
+        correctLevel: QRCode.CorrectLevel.H,
       });
     },
     judgeShowSuccess() {
@@ -197,7 +204,10 @@ export default {
       this.classes.cId = result.data.data.cId + "";
     },
     async setClassMembersData() {
-      var result = await queryClassMembers(this.$route.query.cId, this.expOrder);
+      var result = await queryClassMembers(
+        this.$route.query.cId,
+        this.expOrder
+      );
       if (result.data != null) {
         this.items = [];
         let divider = { divider: true };
@@ -206,7 +216,7 @@ export default {
             title: result.data.data[i - 1].peName,
             grade: result.data.data[i - 1].exp,
             avatar: require("../assets/images/pikaqiu1.jpg"),
-            peId: result.data.data[i - 1].peId
+            peId: result.data.data[i - 1].peId,
           };
           this.items.push(item);
           this.items.push(divider);
@@ -215,14 +225,14 @@ export default {
           this.items.splice(this.items.length - 1, 1);
         }
       }
-    }
+    },
   },
   async mounted() {
     this.createQrCode();
     this.judgeShowSuccess();
     await this.setClassData();
     await this.setClassMembersData();
-  }
+  },
 };
 </script>
 
