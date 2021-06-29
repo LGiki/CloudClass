@@ -170,7 +170,7 @@ export default {
         this.department == ""
       ) {
         this.snackbar = true;
-        this.text = "请填写班课信息";
+        this.text = "请完整填写班课信息";
       } else {
         //教师id，班级名称，班课名称，学期，学时，学校，学院
         let result = await addClass(
@@ -218,8 +218,6 @@ export default {
       this.schoolId = this.schools[index1].s_id;
       this.department = "";
       this.departmentId = 0;
-
-      this.schoolIndex = index1;
     },
     addClaContent(index1) {
       this.courseName = this.classes[index1].title;

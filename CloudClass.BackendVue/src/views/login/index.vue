@@ -191,12 +191,14 @@ export default {
       redirect: undefined,
       countDownIntervalId: null
     }
-  },
+  }
+  ,
   watch: {
     $route: {
       handler: function (route) {
         this.redirect = route.query && route.query.redirect
-      },
+      }
+      ,
       immediate: true
     }
   },
@@ -204,6 +206,10 @@ export default {
     this.clearCountDown()
   },
   methods: {
+    handleClick(tab, event) {
+      console.log(tab, event)
+    }
+    ,
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''

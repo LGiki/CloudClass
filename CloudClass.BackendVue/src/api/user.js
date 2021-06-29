@@ -32,7 +32,11 @@ export function loginBySMS(username, verifyCode) {
   })
 }
 
+<<<<<<< HEAD
 export function getUserList(pageNo, pageSize) {
+=======
+export function getInfo() {
+>>>>>>> origin/FrontendVue
   return request({
     url: '/allPerson',
     method: 'get',

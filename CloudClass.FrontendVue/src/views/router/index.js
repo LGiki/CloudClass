@@ -2,7 +2,6 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import AfterLoginLayout from "../layout/AfterLoginLayout";
 import store from "../store/index";
-
 Vue.use(VueRouter);
 
 const routes = [
@@ -14,6 +13,15 @@ const routes = [
       stuTitle: "登录",
     },
     // component: () => import("../views/Home"),
+    component: () => import("../views/Login"),
+  },
+  {
+    name: "Login",
+    path: "/login",
+    meta: {
+      title: "登录",
+      stuTitle: "登录",
+    },
     component: () => import("../views/Login"),
   },
   {
@@ -37,6 +45,15 @@ const routes = [
     path: "/",
     component: AfterLoginLayout,
     children: [
+      {
+        name: "About",
+        path: "/about",
+        meta: {
+          title: "关于",
+          stuTitle: "关于",
+        },
+        component: () => import("../views/About"),
+      },
       {
         name: "Class",
         path: "/class",
@@ -128,24 +145,6 @@ const routes = [
         component: () => import("../views/ClassSetupDetail"),
       },
       {
-        name: "SignHistory",
-        path: "/signHistory",
-        meta: {
-          title: "签到历史记录",
-          stuTitle: "签到历史记录",
-        },
-        component: () => import("../views/SignHistory"),
-      },
-      {
-        name: "SignDetail",
-        path: "/signDetail",
-        meta: {
-          title: "签到详情",
-          stuTitle: "签到详情",
-        },
-        component: () => import("../views/SignDetail"),
-      },
-      {
         name: "ExpEdit",
         path: "/expEdit",
         meta: {
@@ -164,13 +163,6 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (
-    to.path === "/" &&
-    store.state.token.token !== null &&
-    store.state.token.token !== ""
-  ) {
-    next({ path: "/class" });
-  }
   if (
     to.name !== "Login" &&
     to.name !== "Register" &&

@@ -26,11 +26,7 @@
                 </v-icon>
                 成员
               </v-btn>
-              <v-btn
-                class="ml-1 mt-1 mb-1 elevation-0"
-                small
-                @click="goSignHistory(index)"
-              >
+              <v-btn class="ml-1 mt-1 mb-1 elevation-0" small>
                 <v-icon left dark color="orange darken-2"
                   >mdi-clipboard-text-outline
                 </v-icon>
@@ -73,20 +69,20 @@
         </div>
       </div>
     </v-card>
-    <!--    <div style="width: 100%; display: flex; justify-content: center">-->
-    <!--      <v-btn-->
-    <!--        elevation="6"-->
-    <!--        fab-->
-    <!--        color="primary"-->
-    <!--        bottom-->
-    <!--        right-->
-    <!--        fixed-->
-    <!--        style="bottom: 75px"-->
-    <!--        @click="showList"-->
-    <!--      >-->
-    <!--        <v-icon dark>mdi-plus</v-icon>-->
-    <!--      </v-btn>-->
-    <!--    </div>-->
+    <div style="width: 100%; display: flex; justify-content: center">
+      <v-btn
+        elevation="6"
+        fab
+        color="primary"
+        medium
+        bottom
+        fixed
+        class="mr-4"
+        @click="showList"
+      >
+        <v-icon dark>mdi-plus</v-icon>
+      </v-btn>
+    </div>
     <v-overlay :absolute="absolute" :value="overlay" opacity="0.7">
       <div class="d-flex flex-no-wrap flex-column">
         <v-btn
@@ -132,12 +128,14 @@
 <script>
 import { initClassList } from "@/api/class";
 
+import { enterClass } from "@/api/class";
+
 export default {
   name: "lookup_classes",
   data() {
     return {
       window: window,
-      absolute: false,
+      absolute: true,
       overlay: false,
       pageNo: 1,
       pageSize: 20,
@@ -179,17 +177,29 @@ export default {
     },
     //二维码加入班课
     enterByQrCode() {
-      var me = this;
       this.window.cordova.plugins.barcodeScanner.scan(
         async function (result) {
-          // let response = await enterClass(result.text);
-          // alert(response.data.code);
-          // alert(response.data.msg);
-          me.$router.push({
-            path: "/enterClass",
-            query: { type: "", classNumber: result.text },
-          });
+          let response = await enterClass(result.text);
+          alert(response.data.code);
+          alert(response.data.msg);
+          switch (response.data.code) {
+            case "200":
+              this.text = "加入成功";
+              this.snackbar = true;
+              this.enterSuccess = true;
+              alert("ing");
+              this.$router.push({
+                path: "/enterClass",
+                query: { type: "", classNumber: result.text },
+              });
 
+              break;
+            default:
+              this.text = response.data.msg;
+              this.snackbar = true;
+
+              alert(response.data.msg);
+          }
           /*
           alert(
             "We got a barcode\n" +
@@ -228,7 +238,6 @@ export default {
         path: "/classDetail/",
         query: {
           id: this.classes[index].cNumber,
-          cId: this.classes[index].cId + "",
         },
       });
     },
@@ -247,33 +256,15 @@ export default {
         path: "/sign",
         query: {
           cId: this.classes[index].cId + "",
-          id: this.classes[index].cNumber,
         },
       });
     },
-    goSignHistory(index) {
-      this.$router.push({
-        name: "SignHistory",
-        query: {
-          cId: this.classes[index].cId,
-          id: this.classes[index].cNumber,
-        },
-      });
-    },
-  },
-  destroyed() {
-    this.$emit("buttons", []);
   },
   async mounted() {
     //初始化班课列表
-    let result = await initClassList(1, 5);
+    let result = await initClassList(1, 3);
     this.classes = result.data.data;
-    this.$emit("buttons", [
-      {
-        icon: "mdi-plus",
-        click: this.showList,
-      },
-    ]);
+
     // initClassList(this.pageNo,this.pageSize,localStorage.getItem("teacherId"));
     // console.log(this.$route.query.className);
     /*

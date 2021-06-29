@@ -34,7 +34,6 @@
                 label="密码"
                 outlined
                 @click:append="showPassword = !showPassword"
-                @keyup.enter="login"
               ></v-text-field>
             </v-tab-item>
             <v-tab-item value="sms-login" class="ma-1">

@@ -163,11 +163,11 @@ export default {
         disabled: false
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }],
-        rePassword: [{ required: true, trigger: 'blur', validator: validateRePassword }],
-        phone: [{ required: true, trigger: 'blur', validator: validatePhone }],
-        validationCode: [{ required: true, trigger: 'blur', validator: validateValidationCode }]
+        username: [{required: true, trigger: 'blur', validator: validateUsername}],
+        password: [{required: true, trigger: 'blur', validator: validatePassword}],
+        rePassword: [{required: true, trigger: 'blur', validator: validateRePassword}],
+        phone: [{required: true, trigger: 'blur', validator: validatePhone}],
+        validationCode: [{required: true, trigger: 'blur', validator: validateValidationCode}]
       },
       loading: false,
       passwordType: 'password',
@@ -177,7 +177,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler: function (route) {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
