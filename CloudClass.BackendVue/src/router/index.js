@@ -133,14 +133,14 @@ export const constantRoutes = [
     redirect: '/class/index',
     component: Layout,
     meta: {
-      title: '菜单管理'
+      title: '班课管理'
     },
     children: [{
       path: 'index',
       name: 'Class List',
       component: () => import('@/views/class/list'),
       meta: {
-        title: '菜单管理'
+        title: '班课管理'
       }
     }]
   },

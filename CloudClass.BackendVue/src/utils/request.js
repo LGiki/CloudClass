@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
+import {Message} from 'element-ui'
 import store from '@/store'
 
 const service = axios.create({
   baseURL: 'http://119.91.75.131:8080/api/CloudClass', // url = base url + request url
-  timeout: 5000
+  timeout: 10000
 })
 
 service.interceptors.request.use(
@@ -16,6 +16,9 @@ service.interceptors.request.use(
   },
   error => {
     console.log(error)
+    if (error.message.includes('timeout')) {
+      Message.error('连接超时，请刷新重试')
+    }
     return Promise.reject(error)
   }
 )
@@ -34,7 +37,7 @@ service.interceptors.response.use(
       switch (error.response.status) {
         case 401:
           Message.error('您未登录或登录已过期，请登录后重试')
-          this.$router.replace({ path: '/login' })
+          this.$router.replace({path: '/login'})
           // TODO: remove token from localstorage
           this.$store.commit('token/REMOVE_TOKEN')
       }
