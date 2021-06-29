@@ -284,44 +284,30 @@ export default {
           "精度:\t" +
           position.coords.longitude +
           "\n";
-
         me.longtitude = position.coords.longitude + "";
         me.latitude = position.coords.latitude + "";
         console.log(me.longtitude);
         console.log(me.latitude);
-
-        /*
-          "Altitude:\t" +
-          position.coords.altitude +
-          "\n" +
-          "Accuracy:\t" +
-          position.coords.accuracy +
-          "\n" +
-          "Altitude Accuracy:\t" +
-          position.coords.altitudeAccuracy +
-          "\n" +
-          "Heading:\t" +
-          position.coords.heading +
-          "\n" +
-          "Speed:\t" +
-          position.coords.speed +
-          "\n" +
-          "Timestamp:\t" +
-          position.timestamp +
-          "\n";
-          */
       };
+      // const reTry = () => {
+      //   navigator.geolocation.getCurrentPosition(onSuccess, error, {
+      //     maximumAge: 30000,
+      //     timeout: 5000,
+      //     enableHighAccuracy: val,
+      //   });
+      // }
       var error = function (error) {
         console.log(error.message);
         me.msg =
           "code: " + error.code + "\n" + "message: " + error.message + "\n";
-        alert(me.msg);
+        // reTry()
+        // alert(me.msg);
       };
-
+      console.log('val:', val)
       navigator.geolocation.getCurrentPosition(onSuccess, error, {
         maximumAge: 30000,
-        timeout: 3000,
-        enableHighAccuracy: val,
+        timeout: 27000,
+        enableHighAccuracy: true,
       });
     },
     //学生进行签到
@@ -520,13 +506,10 @@ export default {
     },
   },
   async mounted() {
-    navigator.geolocation.getCurrentPosition(
-      () => {},
-      () => {},
-      {
-        maximumAge: 30000,
-        timeout: 10,
-        enableHighAccuracy: false,
+    navigator.geolocation.getCurrentPosition(() => {}, () => {}, {
+      maximumAge: 10,
+      timeout: 10,
+      enableHighAccuracy: true,
     });
 
     this.setClassData();
