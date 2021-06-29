@@ -168,6 +168,7 @@
       <v-btn
         v-if="isSuccess === true && isTeacher === '1'"
         x-large
+        block
         class="white--text"
         elevation="4"
         color="red darken"

@@ -72,6 +72,40 @@
         </v-list-item>
       </template>
     </v-list>
+    <v-dialog v-model="updateExpDialog" persistent max-width="600px">
+      <v-card>
+        <v-card-title>
+          <span class="text-h5">修改经验值</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-form ref="updateExpForm">
+              <v-text-field
+                v-model="exp"
+                :rules="[rules.required]"
+                hint="请输入新经验值"
+                label="经验值"
+                prepend-icon="mdi-star"
+              >
+              </v-text-field>
+            </v-form>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="updateExpDialog = false"
+          >
+            取消
+          </v-btn>
+          <v-btn color="blue darken-1" text @click="handleUpdateExp">
+            确定
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-snackbar v-model="snackbar" timeout="3000">
       {{ text }}
 
@@ -89,6 +123,7 @@
 import { getClassData } from "@/api/class";
 import QRCode from "qrcodejs2";
 import { queryClassMembers } from "./api/class";
+import { editExp } from "@/api/person";
 
 export default {
   name: "ClassDetail",
@@ -101,13 +136,39 @@ export default {
         teacher: "池芝标",
         semester: "2021-1",
         classNumber: 10004,
-        cId: '',
+        cId: ""
       },
       items: [],
-      expOrder: 1
+      expOrder: 1,
+      updateExpDialog: false,
+      peId: 0,
+      cId: 0,
+      exp: 0,
+      rules: {
+        required: (value) => !!value || "必填"
+      }
     };
   },
   methods: {
+    handleUpdateExp() {
+      editExp(this.peId, this.cId, this.exp).then(res => {
+        if (res.data.code === "200") {
+          this.setClassMembersData()
+          this.text = "经验值修改成功";
+          this.snackbar = true
+          this.updateExpDialog = false
+        } else {
+          this.text = "经验值修改失败，请稍后再试";
+          this.snackbar = true
+        }
+      })
+    },
+    editExp(index) {
+      this.updateExpDialog = true;
+      this.peId = this.items[index].peId;
+      this.cId = this.classes.cId;
+      this.exp = this.items[index].grade;
+    },
     handleOrderByExp() {
       this.expOrder = this.expOrder === 1 ? -1 : 1;
       this.setClassMembersData();
@@ -145,7 +206,7 @@ export default {
             title: result.data.data[i - 1].peName,
             grade: result.data.data[i - 1].exp,
             avatar: require("../assets/images/pikaqiu1.jpg"),
-            peId: result.data.data[i-1].peId,
+            peId: result.data.data[i - 1].peId
           };
           this.items.push(item);
           this.items.push(divider);
@@ -155,16 +216,6 @@ export default {
         }
       }
     }
-  },
-  editExp(index){
-    this.$router.push({
-      path: "/expEdit",
-      query: {
-        peId: this.items[index].peId,
-        cId: this.classes.cId,
-        exp: this.items[index].grade + "",
-      }
-    })
   },
   async mounted() {
     this.createQrCode();

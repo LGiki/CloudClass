@@ -145,6 +145,15 @@ const routes = [
         },
         component: () => import("../views/SignDetail"),
       },
+      {
+        name: "ExpEdit",
+        path: "/expEdit",
+        meta: {
+          title: "经验值修改",
+          stuTitle: "经验值修改",
+        },
+        component: () => import("../views/ExpEdit"),
+      },
     ],
   },
 ];

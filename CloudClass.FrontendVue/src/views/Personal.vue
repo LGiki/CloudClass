@@ -128,11 +128,11 @@ export default {
           title: "个人信息修改",
           subtitle: ``,
         },
-        { divider: true, inset: true },
-        {
-          title: "签到记录",
-          subtitle: ``,
-        },
+        // { divider: true, inset: true },
+        // {
+        //   title: "签到记录",
+        //   subtitle: ``,
+        // },
         { divider: true, inset: true },
         {
           title: "修改密码",

@@ -26,7 +26,7 @@
                 </v-icon>
                 成员
               </v-btn>
-              <v-btn class="ml-1 mt-1 mb-1 elevation-0" small>
+              <v-btn class="ml-1 mt-1 mb-1 elevation-0" small @click="goSignHistory(index)">
                 <v-icon left dark color="orange darken-2"
                   >mdi-clipboard-text-outline
                 </v-icon>
@@ -134,7 +134,7 @@ export default {
   data() {
     return {
       window: window,
-      absolute: true,
+      absolute: false,
       overlay: false,
       pageNo: 1,
       pageSize: 20,
@@ -248,6 +248,15 @@ export default {
         },
       });
     },
+    goSignHistory(index) {
+      this.$router.push({
+        name: "SignHistory",
+        query: {
+          cId: this.classes[index].cId,
+          id: this.classes[index].cNumber,
+        },
+      });
+    }
   },
   destroyed() {
     this.$emit("buttons", []);
