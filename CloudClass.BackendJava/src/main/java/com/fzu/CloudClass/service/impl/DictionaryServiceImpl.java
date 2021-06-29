@@ -65,4 +65,25 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
         one.setChineseName(chineseName);
         dictionaryMapper.updateById(one);
     }
+
+    @Override
+    public int getDictionaryByEnglishName(String english_name) {
+        QueryWrapper<Dictionary> queryWrapper =  new QueryWrapper<>();
+        queryWrapper.eq("english_name",english_name);
+        return dictionaryMapper.selectOne(queryWrapper).getDId();
+    }
+
+    @Override
+    public int countDictionaryByEnglishName(String english_name) {
+        QueryWrapper<Dictionary> queryWrapper =  new QueryWrapper<>();
+        queryWrapper.eq("english_name",english_name);
+        return dictionaryMapper.selectCount(queryWrapper);
+    }
+
+    @Override
+    public int countDictionaryByChineseName(String chinese_name) {
+        QueryWrapper<Dictionary> queryWrapper =  new QueryWrapper<>();
+        queryWrapper.eq("chinese_name",chinese_name);
+        return dictionaryMapper.selectCount(queryWrapper);
+    }
 }

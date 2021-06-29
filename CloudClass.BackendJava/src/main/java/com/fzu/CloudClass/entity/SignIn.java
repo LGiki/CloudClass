@@ -24,24 +24,22 @@ public class SignIn implements Serializable {
     @TableId(value = "si_id", type = IdType.AUTO)
     private Integer siId;
 
-    /**
-     * ǩ
-     */
-    private Integer state;
+    private Integer type;
 
-    /**
-     * ǩ
-     */
     private LocalDateTime date;
 
-    /**
-     * ǩ
-     */
-    private String position;
+    private Double lng;
+
+    private Double lat;
 
     private Integer peId;
 
     private Integer cId;
+
+    private String code;
+
+    //限时签到时长
+    private Integer time;
 
 
 }

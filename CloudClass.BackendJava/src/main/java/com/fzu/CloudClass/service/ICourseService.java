@@ -22,6 +22,10 @@ public interface ICourseService extends IService<Course> {
 
     Long getAllCourseCountByTeacher(int pe_id,int pageNo,int pageSize);
 
+    List<Course> getAllCourse(int pageNo,int pageSize);
+
+    Long countAllCourse(int pageNo,int pageSize);
+
     //找重复课程号
     int countMulClass(String c_number);
 
@@ -37,7 +41,7 @@ public interface ICourseService extends IService<Course> {
 
     int getIsEnd(String c_number);
 
-
+    void modifyCourse(Course course);
 
 
 

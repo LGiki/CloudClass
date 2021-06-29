@@ -48,6 +48,24 @@ public class DictionaryDetailController {
         return result;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/DictionaryList", method = RequestMethod.GET)
+    public JSONObject getDictionaryDetailListByEName(@RequestParam("EnglishName") String EnglishName){
+
+        int d_id = dictionaryService.getDictionaryByEnglishName(EnglishName);
+
+        List<DictionaryDetail> data = new ArrayList<>();
+        data = dictionaryDetailService.getAllDictionaryDetailById(d_id);
+        //int count = dictionaryDetailService.getCountAllDictionaryDetailByDId(d_id);
+        JSONObject result = new JSONObject();
+        //result.put("total", count);
+        result.put("data", data);
+        result.put("msg", "ok");
+        result.put("code", "200");
+
+        return result;
+    }
+
     /*
     添加
      */

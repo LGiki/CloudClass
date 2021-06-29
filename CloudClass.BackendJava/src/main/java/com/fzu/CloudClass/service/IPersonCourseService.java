@@ -1,7 +1,10 @@
 package com.fzu.CloudClass.service;
 
+import com.fzu.CloudClass.entity.Course;
 import com.fzu.CloudClass.entity.PersonCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,6 +20,18 @@ public interface IPersonCourseService extends IService<PersonCourse> {
 
     int countByCIdAndPeId(int c_id,int pe_id);
 
-    PersonCourse getByCId(int c_id,int status);
+    List<PersonCourse> getByCId(int c_id,int status);
+
+    void addExp(int c_id,int pe_id,int exp);
+
+    List<PersonCourse> getPersonCourseByCId(int c_id);
+
+    int countStudentByCId(int c_id);
+
+    void delByCIdAndPeId(int c_id,int pe_id);
+
+    PersonCourse getByCIdAndPeId(int c_id,int pe_id);
+
+    void modifyPersonCourse(PersonCourse personCourse);
 
 }

@@ -36,11 +36,7 @@ public class SmsController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", code);
         jsonObject.put("type", type);
-
-
         redisUtil.set(phone, jsonObject.toString(), 300);
-
-
         JSONObject result = new JSONObject();
         result.put("msg", "success");
         result.put("code", "200");

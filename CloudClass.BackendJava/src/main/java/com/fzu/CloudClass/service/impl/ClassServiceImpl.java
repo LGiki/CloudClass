@@ -59,4 +59,9 @@ public class ClassServiceImpl extends ServiceImpl<ClassMapper, Class> implements
     public String getNameById(int cc_id) {
         return classMapper.selectById(cc_id).getCcName();
     }
+
+    @Override
+    public void modify(Class one) {
+        classMapper.updateById(one);
+    }
 }

@@ -26,4 +26,10 @@ public interface IDictionaryService extends IService<Dictionary> {
 
     void modifyDictionary(int i_id,String chineseName,String englishName);
 
+    int getDictionaryByEnglishName(String english_name);
+
+    int countDictionaryByEnglishName(String english_name);
+
+    int countDictionaryByChineseName(String chinese_name);
+
 }

@@ -23,7 +23,7 @@ public class PersonCourse implements Serializable {
     @TableId(value = "pc_id", type = IdType.AUTO)
     private Integer pcId;
 
-    private Integer value;
+    private Integer exp;
 
     private Integer status;
 

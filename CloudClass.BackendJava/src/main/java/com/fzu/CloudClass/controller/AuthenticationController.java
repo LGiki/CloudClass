@@ -6,12 +6,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.fzu.CloudClass.entity.Person;
 import com.fzu.CloudClass.service.impl.PersonServiceImpl;
 import com.fzu.CloudClass.util.JwtTokenUtil;
+import com.fzu.CloudClass.util.MD5;
 import com.fzu.CloudClass.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.nio.charset.StandardCharsets;
 
 /**
  * <p>
@@ -58,8 +61,13 @@ public class AuthenticationController {
         }else{
             person = person2;
         }
+        if(person.getIsTeacher() == -1){
+            result.put("msg", "用户不存在");
+            result.put("code", "201");
+            return result;
+        }
 
-        if(person.getPassword().equals(password) == true){
+        if(person.getPassword().equals(password) || MD5.encrypt16(person.getPassword()).equals(password)){
             result.put("role",person.getIsTeacher());
             result.put("token", jwtTokenUtil.generateToken(String.valueOf(person.getPeId())));
             result.put("msg", "ok");
@@ -95,7 +103,6 @@ public class AuthenticationController {
             result.put("code", "201");
             return result;
         }
-
         if(code.equals(verifyCode)){
             result.put("role",personService.getPersonByPhone(phone).getIsTeacher());
             result.put("token", jwtTokenUtil.generateToken(personService.getPersonByPhone(phone).getPeId().toString()));
@@ -111,18 +118,28 @@ public class AuthenticationController {
     @ResponseBody
     @RequestMapping(value = "/phone", method = RequestMethod.POST)
     public JSONObject loginByPhone(@RequestBody JSONObject jsonParam){
-
         JSONObject result = new JSONObject();
         String phone = (String) jsonParam.get("phone");
         String password = (String) jsonParam.get("password");
-
-        if(personService.getPersonByPhone(phone) == null){
+        if(personService.getPersonByPhone(phone) == null && personService.getPersonByUsername(phone) == null){
             result.put("msg", "用户不存在");
             result.put("code", "201");
             return result;
         }
-        Person person = personService.getPersonByPhone(phone);
-        if(person.getPassword().equals(password) == true){
+        Person person = new Person();
+        if(personService.getPersonByPhone(phone) == null){
+            person = personService.getPersonByUsername(phone);
+        }else{
+            person = personService.getPersonByPhone(phone);
+        }
+
+        if(person.getIsTeacher() == 0){
+            result.put("msg", "没有登陆权限！");
+            result.put("code", "203");
+            return result;
+        }
+
+        if(person.getPassword().equals(password) || MD5.encrypt16(person.getPassword()).equals(password)){
             result.put("role",person.getIsTeacher());
             result.put("token", jwtTokenUtil.generateToken(person.getPeId().toString()));
             result.put("msg", "ok");
