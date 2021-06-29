@@ -31,12 +31,9 @@ public class Person implements Serializable {
 
     private String grade;
 
-    /**
-     * רҵ
-     */
-    private String major;
+    private Integer major;
 
-    private Integer classes;
+    private String classes;
 
     private Integer isTeacher;
 

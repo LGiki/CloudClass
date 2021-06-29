@@ -29,7 +29,7 @@ public class SchoolController {
 
     @ResponseBody
     @RequestMapping(value = "/AllCollege", method = RequestMethod.GET)
-    public JSONObject findKeyWord(){
+    public JSONObject getAllCollege(){
 
         JSONObject result = new JSONObject();
 

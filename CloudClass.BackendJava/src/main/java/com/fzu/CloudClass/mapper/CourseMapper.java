@@ -24,4 +24,10 @@ public interface CourseMapper extends BaseMapper<Course> {
             "</script>")
     IPage<Course> getAllCourseByTeacher(@Param("pe_id")int pe_id, IPage<Course> page);
 
+    @Select("<script>\n"+
+            "SELECT course.c_id,c_number,c_name,term,date,cc_id,university_id,college_id FROM course,person_course\n" +
+            "WHERE course.c_id = person_course.c_id\n" +
+            "</script>")
+    IPage<Course> getAllCourse(IPage<Course> page);
+
 }

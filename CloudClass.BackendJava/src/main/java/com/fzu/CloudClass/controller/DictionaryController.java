@@ -32,9 +32,7 @@ public class DictionaryController {
     @ResponseBody
     @RequestMapping(value = "/allDictionary", method = RequestMethod.GET)
     public JSONObject getAllDictionary(@RequestParam("pageNo") int pageNo,@RequestParam("pageSize") int pageSize){
-
         List<Map<String, Object>> datas = new ArrayList<>();
-
         List<Dictionary> dictionaries = dictionaryService.getAllDictionary(pageNo,pageSize);
         int count = dictionaryService.getCountAll();
         for(int i =0;i<dictionaries.size();i++){
@@ -48,8 +46,6 @@ public class DictionaryController {
             data.put("items",ones);
             datas.add(data);
         }
-
-
         JSONObject result = new JSONObject();
         result.put("total",count);
         result.put("data", datas);
@@ -65,49 +61,46 @@ public class DictionaryController {
     @ResponseBody
     @RequestMapping(value = "/Dictionary", method = RequestMethod.POST)
     public JSONObject addDictionary(@RequestBody JSONObject jsonParam){
-
+        JSONObject result = new JSONObject();
         String chineseName = (String) jsonParam.get("chineseName");
         String englishName = (String) jsonParam.get("englishName");
-
+        if(dictionaryService.countDictionaryByEnglishName(englishName) != 0){
+            result.put("msg", "已存在该字典");
+            result.put("code", "201");
+            return result;
+        }
+        if(dictionaryService.countDictionaryByChineseName(chineseName) != 0){
+            result.put("msg", "已存在该字典");
+            result.put("code", "201");
+            return result;
+        }
         dictionaryService.addDictionary(chineseName,englishName);
-
-
-        JSONObject result = new JSONObject();
         result.put("msg", "ok");
         result.put("code", "200");
-
         return result;
     }
 
     @ResponseBody
     @RequestMapping(value = "/Dictionary", method = RequestMethod.DELETE)
     public JSONObject delDictionary(@RequestParam("dId") int d_id){
-
-        //int d_id = Integer.parseInt((String) jsonParam.get("dId"));
-//        System.out.println(d_id);
         dictionaryDetailService.delDictionaryDetailBydId(d_id);
         dictionaryService.delDictionary(d_id);
-
         JSONObject result = new JSONObject();
         result.put("msg", "ok");
         result.put("code", "200");
-
         return result;
     }
 
     @ResponseBody
     @RequestMapping(value = "/Dictionary", method = RequestMethod.PUT)
     public JSONObject modifyDictionary(@RequestBody JSONObject jsonParam){
-
         int d_id = Integer.parseInt((String) jsonParam.get("dId"));
         String chineseName = (String) jsonParam.get("chineseName");
         String englishName = (String) jsonParam.get("englishName");
         dictionaryService.modifyDictionary(d_id,chineseName,englishName);
-
         JSONObject result = new JSONObject();
         result.put("msg", "ok");
         result.put("code", "200");
-
         return result;
     }
 

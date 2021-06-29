@@ -26,10 +26,14 @@ public interface IPersonService extends IService<Person> {
 
     List<Person> getAllPerson(int pageNo, int pageSize);
 
+    Long countAllPerson(int pageNo, int pageSize);
+
     Person getManPersonByPhone(String phone);
 
     Person getManPersonByUsername(String username);
 
     Person getPersonById(int pe_id);
+
+    void modifyPerson(Person person);
 
 }

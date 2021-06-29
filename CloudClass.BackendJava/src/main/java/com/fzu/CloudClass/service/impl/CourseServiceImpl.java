@@ -52,10 +52,28 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         return page.getRecords();
     }
 
+
     @Override
     public Long getAllCourseCountByTeacher(int pe_id, int pageNo, int pageSize) {
         IPage<Course> page = new Page<>(pageNo,pageSize);
         page = courseMapper.getAllCourseByTeacher(pe_id, page);
+
+        return page.getTotal();
+    }
+
+    @Override
+    public List<Course> getAllCourse(int pageNo,int pageSize) {
+
+        IPage<Course> page = new Page<>(pageNo,pageSize);
+        page = courseMapper.getAllCourse(page);
+
+        return page.getRecords();
+    }
+
+    @Override
+    public Long countAllCourse(int pageNo, int pageSize) {
+        IPage<Course> page = new Page<>(pageNo,pageSize);
+        page = courseMapper.getAllCourse(page);
 
         return page.getTotal();
     }
@@ -101,14 +119,21 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     @Override
     public int getCanAttend(String c_number) {
         QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("cNumber",c_number);
+        queryWrapper.eq("c_number",c_number);
         return courseMapper.selectOne(queryWrapper).getCanAttend();
     }
 
     @Override
     public int getIsEnd(String c_number) {
         QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("cNumber",c_number);
+        queryWrapper.eq("c_number",c_number);
         return courseMapper.selectOne(queryWrapper).getIsEnd();
     }
+
+    @Override
+    public void modifyCourse(Course course) {
+        courseMapper.updateById(course);
+    }
+
+
 }

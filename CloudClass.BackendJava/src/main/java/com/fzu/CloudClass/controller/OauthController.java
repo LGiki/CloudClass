@@ -115,8 +115,6 @@ public class OauthController {
             personService.addPerson(person);
         }
 
-
-
         JSONObject result = new JSONObject();
         result.put("token", token);
         result.put("msg", "ok");

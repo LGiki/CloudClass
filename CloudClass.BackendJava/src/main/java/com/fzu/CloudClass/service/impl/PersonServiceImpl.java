@@ -34,12 +34,12 @@ public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> impleme
 
     @Override
     public Person getPersonByPhone(String phone) {
-        return personMapper.selectOne(new QueryWrapper<Person>().eq("phone",phone).eq("type",0));
+        return personMapper.selectOne(new QueryWrapper<Person>().eq("phone",phone));
     }
 
     @Override
     public Person getPersonByUsername(String username) {
-        return personMapper.selectOne(new QueryWrapper<Person>().eq("username",username).eq("type",0));
+        return personMapper.selectOne(new QueryWrapper<Person>().eq("username",username));
     }
 
     @Override
@@ -51,10 +51,19 @@ public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> impleme
     public List<Person> getAllPerson(int pageNo, int pageSize) {
 
         QueryWrapper<Person> queryWrapper =  new QueryWrapper<>();
-        queryWrapper.orderByAsc("pe_id").select("pe_id","gender","grade","major","classes","is_teacher","username","phone","type");
+        queryWrapper.orderByAsc("pe_id").select("pe_id","pe_name","gender","grade","major","classes","is_teacher","username","phone","type");
         IPage<Person> page = new Page<>(pageNo,pageSize);
         page = personMapper.selectPage(page, queryWrapper);
         return page.getRecords();
+    }
+
+    @Override
+    public Long countAllPerson(int pageNo, int pageSize) {
+        QueryWrapper<Person> queryWrapper =  new QueryWrapper<>();
+        queryWrapper.orderByAsc("pe_id").select("pe_id","pe_name","gender","grade","major","classes","is_teacher","username","phone","type");
+        IPage<Person> page = new Page<>(pageNo,pageSize);
+        page = personMapper.selectPage(page, queryWrapper);
+        return page.getTotal();
     }
 
     @Override
@@ -70,5 +79,10 @@ public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> impleme
     @Override
     public Person getPersonById(int pe_id) {
         return personMapper.selectById(pe_id);
+    }
+
+    @Override
+    public void modifyPerson(Person person) {
+        personMapper.updateById(person);
     }
 }

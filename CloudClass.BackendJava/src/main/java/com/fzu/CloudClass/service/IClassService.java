@@ -17,4 +17,6 @@ public interface IClassService extends IService<Class> {
 
     String getNameById(int cc_id);
 
+    void modify(Class one);
+
 }

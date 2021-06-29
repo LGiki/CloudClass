@@ -30,28 +30,22 @@ public class ClassController {
     @ResponseBody
     @RequestMapping(value = "/Class", method = RequestMethod.GET)
     public JSONObject getAllClass(){
-
         JSONObject result = new JSONObject();
         List<Class> data = classService.getAllClass();
-
         result.put("data", data);
         result.put("msg", "ok");
         result.put("code", "200");
-
         return result;
     }
 
     @ResponseBody
     @RequestMapping(value = "/Class", method = RequestMethod.POST)
     public JSONObject addAllClass(){
-
         JSONObject result = new JSONObject();
         List<Class> data = classService.getAllClass();
-
         result.put("data", data);
         result.put("msg", "ok");
         result.put("code", "200");
-
         return result;
     }
 
